@@ -1,0 +1,15 @@
+# The demo shop, from its published image (spec: workshop/shop-access).
+#
+#   start       docker compose -f shop/compose.yaml up -d
+#   fresh seed  docker compose -f shop/compose.yaml up -d --force-recreate
+#   stop        docker compose -f shop/compose.yaml down
+#
+# This is the one place the shop's version is pinned: a version tag, never
+# `edge` and never `sha-...`. setup-check reads the tag from here.
+# No volume: restarting keeps the shop's data, recreating reseeds it.
+
+services:
+  shop:
+    image: ghcr.io/manykarim/demo-webshop:0.3.0
+    ports:
+      - "9090:9090"

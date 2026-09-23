@@ -6,8 +6,8 @@
   - the `[tool.workshop]` table (OpenSpec `1.13.1`, minimum Node `20.19`, and the minimum Docker, Compose and `gh` versions).
 
   Remove `main.py`. Verify: `uv lock` succeeds with pre-releases disallowed, and every locked package is a final release. `uv run robotcode --help` lists `discover`, `libdoc`, `robot-debug`, `repl` and `results`.
-- [ ] 1.2 Commit `uv.lock`. Verify: on a fresh clone, `uv sync --locked` installs exactly the locked versions. After a direct dependency is edited in `pyproject.toml` without relocking, `uv sync --locked` fails with an out-of-date message. Revert the edit.
-- [ ] 1.3 Install the browser binaries through the batteries package (design D4). Verify in a clean Linux container without Node.js on `PATH`: `uv sync --locked` followed by `uv run rfbrowser install --with-deps chromium` lets a headless Browser session open `about:blank`. Then recreate `.venv` and confirm the browser binary is gone, which proves the D4 consequence that `setup-check` must catch.
+- [x] 1.2 Commit `uv.lock`. Verify: on a fresh clone, `uv sync --locked` installs exactly the locked versions. After a direct dependency is edited in `pyproject.toml` without relocking, `uv sync --locked` fails with an out-of-date message. Revert the edit.
+- [x] 1.3 Install the browser binaries through the batteries package (design D4). Verify in a clean Linux container without Node.js on `PATH`: `uv sync --locked` followed by `uv run rfbrowser install --with-deps chromium` lets a headless Browser session open `about:blank`. Then recreate `.venv` and confirm the browser binary is gone, which proves the D4 consequence that `setup-check` must catch.
 - [ ] 1.4 Verify the platforms the specs promise. Verify: `uv sync --locked`, `uv run rfbrowser install chromium` and a headless launch succeed on Windows x64 and on macOS 13 or newer on Apple silicon, with the outputs recorded in the pull request.
 
 ## 2. Shop access
@@ -16,12 +16,12 @@
   - after `docker compose -f shop/compose.yaml up -d`, `http://localhost:9090/health` reports that version;
   - after placing an order, `up -d --force-recreate` leaves no runtime order;
   - searching the repository for `demo-webshop:` finds this file as the only tag reference.
-- [ ] 2.2 Add the variable file and the `robot.toml` profiles `local` (the default) and `shared` (design D7). Verify with a throwaway suite that is not committed, because tests belong to `baseline-suite`:
+- [x] 2.2 Add the variable file and the `robot.toml` profiles `local` (the default) and `shared` (design D7). Verify with a throwaway suite that is not committed, because tests belong to `baseline-suite`:
   - without settings it logs `http://localhost:9090` and no space;
   - values from `.env` are used, and the process environment wins over `.env`;
   - `-p shared` without a space stops before the first test and explains how to set one;
   - `-p shared` with `SHOP_SPACE=OctoCat` resolves to `octocat`.
-- [ ] 2.3 Add the `shop` helper (`status`, `presets`, `preset`, `reset`, `wait`) with the header rule and the neutral status (design D8). Verify locally, and on the shared instance in a throwaway test space that is reset afterwards and is never `default`:
+- [x] 2.3 Add the `shop` helper (`status`, `presets`, `preset`, `reset`, `wait`) with the header rule and the neutral status (design D8). Verify locally, and on the shared instance in a throwaway test space that is reset afterwards and is never `default`:
   - `preset stage2` makes the status name `stage2`;
   - `preset buggy` then names `stage2` and `buggy`, and no `BUG_` string appears in the output;
   - `reset` brings back a status naming `clean`;
