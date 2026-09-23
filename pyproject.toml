@@ -1,7 +1,43 @@
 [project]
 name = "ai-engineering-robotframework"
 version = "0.1.0"
-description = "Add your description here"
+description = "Participant repository for the workshop Agentic Engineering with Robot Framework."
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = []
+# Exactly the interpreter in .python-version: the lock targets one Python,
+# and uv installs it for participants (design D1).
+requires-python = "==3.12.*"
+# Every direct dependency is pinned exactly and resolved into uv.lock.
+# Install with `uv sync --locked`, never with pip (design D1).
+dependencies = [
+  "robotframework==7.5",
+  # Browser Library plus the batteries package, which ships its own Node
+  # runtime: install browsers with `uv run rfbrowser install chromium` and
+  # never run `rfbrowser init` (design D4).
+  "robotframework-browser==20.5.0",
+  "robotframework-browser-batteries==20.5.0",
+  "robotframework-requests==0.9.7",
+  # discover, libdoc, robot-debug, repl and results (design D3).
+  "robotcode[all]==2.7.0",
+  # [web,api] only: [all] pins desktop-automation pre-releases (design D2).
+  "rf-mcp[web,api]==0.35.0",
+  "robotframework-heal==0.4.0",
+  # Reads the git-ignored .env for SHOP_URL and SHOP_SPACE (design D7).
+  "python-dotenv==1.2.3",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.15"
+# Stable releases only (spec: workshop/toolchain). Recorded in uv.lock, so a
+# re-lock can never pull a pre-release in by accident.
+prerelease = "disallow"
+
+# Pins for tools that are not Python packages. setup-check reads them from
+# here, so this table and uv.lock are the only sources of expected versions
+# (design D6). The shop image tag lives in shop/compose.yaml.
+[tool.workshop]
+openspec = "1.13.1"
+node = ">=20.19"
+docker = ">=20.10"
+compose = ">=2.0"
+gh = ">=2.40"

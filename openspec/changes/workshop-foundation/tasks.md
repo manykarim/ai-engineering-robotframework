@@ -1,6 +1,6 @@
 ## 1. Toolchain
 
-- [ ] 1.1 Rewrite `pyproject.toml` with:
+- [x] 1.1 Rewrite `pyproject.toml` with:
   - the exact pins of design D1, including `rf-mcp[web,api]`, `robotcode[all]`, the batteries package and a direct `python-dotenv` pin;
   - `[tool.uv] package = false` and `required-version`;
   - the `[tool.workshop]` table (OpenSpec `1.13.1`, minimum Node `20.19`, and the minimum Docker, Compose and `gh` versions).
