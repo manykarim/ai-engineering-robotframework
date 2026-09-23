@@ -1,0 +1,2 @@
+# Local secrets (Coolify API token and similar); never commit.
+.env
