@@ -12,6 +12,8 @@
 
   **Windows x64 verified 2026-09-24; macOS outstanding.** The check ran in an isolated temp folder with a standalone uv 0.8.15, with the uv cache and Python installs redirected into that folder, so nothing touched the machine's own uv: `uv sync --locked` exit 0, `rfbrowser install chromium` exit 0, and a headless session PASS. The machine's installed uv 0.6.17 was refused cleanly with "Required uv version `>=0.8.15` does not match the running version `0.6.17`", which is why `SETUP.md` says `uv self update`. Outstanding: the same three steps on macOS 13 or newer on Apple silicon.
 
+  **Carried over at archive (2026-09-24), by decision.** Archived unticked. The macOS check belongs to `workshop-labs`' dry-run gate, which needs a clean Mac anyway.
+
 ## 2. Shop access
 
 - [x] 2.1 Add `shop/compose.yaml` (design D7), pinned to the newest demo-webshop `X.Y.Z` tag at implementation time, never `edge` or `sha-`, on port 9090 with no volume. Verify:
@@ -47,13 +49,20 @@
 
 ## 4. Agent context
 
-- [ ] 4.1 Write `AGENTS.md` (under 30 lines, with the content of design D10) and `CLAUDE.md` (a single `@AGENTS.md` import). Verify:
+- [x] 4.1 Write `AGENTS.md` (under 30 lines, with the content of design D10) and `CLAUDE.md` (a single `@AGENTS.md` import). Verify:
 
   **Claude Code verified 2026-09-24; Codex and Copilot outstanding.** `AGENTS.md` has 22 lines and none of the terms Labs 2 to 4 teach. A nested, non-interactive Claude Code session in the repository root, with every file tool disabled, quoted "This file is deliberately short: Lab 2 builds it out." verbatim from its loaded context. Outstanding: Codex, which is installed here but whose sign-in has expired (`codex login`), and GitHub Copilot, whose CLI is not installed here.
   - `wc -l AGENTS.md` is below 30;
   - the file names none of the conventions or RobotCode habits taught in Labs 2 to 4;
   - Claude Code started in the repository root shows the content of `AGENTS.md` in its loaded memory;
   - Codex and GitHub Copilot each load `AGENTS.md`. Should Copilot not, add a pointer-only `.github/copilot-instructions.md` and check again.
+
+  **Completed after archive, 2026-09-24: all three agents verified.** Each agent ran non-interactively in the repository root, was asked to quote from its already-loaded instructions without tools, and quoted "This file is deliberately short: Lab 2 builds it out." verbatim:
+  - Claude Code, with every file tool disallowed;
+  - Codex CLI 0.156.1, in a read-only sandbox, running no commands (0.87.0 had pinned a model that ChatGPT-account sign-ins reject);
+  - GitHub Copilot CLI 1.0.88, with `--available-tools` naming no real tool, so it could see none.
+  The sentence exists only in `AGENTS.md`. As a control, Copilot in an empty repository produced no such sentence (it quoted its own system prompt instead of answering NONE).
+
 - [x] 4.2 Generate the OpenSpec integrations with `openspec init --tools claude,codex,github-copilot` at OpenSpec `1.13.1`, and commit the generated files. Verify: `openspec --version` prints `1.13.1`, and each of the three tools offers explore, propose, apply and archive.
 - [x] 4.3 Add the namespace `context` and the `rules.specs` neutrality rule, scoped to `shop/*`, to `openspec/config.yaml` (design D10). Verify: `openspec instructions specs --change workshop-foundation --json` returns both the context and the rule, and `openspec validate --all --strict` passes.
 
@@ -80,4 +89,6 @@
   - `setup-check` reports no failure in shared mode, with a throwaway test space that is reset afterwards;
   - it also reports no failure in local mode against the shop started from `shop/compose.yaml` on the host;
   - both outputs are recorded in the pull request.
-- [ ] 6.2 Validate and archive. Verify: `openspec validate workshop-foundation --strict` passes. After the merge, `openspec archive workshop-foundation -y` creates `openspec/specs/workshop/toolchain`, `setup-check`, `shop-access` and `agent-context` as main specs, each with its Purpose filled in.
+- [x] 6.2 Validate and archive. Verify: `openspec validate workshop-foundation --strict` passes. After the merge, `openspec archive workshop-foundation -y` creates `openspec/specs/workshop/toolchain`, `setup-check`, `shop-access` and `agent-context` as main specs, each with its Purpose filled in.
+
+  **Done 2026-09-24.** `openspec validate workshop-foundation --strict` passes. The sync created `openspec/specs/workshop/{toolchain,setup-check,shop-access,agent-context}/spec.md` with 30 requirements and every Purpose set, byte-identical to what `openspec archive` produces (checked against a trial archive in a scratch copy).

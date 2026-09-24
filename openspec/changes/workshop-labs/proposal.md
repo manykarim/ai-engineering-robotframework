@@ -28,6 +28,7 @@ The curriculum exists only as the master preparation document. Participants need
   - every lab run end to end on a clean machine with the pinned stack;
   - Lab 5 run explicitly **without** MCP, as the master document demands;
   - Labs 2-4 spot-checked with a second agent.
+  - The check carried over from `workshop-foundation`: the toolchain on macOS 13+ on Apple silicon (its task 1.4).
 
 ## Capabilities
 
