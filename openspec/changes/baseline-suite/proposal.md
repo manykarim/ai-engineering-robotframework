@@ -16,11 +16,12 @@ That only works if the suite's imperfections are designed, documented and determ
 - **`resources/`**: shared keywords that implement the `SHOP_URL`/`SHOP_SPACE` contract from `workshop-foundation`. Every browser context sends `X-Workshop-Space` when a space is set. Presets are applied outside the suite, so the same suite runs unchanged under any preset.
 - **Designed imperfections, each documented with its purpose:**
   - two tests tagged `broken`, with distinct causes: one for Module 4's step-debugging, one for Module 5's conversational debugging;
-  - a deliberate mix of drift-fragile locators (stage-1 ids and classes: Module 8's healing targets) and drift-robust ones (visible text and roles: the Lab 3 lesson);
-  - exactly one inline-locator convention violation, the target of the Lab 3 skill and the Lab 7 hook.
-- **An expected-outcome matrix.** For each preset (`clean`, `stage2`-`stage4`, `buggy`, `drift_and_bug`) it lists which tests fail and why, verified against the pinned image. Facilitators use it, and so does the Module 8 heal triage (accept, reject or investigate) and CI. Under `drift_and_bug`, the WEB-002 price and WEB-006 total failures stay red however the locators heal.
-- **Healing wiring**: a `heal` profile that runs the suite with `robotframework-heal` at `HEAL_FIX_TIER=report`, so every heal is a proposal and never a silent edit. A spike first establishes whether its deterministic tier heals stage 2-4 drift with no LLM key. The answer decides which fragile locators the suite uses, and whether Module 8 needs a key at all.
-- **`docs/conventions.md`**: the conventions the suite follows and the one place it deliberately does not. The `AGENTS.md` from Lab 2 references it, and the Lab 3 skill enforces it.
+  - a deliberate mix of drift-fragile locators and drift-robust ones. The fragile ones are stage-1 ids, classes and `data-test` hooks, each breaking in a different set of stages, and are Module 8's healing targets. The robust ones use visible text, roles and labels, and are the Lab 3 lesson;
+  - exactly one inline-locator convention violation, the target of the Lab 3 skill and the Lab 7 hook. It is recorded for facilitators only, so participants have something real to find.
+- **An expected-outcome matrix.** For each preset (`clean`, `stage2`-`stage4`, `buggy`, `drift_and_bug`) it lists which tests fail and why. It is kept as data, with a script that runs the suite under every preset against the pinned image and reports any difference, so the matrix stays true when the image changes. Facilitators use it, and so does the Module 8 heal triage (accept, reject or investigate) and CI. Under `drift_and_bug`, the WEB-002 price and WEB-006 total failures stay red however the locators heal.
+- **Healing wiring**: a `heal` profile that attaches `robotframework-heal` as a listener to the unmodified suite, at `HEAL_FIX_TIER=report` and with assertion healing off, so every heal is a proposal and never a silent edit, and a planted bug can never be healed away.
+- **The spike is answered: healing needs a model.** Run against stages 1-4 with no `HEAL_*` settings, `robotframework-heal` 0.4.0 attached, recorded every failure, and healed none: *"Healing skipped: No model configured for role 'locator'"*. Even classifying a failure needs the model. Module 8's listener path therefore needs an LLM endpoint; how participants get one is decided in `workshop-labs`. The spike also showed that `--listener Heal` works without touching a suite, and that `[name="email"]` alone is ambiguous: the sign-in dialog has one too.
+- **`docs/conventions.md`**: the conventions the suite follows, and the legacy locators it keeps deliberately as Module 8's healing targets. The `AGENTS.md` from Lab 2 references it, and the Lab 3 skill enforces it.
 
 ## Capabilities
 
@@ -33,7 +34,7 @@ None.
 
 ## Impact
 
-- **New files**: `tests/ui/`, `tests/api/`, `resources/`, `docs/conventions.md`, `robot.toml` profile additions.
+- **New files**: `tests/ui/`, `tests/api/`, `resources/`, `docs/conventions.md`, `docs/facilitator/suite-outcomes.yaml` and `.md` (the matrix, in the facilitator folder `workshop-labs` fills), `tools/verify_outcomes.py`, and the `paths` setting and `heal` profile in `robot.toml`.
 - **Depends on** `workshop-foundation` (profiles, shop contract, pinned stack) and `shop-specs` (the requirements the tests verify).
 - **Consumed by** every lab from M0 to M9, and by `ci-and-site`.
 - **Not in scope**: the participants' own Module 5 tests, lab instructions, skills, hooks and workflows.
