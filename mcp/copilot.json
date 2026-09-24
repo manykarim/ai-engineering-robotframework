@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "robotframework": {
+      "type": "local",
+      "command": "uv",
+      "args": [
+        "run",
+        "--no-sync",
+        "rf-mcp"
+      ],
+      "tools": [
+        "*"
+      ],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    }
+  }
+}

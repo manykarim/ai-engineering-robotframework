@@ -4,7 +4,7 @@
     "preToolUse": [
       {
         "type": "command",
-        "matcher": "^(create|edit)$",
+        "matcher": "^(create|edit|apply_patch)$",
         "bash": "uv run --no-sync python hooks/no_inline_locators.py",
         "powershell": "uv run --no-sync python hooks/no_inline_locators.py"
       },
@@ -18,7 +18,7 @@
     "postToolUse": [
       {
         "type": "command",
-        "matcher": "^(create|edit)$",
+        "matcher": "^(create|edit|apply_patch)$",
         "bash": "uv run --no-sync python hooks/run_affected_tests.py",
         "powershell": "uv run --no-sync python hooks/run_affected_tests.py",
         "timeoutSec": 300

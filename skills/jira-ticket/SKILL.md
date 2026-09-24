@@ -27,7 +27,7 @@ Without all four, the script runs as a dry run: it prints the issue it would fil
 1. **Collect the evidence from the run**, not from memory:
 
    ```bash
-   uv run robotcode results
+   uv run robotcode results show --failed
    ```
 
    Note the failing test, its message, and the story criterion in its name (`WEB-006_AC-1` means

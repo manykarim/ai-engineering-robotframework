@@ -5,7 +5,7 @@
   - `openspec validate --specs --strict` still passes.
 - [x] 1.2 Create the nine lab folders and `labs/README.md`, the index with module, time and preset (design D1, D2). Verify: `ls labs` shows exactly the nine folders of spec *One folder per lab*, plus `README.md`.
 - [x] 1.3 Copy the five story files (WEB-003, WEB-004, WEB-005, WEB-007, API-005) from demo-webshop at the pinned `v0.3.0` into `labs/lab-05-prompt-to-green/stories/`. Verify: each file is byte-identical to `git show v0.3.0:docs/user-stories/<file>` in demo-webshop, and no other story or `CONFORMANCE.md` is present.
-- [ ] 1.4 Write `tools/check_labs.py`, which checks the lab contract. Verify that it reports each of the following on a deliberately broken copy, and passes once the labs exist:
+- [x] 1.4 Write `tools/check_labs.py`, which checks the lab contract. Verify that it reports each of the following on a deliberately broken copy, and passes once the labs exist:
   - a missing folder or file;
   - a header table without module, time, preset, prerequisites or starting state;
   - a time budget that differs from the timetable (Labs 2-9 per spec *What every lab states up front*);
@@ -14,7 +14,7 @@
 
 ## 2. Lab assets
 
-- [ ] 2.1 Write `skills/template/` (`SKILL.md` and `scripts/check.py`) per design D5. Verify: copied into a scratch clone's skill folder for each agent, Claude Code, Codex and GitHub Copilot each list the skill; in Claude Code, a headless prompt that matches the description triggers it and an unrelated prompt does not.
+- [x] 2.1 Write `skills/template/` (`SKILL.md` and `scripts/check.py`) per design D5. Verify: copied into a scratch clone's skill folder for each agent, Claude Code, Codex and GitHub Copilot each list the skill; in Claude Code, a headless prompt that matches the description triggers it and an unrelated prompt does not.
 - [x] 2.2 Write `skills/jira-ticket/` (`SKILL.md` and `scripts/file_issue.py`). Verify:
   - without Jira settings, the script prints the issue it would file and names the missing settings;
   - with settings and without `--send`, it prints the request and sends nothing (checked with no network route);
@@ -24,26 +24,26 @@
   - an edit payload adding `Click    css=button.buy` to a test file is rejected, in the input shape of each of the three agents;
   - `green_before_commit.py` blocks with a missing, a stale and a red `results/output.xml`, and allows a fresh green one, a run whose only failures are `broken`, and any command that is not `git commit`;
   - `run_affected_tests.py` runs `tests/ui/checkout.robot` for a change to `resources/checkout.resource`, and reports the verdict.
-- [ ] 2.4 Write `hooks/README.md` with the wiring for Claude Code, Codex and GitHub Copilot. Verify: in a scratch clone, each hook fires once in each agent - an inline-locator edit is rejected, an affected run is reported, a commit after a red run is blocked - and the observed behaviour is recorded in `docs/facilitator/rehearsal.md`.
-- [ ] 2.5 Write the writer, reviewer and runner subagents in `agents/claude-code/`, `agents/copilot/` and `agents/codex/`, and `agents/README.md` with where each agent loads them. Verify: each agent lists the three; asked to change a file, the reviewer makes no change and reports a finding, in Claude Code and one other agent.
-- [ ] 2.6 Write `mcp/README.md` with the `mcp add` command per agent and the snippets `mcp/claude-code.mcp.json`, `mcp/codex.toml` and `mcp/copilot.json`. Verify:
+- [x] 2.4 Write `hooks/README.md` with the wiring for Claude Code, Codex and GitHub Copilot. Verify: in a scratch clone, each hook fires once in each agent - an inline-locator edit is rejected, an affected run is reported, a commit after a red run is blocked - and the observed behaviour is recorded in `docs/facilitator/rehearsal.md`.
+- [x] 2.5 Write the writer, reviewer and runner subagents in `agents/claude-code/`, `agents/copilot/` and `agents/codex/`, and `agents/README.md` with where each agent loads them. Verify: each agent lists the three; asked to change a file, the reviewer makes no change and reports a finding, in Claude Code and one other agent.
+- [x] 2.6 Write `mcp/README.md` with the `mcp add` command per agent and the snippets `mcp/claude-code.mcp.json`, `mcp/codex.toml` and `mcp/copilot.json`. Verify:
   - each agent lists the server as connected;
   - in Claude Code with the shared profile and a throwaway space, a page opened through the server via `resources/shop.resource` reports that space;
   - the snippets contain no secret and no space name.
-- [ ] 2.7 Pin the third-party plugins (design D5), and add both to `SETUP.md` with their versions. Verify:
+- [x] 2.7 Pin the third-party plugins (design D5), and add both to `SETUP.md` with their versions. Verify:
   - `uvx rf-agentskills@0.6.0 install --agent claude-code --scope project --project <clone>` writes only inside the clone, and the installed skills report content `v1.2.0`;
   - the RobotCode plugin installs from its marketplace in Claude Code, at the recorded commit where a ref is supported;
   - `setup-check`'s guide references still resolve.
 
 ## 3. Labs
 
-- [ ] 3.1 Write Lab 0 (`lab-00-arrival`). Verify: `tools/check_labs.py` passes for it, and its done criteria match a fresh run: `setup-check` green, and exactly the two `broken` tests fail.
-- [ ] 3.2 Write Lab 2 (`lab-02-context`): the `AGENTS.md` checklist, the split into a referenced file, the before/after prompt, and the nested `tests/api/AGENTS.md` stretch. Verify: `check_labs.py` passes, and the checklist keeps the result within the agent-context rules (one context file, no secrets).
-- [ ] 3.3 Write Lab 3 (`lab-03-skills`): the RF Agent Skills install, the before/after prompt, and the convention skill from `skills/template/` with trigger and no-trigger prompts. The stretch goal bundles the helper script. Verify: `check_labs.py` passes.
-- [ ] 3.4 Write Lab 4 (`lab-04-robotcode`): the plugin install, a discovery and a libdoc question, step-debugging the Module 4 broken test, and a REPL exploration with a visible browser. The stretch goal is a results query by tag. Verify: `check_labs.py` passes, and the lab names the broken test and the tool but not the cause.
-- [ ] 3.5 Write Lab 5 (`lab-05-prompt-to-green`): the story choice with the slices of design D3, propose, the pair review with its checklist, apply, run and refine, conversational debugging of the Module 5 broken test, WEB-007 as swap-in, and the API-005 stretch goal. Include the per-agent command table. Verify: `check_labs.py` passes, and no step needs an MCP server.
-- [ ] 3.6 Write Lab 6 (`lab-06-mcp`): connect rf-mcp from `mcp/`, rebuild one Module 5 test stepwise, and compare. The stretch goal changes the page mid-session. Verify: `check_labs.py` passes.
-- [ ] 3.7 Write Lab 7 (`lab-07-hooks-toolbelt`):
+- [x] 3.1 Write Lab 0 (`lab-00-arrival`). Verify: `tools/check_labs.py` passes for it, and its done criteria match a fresh run: `setup-check` green, and exactly the two `broken` tests fail.
+- [x] 3.2 Write Lab 2 (`lab-02-context`): the `AGENTS.md` checklist, the split into a referenced file, the before/after prompt, and the nested `tests/api/AGENTS.md` stretch. Verify: `check_labs.py` passes, and the checklist keeps the result within the agent-context rules (one context file, no secrets).
+- [x] 3.3 Write Lab 3 (`lab-03-skills`): the RF Agent Skills install, the before/after prompt, and the convention skill from `skills/template/` with trigger and no-trigger prompts. The stretch goal bundles the helper script. Verify: `check_labs.py` passes.
+- [x] 3.4 Write Lab 4 (`lab-04-robotcode`): the plugin install, a discovery and a libdoc question, step-debugging the Module 4 broken test, and a REPL exploration with a visible browser. The stretch goal is a results query by tag. Verify: `check_labs.py` passes, and the lab names the broken test and the tool but not the cause.
+- [x] 3.5 Write Lab 5 (`lab-05-prompt-to-green`): the story choice with the slices of design D3, propose, the pair review with its checklist, apply, run and refine, conversational debugging of the Module 5 broken test, WEB-007 as swap-in, and the API-005 stretch goal. Include the per-agent command table. Verify: `check_labs.py` passes, and no step needs an MCP server.
+- [x] 3.6 Write Lab 6 (`lab-06-mcp`): connect rf-mcp from `mcp/`, rebuild one Module 5 test stepwise, and compare. The stretch goal changes the page mid-session. Verify: `check_labs.py` passes.
+- [x] 3.7 Write Lab 7 (`lab-07-hooks-toolbelt`):
   - wire two hooks from `hooks/`;
   - apply `buggy`, run the suite, and file one defect with `gh` from the run's evidence, in the participant's fork;
   - stretch A: writer then reviewer;
@@ -51,12 +51,12 @@
   - reset the space.
 
   Verify: `check_labs.py` passes, and the lab names no defect.
-- [ ] 3.8 Write Lab 8 (`lab-08-healing`): apply `drift_and_bug`, run with `-p heal`, and triage each heal. Include the no-model path of design D4 and the agentic stretch goal, and reset the space. Verify: `check_labs.py` passes.
-- [ ] 3.9 Write Lab 9 (`lab-09-ci`) against the workflow contract of `ci-and-site`'s proposal: enable the workflow on the fork, push a break, open a PR, and read the triage comment; the no-key fallback; and the heal-suggestion stretch goal. Verify: `check_labs.py` passes, and the lab says its workflows arrive with `ci-and-site`.
+- [x] 3.8 Write Lab 8 (`lab-08-healing`): apply `drift_and_bug`, run with `-p heal`, and triage each heal. Include the no-model path of design D4 and the agentic stretch goal, and reset the space. Verify: `check_labs.py` passes.
+- [x] 3.9 Write Lab 9 (`lab-09-ci`) against the workflow contract of `ci-and-site`'s proposal: enable the workflow on the fork, push a break, open a PR, and read the triage comment; the no-key fallback; and the heal-suggestion stretch goal. Verify: `check_labs.py` passes, and the lab says its workflows arrive with `ci-and-site`.
 
 ## 4. Facilitation
 
-- [ ] 4.1 Write `GLOSSARY.md`, grouped by the five tiers. Verify:
+- [x] 4.1 Write `GLOSSARY.md`, grouped by the five tiers. Verify:
   - every term in the list of spec *A glossary* is defined, and every glossary link in the labs resolves to an entry (`check_labs.py` checks the anchors);
   - the file is under 1,800 words (about ten minutes).
 - [ ] 4.2 Write `docs/environments.md`: the local shop, the shared instance, no Docker, and the agent choice with where the labs differ. Verify: every lab difference named in a per-agent table of Labs 3-7 appears in it.

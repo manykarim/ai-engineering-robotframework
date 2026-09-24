@@ -4,7 +4,7 @@ Claude Code, Codex and GitHub Copilot each pass a JSON object on stdin, in their
 
     Claude Code  {"tool_name": "Write"|"Edit"|"MultiEdit"|"Bash", "tool_input": {...}}
     Codex        {"tool_name": "apply_patch"|"Bash", "tool_input": {"command": <patch or shell>}}
-    Copilot      {"toolName": "create"|"edit"|"bash", "toolArgs": {...}}
+    Copilot      {"toolName": "create"|"edit"|"apply_patch"|"bash", "toolArgs": {...} or <patch>}
 
 read_call() turns any of them into a Call; deny() and report() answer in the way the sending
 agent understands. Input that cannot be read lets the action through, with a warning: a
@@ -81,6 +81,9 @@ def parse(payload: dict) -> Call:
     cwd = payload.get("cwd") or os.getcwd()
     if "toolName" in payload:  # GitHub Copilot
         tool, args = payload["toolName"], payload.get("toolArgs") or {}
+        if tool == "apply_patch":  # GPT models edit through patches; the arguments are the patch itself
+            patch = args if isinstance(args, str) else args.get("input") or args.get("patch") or args.get("command") or ""
+            return Call("copilot", "edit", _patch_edits(patch, cwd))
         if isinstance(args, str):
             args = json.loads(args)
         path = _relative(args.get("path", ""), cwd)
