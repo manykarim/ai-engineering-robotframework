@@ -30,7 +30,7 @@ The curriculum exists only as the master preparation document. Participants need
   - Labs 2-4 spot-checked with a second agent.
   - The two checks carried over from `workshop-foundation`:
     - the toolchain on macOS 13+ on Apple silicon (its task 1.4);
-    - Codex and GitHub Copilot loading `AGENTS.md` (its task 4.1).
+    - GitHub Copilot loading `AGENTS.md` (its task 4.1; Claude Code and Codex are verified).
 
 ## Capabilities
 
