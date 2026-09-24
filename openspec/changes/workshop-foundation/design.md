@@ -101,7 +101,7 @@ OpenSpec 1.13.1 is published only to npm and requires Node 20.19 or newer, and M
 
 ### D9. `setup-check`
 
-`uv run python setup-check/check.py` is one file, following the master document's layout, and uses only the standard library and locked packages. Because uv must exist to run it at all, `SETUP.md`'s first step installs uv, and the check only reports uv's version.
+`uv run --no-sync python setup-check/check.py` is one file, following the master document's layout. `--no-sync` is essential: plain `uv run` repairs the environment before running (measured: a hand-installed Robot Framework 7.4 was silently replaced by 7.5), which would hide exactly the drift the check exists to find and break its read-only promise. The locked-environment check asks `uv sync --locked --dry-run`, which names both versions of every mismatch and lets the lock stay the single source. The file and uses only the standard library and locked packages. Because uv must exist to run it at all, `SETUP.md`'s first step installs uv, and the check only reports uv's version.
 
 | Check | Severity | Module | How |
 |---|---|---|---|
@@ -124,7 +124,7 @@ OpenSpec 1.13.1 is published only to npm and requires Node 20.19 or newer, and M
 | healing endpoint | warn | M8 | `HEAL_*` settings present or absent, values never shown |
 | platform | warn | - | inside the tested set (D4) |
 
-The output is a human-readable table (pass, warn, fail, skip), plus `--json` for the setup-problem template and `--offline` to skip network checks. The exit status is non-zero on any failure. Secret settings are reported by name only, and a task proves it with a planted fake key. The exact marker that tells an `rfbrowser init` installation apart from a batteries-only one is determined against both flows during implementation, and recorded in the check.
+The output is a human-readable table (pass, warn, fail, skip), plus `--json` for the setup-problem template and `--offline` to skip network checks. The exit status is non-zero on any failure. Secret settings are reported by name only, and a task proves it with a planted fake key. Measured against both flows: batteries alone leave exactly one entry in `Browser/wrapper/node_modules` (`playwright-core`, holding the browsers), while `rfbrowser init` adds some sixty Node packages (`@grpc`, `playwright`, ...); any extra entry is the marker. `rfbrowser clean-node` removes the browsers too, so the printed fix is `clean-node` followed by `install chromium`. The check sends its own User-Agent: the CDN in front of the shared instance answers 403 to Python's default `Python-urllib` agent.
 
 ### D10. Agent context and OpenSpec
 

@@ -34,6 +34,11 @@ SPACE_HEADER = "X-Workshop-Space"
 
 SPACE_FORMAT = "1 to 39 letters, digits or single hyphens, not starting or ending with a hyphen"
 
+#: Sent by the repository's own HTTP clients. The CDN in front of the shared
+#: instance answers 403 to Python's default ``Python-urllib`` agent (measured);
+#: requests, httpx, curl and browsers are let through, so tests are unaffected.
+USER_AGENT = "ai-engineering-robotframework"
+
 
 @dataclass(frozen=True)
 class ShopSettings:

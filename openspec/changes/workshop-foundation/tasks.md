@@ -12,7 +12,7 @@
 
 ## 2. Shop access
 
-- [ ] 2.1 Add `shop/compose.yaml` (design D7), pinned to the newest demo-webshop `X.Y.Z` tag at implementation time, never `edge` or `sha-`, on port 9090 with no volume. Verify:
+- [x] 2.1 Add `shop/compose.yaml` (design D7), pinned to the newest demo-webshop `X.Y.Z` tag at implementation time, never `edge` or `sha-`, on port 9090 with no volume. Verify:
   - after `docker compose -f shop/compose.yaml up -d`, `http://localhost:9090/health` reports that version;
   - after placing an order, `up -d --force-recreate` leaves no runtime order;
   - searching the repository for `demo-webshop:` finds this file as the only tag reference.
@@ -30,8 +30,8 @@
 
 ## 3. setup-check
 
-- [ ] 3.1 Implement `setup-check/check.py` with the checks, severities and modules of design D9. It reads expected versions only from `uv.lock`, `[tool.workshop]` and `shop/compose.yaml`. Verify: on a correctly prepared machine, every check passes or warns and the exit status is 0. On a copy of the repository, changing a pin in its source changes the expectation without any edit to `check.py`.
-- [ ] 3.2 Stage each known pitfall on its own and restore the environment after each one. Verify that each is reported with its fix and setup guide reference:
+- [x] 3.1 Implement `setup-check/check.py` with the checks, severities and modules of design D9. It reads expected versions only from `uv.lock`, `[tool.workshop]` and `shop/compose.yaml`. Verify: on a correctly prepared machine, every check passes or warns and the exit status is 0. On a copy of the repository, changing a pin in its source changes the expectation without any edit to `check.py`.
+- [x] 3.2 Stage each known pitfall on its own and restore the environment after each one. Verify that each is reported with its fix and setup guide reference:
   - Robot Framework 7.4 installed into the environment fails, naming both versions;
   - `rfbrowser init` run on top of the batteries package fails and prints the removal command. Record the exact marker that tells the two installs apart in the check;
   - browsers missing after `.venv` is recreated fail with the install command;
@@ -40,8 +40,8 @@
   - the shared URL without a space fails;
   - space `-bad--name-` fails with the format;
   - a missing Azure CLI warns while the exit status stays 0.
-- [ ] 3.3 Add `--json` and `--offline`. Verify: with a planted `HEAL_API_KEY=sk-test-DO-NOT-LEAK`, both the text and the JSON output report the key as present and neither contains the value. `--offline` without network access reports the network checks as skipped, and the exit status reflects only the local checks.
-- [ ] 3.4 Confirm the check is read-only. Verify: `git status`, `docker ps -a` and the environment's list of installed distributions are identical before and after a full run.
+- [x] 3.3 Add `--json` and `--offline`. Verify: with a planted `HEAL_API_KEY=sk-test-DO-NOT-LEAK`, both the text and the JSON output report the key as present and neither contains the value. `--offline` without network access reports the network checks as skipped, and the exit status reflects only the local checks.
+- [x] 3.4 Confirm the check is read-only. Verify: `git status`, `docker ps -a` and the environment's list of installed distributions are identical before and after a full run.
 
 ## 4. Agent context
 

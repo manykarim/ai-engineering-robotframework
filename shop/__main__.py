@@ -20,7 +20,7 @@ import time
 import urllib.error
 import urllib.request
 
-from shop.config import load
+from shop.config import USER_AGENT, load
 
 TIMEOUT = 15
 
@@ -31,7 +31,7 @@ class ShopError(Exception):
 
 def request(settings, method: str, path: str, body: dict | None = None) -> dict:
     data = None if body is None else json.dumps(body).encode()
-    headers = {"Accept": "application/json", "User-Agent": "workshop-shop-helper", **settings.headers()}
+    headers = {"Accept": "application/json", "User-Agent": USER_AGENT, **settings.headers()}
     if data is not None:
         headers["Content-Type"] = "application/json"
     req = urllib.request.Request(settings.url + path, data=data, method=method, headers=headers)
