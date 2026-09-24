@@ -50,8 +50,10 @@
   - the file names none of the conventions or RobotCode habits taught in Labs 2 to 4;
   - Claude Code started in the repository root shows the content of `AGENTS.md` in its loaded memory;
   - Codex and GitHub Copilot each load `AGENTS.md`. Should Copilot not, add a pointer-only `.github/copilot-instructions.md` and check again.
-- [ ] 4.2 Generate the OpenSpec integrations with `openspec init --tools claude,codex,github-copilot` at OpenSpec `1.13.1`, and commit the generated files. Verify: `openspec --version` prints `1.13.1`, and each of the three tools offers explore, propose, apply and archive.
-- [ ] 4.3 Add the namespace `context` and the `rules.specs` neutrality rule, scoped to `shop/*`, to `openspec/config.yaml` (design D10). Verify: `openspec instructions specs --change workshop-foundation --json` returns both the context and the rule, and `openspec validate --all --strict` passes.
+- [x] 4.2 Generate the OpenSpec integrations with `openspec init --tools claude,codex,github-copilot` at OpenSpec `1.13.1`, and commit the generated files. Verify: `openspec --version` prints `1.13.1`, and each of the three tools offers explore, propose, apply and archive.
+- [x] 4.3 Add the namespace `context` and the `rules.specs` neutrality rule, scoped to `shop/*`, to `openspec/config.yaml` (design D10). Verify: `openspec instructions specs --change workshop-foundation --json` returns both the context and the rule, and `openspec validate --all --strict` passes.
+
+  **Done 2026-09-24.** The context and the neutrality rule are both returned by `openspec instructions specs`. `openspec validate --all --strict` reports 2 passed, 3 failed: the failures are `baseline-suite`, `workshop-labs` and `ci-and-site`, which are proposal-only by decision and have no spec deltas yet. This is expected until they are detailed, and unrelated to the configuration. Both complete changes, `workshop-foundation` and `shop-specs`, pass `--strict`.
 - [ ] 4.4 Check secret hygiene. Verify:
   - a secret scan (gitleaks or equivalent) over the tracked tree finds nothing;
   - `git check-ignore .env` confirms the maintainer's local `.env`, which holds deployment tokens, is ignored;
@@ -59,9 +61,9 @@
 
 ## 5. Documents
 
-- [ ] 5.1 Rewrite `README.md` with the five-command quickstart and the link to `SETUP.md` (design D11). Verify: the quickstart matches the setup guide command for command.
-- [ ] 5.2 Write `SETUP.md` with every section design D11 lists, including a version-bump procedure that names the files to change together. Verify: every prerequisite carries a minimum version and a first module, and every setup guide reference printed by `setup-check` resolves to an existing heading, checked programmatically.
-- [ ] 5.3 Add `.env.example` and extend `.gitignore` (design D11). Verify: `.env.example` contains names without values, and `git check-ignore` confirms that Robot Framework output files, a healing report directory and `node_modules/` are ignored.
+- [x] 5.1 Rewrite `README.md` with the five-command quickstart and the link to `SETUP.md` (design D11). Verify: the quickstart matches the setup guide command for command.
+- [x] 5.2 Write `SETUP.md` with every section design D11 lists, including a version-bump procedure that names the files to change together. Verify: every prerequisite carries a minimum version and a first module, and every setup guide reference printed by `setup-check` resolves to an existing heading, checked programmatically.
+- [x] 5.3 Add `.env.example` and extend `.gitignore` (design D11). Verify: `.env.example` contains names without values, and `git check-ignore` confirms that Robot Framework output files, a healing report directory and `node_modules/` are ignored.
 
 ## 6. Clean-room verification and close-out
 

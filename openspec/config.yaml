@@ -1,32 +1,25 @@
 schema: spec-driven
+githubCopilot:
+  cloudAgent: false
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+# Shown to every agent that creates an OpenSpec artifact in this repository.
+context: |
+  This is the participant repository of the workshop "Agentic Engineering with
+  Robot Framework". The system under test is the demo shop, which runs from a
+  published image (shop/compose.yaml); its source is not in this repository.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  Specs live in two namespaces:
+  - shop/*      What the demo shop does, as a shopper or an API consumer experiences
+                it. This is the reference for writing tests. Every requirement names
+                its acceptance criterion as <STORY>_<AC>, and shop/interpretation-rules
+                says how quoted text, labels and error messages are matched.
+  - workshop/*  What this repository itself guarantees: toolchain, setup-check, shop
+                access, agent context. Maintainers need it; tests never do.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+rules:
+  specs:
+    - >-
+      Requirements under shop/* describe correct behaviour only. They never name a
+      feature flag, a locator stage, a planted bug, a locator (ids, classes,
+      data-test hooks) or the purpose of a check. Visible texts and accessible
+      names are allowed. This rule applies to shop/* only, not to workshop/*.

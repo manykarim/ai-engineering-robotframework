@@ -1,2 +1,19 @@
-# Local secrets (Coolify API token and similar); never commit.
+# Local settings and secrets: API keys, deployment tokens. Never commit.
 .env
+
+# The project environment (uv sync --locked); the browsers live inside it.
+.venv/
+__pycache__/
+*.pyc
+
+# Robot Framework output: robot.toml writes to results/, which also holds the
+# healing reports (results/heal/) and Browser Library's traces.
+results/
+output.xml
+log.html
+report.html
+playwright-log.txt
+browser/
+
+# Documentation site (ci-and-site).
+node_modules/
