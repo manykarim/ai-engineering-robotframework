@@ -12,6 +12,8 @@
 
   **Windows x64 verified 2026-09-24; macOS outstanding.** The check ran in an isolated temp folder with a standalone uv 0.8.15, with the uv cache and Python installs redirected into that folder, so nothing touched the machine's own uv: `uv sync --locked` exit 0, `rfbrowser install chromium` exit 0, and a headless session PASS. The machine's installed uv 0.6.17 was refused cleanly with "Required uv version `>=0.8.15` does not match the running version `0.6.17`", which is why `SETUP.md` says `uv self update`. Outstanding: the same three steps on macOS 13 or newer on Apple silicon.
 
+  **Carried over at archive (2026-09-24), by decision.** Archived unticked. The macOS check belongs to `workshop-labs`' dry-run gate, which needs a clean Mac anyway.
+
 ## 2. Shop access
 
 - [x] 2.1 Add `shop/compose.yaml` (design D7), pinned to the newest demo-webshop `X.Y.Z` tag at implementation time, never `edge` or `sha-`, on port 9090 with no volume. Verify:
@@ -54,6 +56,9 @@
   - the file names none of the conventions or RobotCode habits taught in Labs 2 to 4;
   - Claude Code started in the repository root shows the content of `AGENTS.md` in its loaded memory;
   - Codex and GitHub Copilot each load `AGENTS.md`. Should Copilot not, add a pointer-only `.github/copilot-instructions.md` and check again.
+
+  **Carried over at archive (2026-09-24), by decision.** After `codex login`, Codex authenticates ("Logged in using ChatGPT"), but every request is rejected with HTTP 400: the local Codex CLI 0.87.0 pins `gpt-5.2-codex`, and neither that nor `gpt-5-codex` or `gpt-5` is accepted for a ChatGPT-account sign-in. The fix is on the maintainer's side: a current Codex CLI (a bare-machine run installed 0.156.1) and/or another `model` in `~/.codex/config.toml`. The checks for Codex and Copilot belong to `workshop-labs`' second-agent spot check.
+
 - [x] 4.2 Generate the OpenSpec integrations with `openspec init --tools claude,codex,github-copilot` at OpenSpec `1.13.1`, and commit the generated files. Verify: `openspec --version` prints `1.13.1`, and each of the three tools offers explore, propose, apply and archive.
 - [x] 4.3 Add the namespace `context` and the `rules.specs` neutrality rule, scoped to `shop/*`, to `openspec/config.yaml` (design D10). Verify: `openspec instructions specs --change workshop-foundation --json` returns both the context and the rule, and `openspec validate --all --strict` passes.
 
@@ -80,4 +85,6 @@
   - `setup-check` reports no failure in shared mode, with a throwaway test space that is reset afterwards;
   - it also reports no failure in local mode against the shop started from `shop/compose.yaml` on the host;
   - both outputs are recorded in the pull request.
-- [ ] 6.2 Validate and archive. Verify: `openspec validate workshop-foundation --strict` passes. After the merge, `openspec archive workshop-foundation -y` creates `openspec/specs/workshop/toolchain`, `setup-check`, `shop-access` and `agent-context` as main specs, each with its Purpose filled in.
+- [x] 6.2 Validate and archive. Verify: `openspec validate workshop-foundation --strict` passes. After the merge, `openspec archive workshop-foundation -y` creates `openspec/specs/workshop/toolchain`, `setup-check`, `shop-access` and `agent-context` as main specs, each with its Purpose filled in.
+
+  **Done 2026-09-24.** `openspec validate workshop-foundation --strict` passes. The sync created `openspec/specs/workshop/{toolchain,setup-check,shop-access,agent-context}/spec.md` with 30 requirements and every Purpose set, byte-identical to what `openspec archive` produces (checked against a trial archive in a scratch copy).
