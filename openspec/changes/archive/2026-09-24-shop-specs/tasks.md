@@ -22,4 +22,6 @@
 ## 2. Validate and archive
 
 - [x] 2.1 Confirm the rule reaches agents. Once `workshop-foundation` has added the namespaces and the neutrality rule to `openspec/config.yaml`, verify: `openspec instructions specs --change shop-specs --json` returns both, and `openspec validate shop-specs --strict` passes.
-- [ ] 2.2 Archive the change. Verify: `openspec archive shop-specs -y` creates `openspec/specs/shop/{interpretation-rules,catalogue,product-detail,search,cart,checkout,authentication}/spec.md`, each with its Purpose, and 77 requirements in total.
+- [x] 2.2 Archive the change. Verify: `openspec archive shop-specs -y` creates `openspec/specs/shop/{interpretation-rules,catalogue,product-detail,search,cart,checkout,authentication}/spec.md`, each with its Purpose, and 77 requirements in total.
+
+  **Done 2026-09-24.** The sync created the seven main specs under `openspec/specs/shop/` with 77 requirements and every Purpose set, byte-identical to what `openspec archive` produces (checked against a trial archive in a scratch copy). Each spec validates under `--strict`, and the neutrality scan of the main specs finds nothing.
