@@ -60,7 +60,13 @@ task* becomes a skill.
 
    > Review tests/ui/catalogue.robot against the conventions of this repository.
 
-   The session shows that your skill loaded (Claude Code prints `Skill(<name>)`). Did the review find anything?
+   The session shows that your skill loaded:
+
+   | Claude Code | Codex | GitHub Copilot |
+   |---|---|---|
+   | prints `Skill(<name>)` | reads your skill's `SKILL.md` | names the skill it invokes |
+
+   Did the review find anything?
 
 8. **Check that it stays quiet.** A prompt about something else:
 

@@ -404,7 +404,7 @@ I moved the Environment section into `docs/agent-environment.md`. It has an `# E
 
 In `AGENTS.md`, the section (heading included) is now just your line, right under the intro: "Before installing anything or running tests, read docs/agent-environment.md." That brings `AGENTS.md` down to 31 lines. `CLAUDE.md` still contains only `@AGENTS.md`, and I haven't committed anything.
 
-The line is plain text rather than a Markdown link, as you worded it. That's fine for agents, which read the path either way. If you'd like it clickable when viewed on GitHub, I can change it to `[docs/agent-environment.md](docs/agent-environment.md)`, matching the conventions line.
+The line is plain text rather than a Markdown link, as you worded it. That's fine for agents, which read the path either way. If you'd like it clickable when viewed on GitHub, I can change it to ``docs/agent-environment.md``, matching the conventions line.
 
 Next in the lab is step 5: start a new session and check that `/memory` lists `AGENTS.md` through `CLAUDE.md`.
 

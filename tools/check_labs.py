@@ -112,7 +112,8 @@ def check_lab(root: Path, folder: str, spec: tuple[str, int, str]) -> list[str]:
 def check_links(root: Path, path: Path, pending: bool) -> list[str]:
     problems = []
     rel = path.relative_to(root).as_posix()
-    for target in LINK.findall(path.read_text(encoding="utf-8")):
+    text = re.sub(r"^```.*?^```", "", path.read_text(encoding="utf-8"), flags=re.M | re.S)  # code shows, never links
+    for target in LINK.findall(text):
         if re.match(r"[a-z]+:", target) or target.startswith("#"):
             continue
         file_part, _, anchor = target.partition("#")

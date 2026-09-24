@@ -40,6 +40,7 @@ The labs give a table wherever the agents differ. Here are all those differences
 | 2: check the context loads | `/memory` | reads `AGENTS.md` on start | `copilot instruction list` |
 | 3: Robot Framework Agent Skills | `--agent claude-code`, into `.claude/skills/` | `--agent codex`, into `.agents/skills/` | `--agent copilot`, into `.claude/skills/`, which Copilot also reads |
 | 3: your own skill | `.claude/skills/<name>/` | `.agents/skills/<name>/` | `.github/skills/<name>/` |
+| 3: a skill loads | prints `Skill(<name>)` | reads the skill's `SKILL.md` | names the skill it invokes |
 | 4: RobotCode plugin | `claude plugin marketplace add --scope project ...`, `claude plugin install --scope project robotcode@robotframework-agent-plugins`, recorded in `.claude/settings.json` | `codex plugin marketplace add ...`, `codex plugin add robotcode@robotframework-agent-plugins` | `copilot plugin marketplace add ...`, `copilot plugin install robotcode@robotframework-agent-plugins` |
 | 6: MCP server | `.mcp.json`, approve it on first start, `/mcp` | `.codex/config.toml`, approve each tool call or allow them all | `.github/mcp.json`, in a trusted folder, `copilot mcp list` |
 | 7: hooks | `.claude/settings.json`, merged with the plugin entry of Lab 4 | `.codex/hooks.json`, trust them when asked | `.github/hooks/workshop.json`, in a trusted folder |

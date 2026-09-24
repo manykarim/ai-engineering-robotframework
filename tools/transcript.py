@@ -55,6 +55,11 @@ def quote(text: str) -> str:
     return "\n".join("> " + line if line.strip() else ">" for line in text.strip().splitlines())
 
 
+def plain_links(text: str) -> str:
+    """An agent's Markdown links to local files as code: they would not resolve where the transcript lives."""
+    return re.sub(r"(?<!!)\[([^\]]+)\]\((?![a-z]+:)[^)\s]+\)", lambda m: m.group(1) if m.group(1).startswith("`") else f"`{m.group(1)}`", text)
+
+
 def tool_input(name: str, data: dict) -> str:
     """One line for what a tool call does."""
     if name == "Bash":
@@ -99,7 +104,7 @@ def render(paths: list[Path], title: str, agent: str) -> tuple[str, dict]:
             elif kind == "assistant":  # Claude Code
                 for part in event.get("message", {}).get("content", []):
                     if part.get("type") == "text" and part.get("text", "").strip():
-                        out += ["**Agent:**", "", part["text"].strip(), ""]
+                        out += ["**Agent:**", "", plain_links(part["text"].strip()), ""]
                     elif part.get("type") == "tool_use":
                         pending[part.get("id", "")] = part.get("name", "")
                         out += [f"*The agent {tool_input(part.get('name', ''), part.get('input') or {})}*", ""]
@@ -124,7 +129,7 @@ def render(paths: list[Path], title: str, agent: str) -> tuple[str, dict]:
                 item = event.get("item") or {}
                 it = item.get("type")
                 if it == "agent_message":
-                    out += ["**Agent:**", "", item.get("text", "").strip(), ""]
+                    out += ["**Agent:**", "", plain_links(item.get("text", "").strip()), ""]
                 elif it == "command_execution":
                     out += [f"*The agent runs* `{item.get('command', '')}` *(exit {item.get('exit_code')})*", "",
                             fence(short(item.get("aggregated_output", ""))), ""]
