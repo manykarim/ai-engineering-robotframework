@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^apply_patch$",
+        "hooks": [{"type": "command", "command": "uv run --no-sync python hooks/no_inline_locators.py", "statusMessage": "Checking for inline locators"}]
+      },
+      {
+        "matcher": "^Bash$",
+        "hooks": [{"type": "command", "command": "uv run --no-sync python hooks/green_before_commit.py"}]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^apply_patch$",
+        "hooks": [{"type": "command", "command": "uv run --no-sync python hooks/run_affected_tests.py", "timeout": 300, "statusMessage": "Running the affected tests"}]
+      }
+    ]
+  }
+}

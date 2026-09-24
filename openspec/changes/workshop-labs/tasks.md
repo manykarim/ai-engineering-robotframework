@@ -1,10 +1,10 @@
 ## 1. Namespace and scaffolding
 
-- [ ] 1.1 Add the `suite/*` namespace to `openspec/config.yaml` (design D3): the context describes three namespaces and says a change that adds tests writes to `suite/<area>`, and a spec rule says `suite/*` requirements name the `<STORY>_<AC>` they verify and never a locator or keyword. Verify:
+- [x] 1.1 Add the `suite/*` namespace to `openspec/config.yaml` (design D3): the context describes three namespaces and says a change that adds tests writes to `suite/<area>`, and a spec rule says `suite/*` requirements name the `<STORY>_<AC>` they verify and never a locator or keyword. Verify:
   - `openspec instructions specs --change workshop-labs --json` returns a context naming `shop/*`, `suite/*` and `workshop/*`, and the new rule beside the `shop/*` rule;
   - `openspec validate --specs --strict` still passes.
-- [ ] 1.2 Create the nine lab folders and `labs/README.md`, the index with module, time and preset (design D1, D2). Verify: `ls labs` shows exactly the nine folders of spec *One folder per lab*, plus `README.md`.
-- [ ] 1.3 Copy the five story files (WEB-003, WEB-004, WEB-005, WEB-007, API-005) from demo-webshop at the pinned `v0.3.0` into `labs/lab-05-prompt-to-green/stories/`. Verify: each file is byte-identical to `git show v0.3.0:docs/user-stories/<file>` in demo-webshop, and no other story or `CONFORMANCE.md` is present.
+- [x] 1.2 Create the nine lab folders and `labs/README.md`, the index with module, time and preset (design D1, D2). Verify: `ls labs` shows exactly the nine folders of spec *One folder per lab*, plus `README.md`.
+- [x] 1.3 Copy the five story files (WEB-003, WEB-004, WEB-005, WEB-007, API-005) from demo-webshop at the pinned `v0.3.0` into `labs/lab-05-prompt-to-green/stories/`. Verify: each file is byte-identical to `git show v0.3.0:docs/user-stories/<file>` in demo-webshop, and no other story or `CONFORMANCE.md` is present.
 - [ ] 1.4 Write `tools/check_labs.py`, which checks the lab contract. Verify that it reports each of the following on a deliberately broken copy, and passes once the labs exist:
   - a missing folder or file;
   - a header table without module, time, preset, prerequisites or starting state;
@@ -15,11 +15,11 @@
 ## 2. Lab assets
 
 - [ ] 2.1 Write `skills/template/` (`SKILL.md` and `scripts/check.py`) per design D5. Verify: copied into a scratch clone's skill folder for each agent, Claude Code, Codex and GitHub Copilot each list the skill; in Claude Code, a headless prompt that matches the description triggers it and an unrelated prompt does not.
-- [ ] 2.2 Write `skills/jira-ticket/` (`SKILL.md` and `scripts/file_issue.py`). Verify:
+- [x] 2.2 Write `skills/jira-ticket/` (`SKILL.md` and `scripts/file_issue.py`). Verify:
   - without Jira settings, the script prints the issue it would file and names the missing settings;
   - with settings and without `--send`, it prints the request and sends nothing (checked with no network route);
   - `git grep` finds no Jira credential in the repository.
-- [ ] 2.3 Write the three hook scripts and their input-normalising module in `hooks/` (design D5). Verify, as plain commands:
+- [x] 2.3 Write the three hook scripts and their input-normalising module in `hooks/` (design D5). Verify, as plain commands:
   - `no_inline_locators.py tests/` on `main` reports exactly one finding;
   - an edit payload adding `Click    css=button.buy` to a test file is rejected, in the input shape of each of the three agents;
   - `green_before_commit.py` blocks with a missing, a stale and a red `results/output.xml`, and allows a fresh green one, a run whose only failures are `broken`, and any command that is not `git commit`;
@@ -57,7 +57,7 @@
 ## 4. Facilitation
 
 - [ ] 4.1 Write `GLOSSARY.md`, grouped by the five tiers. Verify:
-  - every term in the list of spec *A glossary* is defined, as is every term `check_labs.py` collects from the labs' bold terms;
+  - every term in the list of spec *A glossary* is defined, and every glossary link in the labs resolves to an entry (`check_labs.py` checks the anchors);
   - the file is under 1,800 words (about ten minutes).
 - [ ] 4.2 Write `docs/environments.md`: the local shop, the shared instance, no Docker, and the agent choice with where the labs differ. Verify: every lab difference named in a per-agent table of Labs 3-7 appears in it.
 - [ ] 4.3 Write `docs/facilitator/run-sheet.md`: one row per module with time, preset, demonstration, lab, fallback and overrun action; the cut order and the beginner plan; the preset commands for the room; the workshop-key procedure of design D4; and the Module 5 whiteboard template. Verify: the times equal the timetable, and every preset named matches its lab.
