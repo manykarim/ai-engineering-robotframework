@@ -25,7 +25,7 @@ The curriculum exists only as the master preparation document. Participants need
   - `transcripts/`: one recorded agent walkthrough per lab, captured during the dry-runs.
 - **A `solutions` branch** with reference solutions per lab in the same structure, produced during the dry-runs and never merged into `main`.
 - **Dry-run evidence as a gate**:
-  - every lab run end to end on a clean machine with the pinned stack;
+  - every lab run end to end on a clean machine with the pinned stack. Lab 9 is the exception: its workflows arrive with `ci-and-site`, which rehearses it;
   - Lab 5 run explicitly **without** MCP, as the master document demands;
   - Labs 2-4 spot-checked with a second agent.
   - The check carried over from `workshop-foundation`: the toolchain on macOS 13+ on Apple silicon (its task 1.4).
@@ -39,11 +39,12 @@ The curriculum exists only as the master preparation document. Participants need
 - `workshop/solutions`: the reference-solutions branch and its relationship to `main`.
 
 ### Modified Capabilities
-None.
+- `workshop/agent-context`: the spec namespaces gain `suite/*`, where participants' Module 5 changes write their specs, so that their work never mixes with `shop/*` or `workshop/*`.
 
 ## Impact
 
 - **New files**: `labs/`, `skills/`, `hooks/`, `agents/`, `mcp/`, `transcripts/`, `GLOSSARY.md`, `docs/environments.md`, `docs/facilitator/`; the `solutions` branch.
 - **Depends on** `workshop-foundation`, `shop-specs` and `baseline-suite`.
-- **Decides in its design** which spec namespace participants' Module 5 changes write to, so their work never mixes with `shop/*` or `workshop/*`.
+- **Changes** `openspec/config.yaml`, whose context gains the `suite/*` namespace, and `SETUP.md`, which names the versions of the agent plugin and skills the labs install.
+- **Decides in its design** how Module 8 participants get a healing model.
 - **Not in scope**: workflows, issue templates and the documentation site (`ci-and-site`).
