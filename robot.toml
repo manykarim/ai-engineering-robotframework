@@ -2,6 +2,7 @@
 # (plain `robot` ignores this file), or pick a profile: `uv run robotcode -p shared robot`.
 
 python-path = ["."]
+paths = ["tests"]
 output-dir = "results"
 # Resolves ${SHOP_URL} and ${SHOP_SPACE} from the environment or .env.
 variable-files = ["shop/variables.py"]
@@ -16,3 +17,12 @@ extend-env = { SHOP_PROFILE = "local" }
 [profiles.shared]
 description = "The shared workshop instance. Requires SHOP_SPACE, your GitHub handle."
 extend-env = { SHOP_PROFILE = "shared" }
+
+[profiles.heal]
+description = "Attach robotframework-heal to the unmodified suite: every heal becomes a proposal in results/heal/."
+extend-listeners = { "Heal" = [] }
+# Written out although they are the defaults: fixes are proposals only, and a
+# failing assertion is never healed away. The time budget per failure is doubled
+# from heal's 60 s, so that a slow or busy model endpoint does not turn a healable
+# failure into an unhealed one.
+extend-env = { HEAL_FIX_TIER = "report", HEAL_HEAL_ASSERTIONS = "false", HEAL_MAX_FAILURE_SECONDS = "120" }

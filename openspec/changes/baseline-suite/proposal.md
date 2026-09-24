@@ -34,7 +34,7 @@ None.
 
 ## Impact
 
-- **New files**: `tests/ui/`, `tests/api/`, `resources/`, `docs/conventions.md`, `docs/facilitator/suite-outcomes.yaml` and `.md` (the matrix, in the facilitator folder `workshop-labs` fills), `tools/verify_outcomes.py`, and the `paths` setting and `heal` profile in `robot.toml`.
+- **New files**: `tests/ui/`, `tests/api/`, `resources/`, `docs/conventions.md`, `docs/facilitator/suite-outcomes.toml` and `.md` (the matrix, in the facilitator folder `workshop-labs` fills), `tools/verify_outcomes.py`, and the `paths` setting and `heal` profile in `robot.toml`.
 - **Depends on** `workshop-foundation` (profiles, shop contract, pinned stack) and `shop-specs` (the requirements the tests verify).
 - **Consumed by** every lab from M0 to M9, and by `ci-and-site`.
 - **Not in scope**: the participants' own Module 5 tests, lab instructions, skills, hooks and workflows.
