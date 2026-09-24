@@ -20,8 +20,9 @@ decide.
    |---|---|---|
    | `cp hooks/claude-code.settings.json .claude/settings.json` | `mkdir -p .codex && cp hooks/codex.hooks.json .codex/hooks.json` | `mkdir -p .github/hooks && cp hooks/copilot.hooks.json .github/hooks/workshop.json` |
 
-   If the target file exists already, merge its `hooks` section by hand. Start a new session, and trust the
-   repository's hooks when your agent asks.
+   If the target file exists already, merge by hand instead of copying: add the `hooks` section of the provided file
+   to it. With Claude Code it usually exists, because Lab 4 recorded the plugin there. Start a new session, and
+   trust the repository's hooks when your agent asks.
 
 2. **Try them** with this prompt:
 

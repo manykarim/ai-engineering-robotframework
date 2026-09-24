@@ -19,8 +19,9 @@ involved.
 
    | Claude Code | Codex | GitHub Copilot |
    |---|---|---|
-   | `claude plugin marketplace add robotcodedev/robotframework-agent-plugins` | `codex plugin marketplace add robotcodedev/robotframework-agent-plugins` | `copilot plugin marketplace add robotcodedev/robotframework-agent-plugins` |
-   | `claude plugin install robotcode@robotframework-agent-plugins` | `codex plugin add robotcode@robotframework-agent-plugins` | `copilot plugin install robotcode@robotframework-agent-plugins` |
+   | `claude plugin marketplace add --scope project robotcodedev/robotframework-agent-plugins` | `codex plugin marketplace add robotcodedev/robotframework-agent-plugins` | `copilot plugin marketplace add robotcodedev/robotframework-agent-plugins` |
+   | `claude plugin install --scope project robotcode@robotframework-agent-plugins` | `codex plugin add robotcode@robotframework-agent-plugins` | `copilot plugin install robotcode@robotframework-agent-plugins` |
+   | recorded in `.claude/settings.json`, so your fork remembers it | installed for your user | installed for your user |
 
    Start a new session afterwards, so that the agent loads it.
 

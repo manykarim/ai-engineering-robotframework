@@ -110,7 +110,7 @@ give the commands. They are named here so that everyone gets the same versions:
 | What | Version | Lab | Installed |
 |---|---|---|---|
 | [Robot Framework Agent Skills](https://github.com/manykarim/robotframework-agentskills) | content `v1.2.0`, installer `rf-agentskills` 0.6.0 | 3 | into the repository, with `uvx rf-agentskills@0.6.0 install --agent <agent> --scope project --project . --what skills` |
-| The [RobotCode agent plugin](https://github.com/robotcodedev/robotframework-agent-plugins) `robotcode` | the marketplace at commit `7c753f8adca1` (2026-09-21) | 4 | from the marketplace, for your user |
+| The [RobotCode agent plugin](https://github.com/robotcodedev/robotframework-agent-plugins) `robotcode` | the marketplace at commit `7c753f8adca1` (2026-09-21) | 4 | from the marketplace: into the repository for Claude Code, for your user in Codex and GitHub Copilot |
 
 The plugin's marketplace publishes no versions, so you cannot pin it. `claude plugin list` shows the commit you
 installed. If it differs from the one above, the labs still work, but your agent's advice may differ in details from
