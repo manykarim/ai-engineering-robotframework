@@ -1,15 +1,16 @@
 """Check docs/facilitator/suite-outcomes.toml against the pinned shop (spec: workshop/baseline-suite).
 
-    uv run --no-sync python tools/verify_outcomes.py [--heal] [--preset NAME ...] [--data PATH]
+    uv run --no-sync python tools/verify_outcomes.py [--heal] [--preset NAME ...] [--data PATH] [--keep DIR]
 
 For every preset: apply it through the shop helper, run the unmodified suite with
 RobotCode, and compare the failing tests with the data. It works in whichever mode
 SHOP_URL and SHOP_SPACE select, and always resets the space when it finishes.
 Exits with status 1 on any difference.
 
---heal checks drift_and_bug with the heal profile instead. It needs a healing model
-(HEAL_MODEL or HEAL_LOCATOR_MODEL, in the environment or .env); without one,
-robotframework-heal skips healing and the check would prove nothing.
+--heal checks drift_and_bug with the heal profile instead, and leaves out the tests
+tagged broken, as Module 8 does. It needs a healing model (HEAL_MODEL or
+HEAL_LOCATOR_MODEL, in the environment or .env); without one, robotframework-heal
+skips healing and the check would prove nothing.
 """
 from __future__ import annotations
 
@@ -40,11 +41,11 @@ def helper(*args: str) -> None:
         raise SystemExit(f"verify-outcomes: `python -m shop {' '.join(args)}` failed: {done.stderr.strip()}")
 
 
-def run_suite(profiles: list[str], outdir: Path) -> tuple[set[str], set[str]]:
-    """Run the whole suite; return the names of the failed and the passed tests."""
+def run_suite(profiles: list[str], options: list[str], outdir: Path) -> tuple[set[str], set[str]]:
+    """Run the suite; return the names of the failed and the passed tests."""
     robotcode = shutil.which("robotcode", path=str(Path(sys.executable).parent)) or "robotcode"
-    subprocess.run([robotcode, *profiles, "robot", "--outputdir", str(outdir), "--report", "NONE", "--log", "NONE",
-                    "--console", "quiet"], cwd=ROOT, capture_output=True, text=True)
+    subprocess.run([robotcode, *profiles, "robot", *options, "--outputdir", str(outdir), "--report", "NONE",
+                    "--log", "NONE", "--console", "quiet"], cwd=ROOT, capture_output=True, text=True)
     output = outdir / "output.xml"
     if not output.is_file():
         raise SystemExit("verify-outcomes: the suite produced no output.xml - see `uv run robotcode robot` for the error")
@@ -64,6 +65,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--heal", action="store_true", help="check drift_and_bug with the heal profile (needs a model)")
     parser.add_argument("--preset", action="append", help="check only this preset (repeatable)")
     parser.add_argument("--data", type=Path, default=DATA, help="the outcomes file (default: %(default)s)")
+    parser.add_argument("--keep", type=Path, metavar="DIR",
+                        help="keep each preset's results, including a healing report, under DIR/<preset>/")
     args = parser.parse_args(argv)
 
     data = tomllib.loads(args.data.read_text(encoding="utf-8"))
@@ -78,7 +81,10 @@ def main(argv: list[str] | None = None) -> int:
     expectations = data["heal"] if args.heal else data["presets"]
     presets = args.preset or list(expectations)
     profiles = ["-p", "shared" if settings.shared else "local"] + (["-p", "heal"] if args.heal else [])
-    inventory = set(data["tests"])
+    # Module 8 runs without the tests broken on purpose: the Module 5 one fails only on a
+    # wrong label, which a model may well heal (docs/facilitator/suite-outcomes.md).
+    options = ["--exclude", "broken"] if args.heal else []
+    inventory = {name for name, kind in data["tests"].items() if not (args.heal and kind == "broken")}
     where = f"{settings.url}" + (f", space {settings.space}" if settings.space else "")
     print(f"verify-outcomes - {where}{' - with healing' if args.heal else ''}")
 
@@ -91,8 +97,13 @@ def main(argv: list[str] | None = None) -> int:
             helper("preset", "clean")
             if preset != "clean":
                 helper("preset", preset)
-            with tempfile.TemporaryDirectory(prefix=f"outcomes-{preset}-") as tmp:
-                failed, passed = run_suite(profiles, Path(tmp))
+            if args.keep:
+                outdir = args.keep / preset
+                outdir.mkdir(parents=True, exist_ok=True)
+                failed, passed = run_suite(profiles, options, outdir)
+            else:
+                with tempfile.TemporaryDirectory(prefix=f"outcomes-{preset}-") as tmp:
+                    failed, passed = run_suite(profiles, options, Path(tmp))
             problems = []
             for name in sorted((failed | passed) - inventory):
                 problems.append(f"{name}: not in [tests] - add it to {args.data.name}")

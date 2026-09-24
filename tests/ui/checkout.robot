@@ -16,10 +16,12 @@ Test Tags           WEB-006    ui
 *** Test Cases ***
 WEB-006_AC-1 Order Total Adds Up
     [Documentation]    The order total is subtotal plus shipping plus tax.
-    &{amounts}=    Get Summary Amounts
-    ${shipping}=    Get Shipping Amount
-    ${expected}=    Evaluate    round($amounts["subtotal"] + $shipping + $amounts["tax"], 2)
-    Should Be Equal As Numbers    ${amounts}[total]    ${expected}
+    ${subtotal}=    Get Summary Amount    Subtotal
+    ${shipping}=    Get Summary Amount    Shipping
+    ${tax}=    Get Summary Amount    Tax
+    ${total}=    Get Order Total
+    ${expected}=    Evaluate    round($subtotal + $shipping + $tax, 2)
+    Should Be Equal As Numbers    ${total}    ${expected}
     ...    msg=The order total should be subtotal plus shipping plus tax.
 
 WEB-006_AC-7 Successful Order

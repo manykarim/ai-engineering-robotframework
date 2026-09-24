@@ -42,17 +42,21 @@ Get Order Confirmation
     ${text}=    Get Text    role=main >> role=alert    *=    confirmed
     RETURN    ${text}
 
-Get Shipping Amount
-    [Documentation]    The shipping line of the order summary, with "Complimentary" as 0.
-    ${text}=    Get Text    ${SUMMARY} >> dt:text-is("Shipping") + dd
+Get Summary Amount
+    [Documentation]    The amount on the order summary's line labelled ``label``, with "Complimentary" as 0.
+    [Arguments]    ${label}
+    ${text}=    Get Text    ${SUMMARY} >> dt:text-is("${label}") + dd
     IF    "${text.strip().lower()}" == "complimentary"    RETURN    ${0}
     ${amount}=    Amount From Text    ${text}
     RETURN    ${amount}
 
 Amount From Text
-    [Documentation]    ``$1,234.50`` as the number 1234.5.
+    [Documentation]    The amount in a text, ``$1,234.50`` as the number 1234.5.
+    ...                A label around it is ignored; with several amounts, the last one counts.
     [Arguments]    ${text}
-    ${amount}=    Evaluate    float($text.strip().lstrip("$").replace(",", ""))
+    @{amounts}=    Get Regexp Matches    ${text}    \\$([0-9,]+\\.[0-9]{2})    1
+    Should Not Be Empty    ${amounts}    msg=No amount in "${text}".
+    ${amount}=    Evaluate    float($amounts[-1].replace(",", ""))
     RETURN    ${amount}
 
 Get Field Messages

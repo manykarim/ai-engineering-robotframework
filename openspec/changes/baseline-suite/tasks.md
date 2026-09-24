@@ -44,7 +44,7 @@
   - under `stage4`, `uv run robotcode -p heal robot` produces the same passed and failed tests as a plain run;
   - `results/heal/summary.json` records every failure as suppressed, with the reason that no model is configured;
   - `git status -- tests resources` is clean.
-- [ ] 5.2 Check the healing profile with a model, which needs the maintainer's `HEAL_*` settings. Verify:
+- [x] 5.2 Check the healing profile with a model, which needs the maintainer's `HEAL_*` settings. Verify:
   - `verify_outcomes.py --heal` under `drift_and_bug` shows `WEB-002_AC-7 Audio Filter Shows Only Audio` and `WEB-006_AC-7 Successful Order` passing through healed locators;
   - `WEB-002_AC-1 Card Prices Are The Product Prices` and `WEB-006_AC-1 Order Total Adds Up` fail on their expected values;
   - `heal_report.html` lists each heal as a proposal;

@@ -14,6 +14,8 @@ Resource            shop.resource
 ${GRID}             section:has(h2:text-is("All products")):not(:has(section))
 ${FILTERS}          role=complementary
 ${HIGHLIGHTS}       section:has(h2:text-is("Handpicked highlights"))
+# A card's price, by its visible text: "$" and an amount with cents.
+${CARD PRICE}       text=/^\\$[0-9,]+\\.[0-9]{2}$/
 
 
 *** Keywords ***

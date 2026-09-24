@@ -2,7 +2,7 @@
 Documentation       Legacy locators, kept deliberately; see docs/conventions.md.
 ...
 ...                 These keywords find elements by id, class or data-test hook instead of
-...                 the shop's stable contract.
+...                 the shop's stable contract. Each such locator names exactly one element.
 
 Library             Browser
 Resource            catalogue.resource
@@ -10,28 +10,28 @@ Resource            checkout.resource
 
 
 *** Keywords ***
+Get Product Grid
+    [Documentation]    The element that holds the product cards of the grid.
+    ${grid}=    Get Element    ${GRID} >> .product-grid
+    RETURN    ${grid}
+
 Get Card Prices
     [Documentation]    The price of every grid card, in page order.
-    Wait For Elements State    ${GRID} >> .product-card__price >> nth=0    visible
-    @{prices}=    Get Texts    ${GRID} >> .product-card__price
+    ${grid}=    Get Product Grid
+    @{prices}=    Get Texts    ${grid} >> article >> ${CARD PRICE}
     RETURN    ${prices}
 
 Get Grid Cards
     [Documentation]    The product cards of the grid.
-    Wait For Elements State    ${GRID} >> [data-test="product-card"] >> nth=0    visible
-    @{cards}=    Get Elements    ${GRID} >> [data-test="product-card"]
+    ${grid}=    Get Product Grid
+    @{cards}=    Get Elements    ${grid} >> article
     RETURN    ${cards}
 
-Get Summary Amounts
-    [Documentation]    Subtotal, tax and total of the order summary, as numbers.
-    ${subtotal}=    Get Text    [data-test="checkout-subtotal"]
-    ${tax}=    Get Text    [data-test="checkout-tax"]
-    ${total}=    Get Text    [data-test="checkout-total"]
-    &{amounts}=    Create Dictionary
-    ...    subtotal=${{ float($subtotal.strip().lstrip("$").replace(",", "")) }}
-    ...    tax=${{ float($tax.strip().lstrip("$").replace(",", "")) }}
-    ...    total=${{ float($total.strip().lstrip("$").replace(",", "")) }}
-    RETURN    ${amounts}
+Get Order Total
+    [Documentation]    The total the order summary shows, as a number.
+    ${text}=    Get Text    [data-test="checkout-total"]
+    ${total}=    Amount From Text    ${text}
+    RETURN    ${total}
 
 Fill Checkout Form By Field Ids
     [Documentation]    Fills the required fields through their ids.
