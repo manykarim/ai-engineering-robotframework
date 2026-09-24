@@ -71,7 +71,12 @@
 
 ## 6. Clean-room verification and close-out
 
-- [ ] 6.1 Run the whole onboarding from nothing. In a fresh Linux container with no Node.js, no RobotCode and no browsers, follow `README.md` and `SETUP.md` exactly, installing Node.js and OpenSpec as the guide says. Verify:
+- [x] 6.1 Run the whole onboarding from nothing. In a fresh Linux container with no Node.js, no RobotCode and no browsers, follow `README.md` and `SETUP.md` exactly, installing Node.js and OpenSpec as the guide says. Verify:
+
+  **Done 2026-09-24, in three runs** in a bare `debian:bookworm-slim` container (no Python, Node.js, uv, RobotCode, Docker CLI, `gh`, agent or OpenSpec), following the guide literally, with Codex as the agent.
+  - *Run 1* stopped at the clone: git's ownership check on the bind-mounted source. This was a harness artifact; participants clone from GitHub.
+  - *Run 2* passed shared mode, but failed local mode with "nothing answers". This was a real startup race: `docker compose up -d` returns before the shop has seeded (3-4 s measured after a recreate), so running `setup-check` straight afterwards, the README's own order, could fail. Fixed in `setup-check`, which now waits for a still-starting shop container (at most 60 s) and still fails at once when no shop runs.
+  - *Run 3*: local mode 16 passed, 2 optional warnings, 0 failed; shared mode 14 passed, 2 warnings, 0 failed, 2 skipped. Both exited 0, and the throwaway space `cleanroom-check` was reset afterwards.
   - `setup-check` reports no failure in shared mode, with a throwaway test space that is reset afterwards;
   - it also reports no failure in local mode against the shop started from `shop/compose.yaml` on the host;
   - both outputs are recorded in the pull request.
