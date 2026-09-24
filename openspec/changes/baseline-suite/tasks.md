@@ -1,24 +1,24 @@
 ## 1. Wiring
 
-- [ ] 1.1 Add `paths = ["tests"]` and the `heal` profile to `robot.toml` (design D7). Verify:
+- [x] 1.1 Add `paths = ["tests"]` and the `heal` profile to `robot.toml` (design D7). Verify:
   - `uv run robotcode profiles list` shows `local`, `shared` and `heal`;
   - `uv run robotcode -p shared -p heal config show` contains both the heal listener and `SHOP_PROFILE=shared`;
   - `uv run robotcode -p heal config show` sets `HEAL_FIX_TIER=report` and `HEAL_HEAL_ASSERTIONS=false`.
-- [ ] 1.2 Write `resources/` per design D2: `shop.resource`, `api.resource`, `catalogue.resource`, `checkout.resource` and `legacy.resource`. Verify:
+- [x] 1.2 Write `resources/` per design D2: `shop.resource`, `api.resource`, `catalogue.resource`, `checkout.resource` and `legacy.resource`. Verify:
   - `uv run robotcode analyze code resources` reports no errors;
   - opening a page through `shop.resource` with the shared profile in a throwaway space shows that space in the page's `data-workshop-space`;
   - a scan of `catalogue.resource`, `checkout.resource`, `shop.resource` and `api.resource` finds no `id=`, `#`, `.class`, `data-test` or `xpath` locator. Those appear only in `legacy.resource`.
 
 ## 2. Tests
 
-- [ ] 2.1 Write `tests/ui/catalogue.robot` with the seven tests of design D1, including the two tests broken on purpose (D4) and the one inline locator (D5). Verify:
+- [x] 2.1 Write `tests/ui/catalogue.robot` with the seven tests of design D1, including the two tests broken on purpose (D4) and the one inline locator (D5). Verify:
   - after `python -m shop reset`, `uv run robotcode robot --exclude broken tests/ui/catalogue.robot` passes locally;
   - with `--include broken`, exactly the two D4 tests run and fail;
   - under `robotcode robot-debug`, a breakpoint in `WEB-002_AC-12` shows the API's `899.0` beside the page's `$899.00`;
   - the `WEB-002_AC-4` failure message contains "4 stars and up".
-- [ ] 2.2 Write `tests/ui/checkout.robot` with the four tests of design D1. Verify: after a reset, the file passes locally, and each test starts with an empty cart. Running the file twice in a row passes both times.
-- [ ] 2.3 Write `tests/api/smoke.robot` with the two smoke tests of design D1. Verify: it passes against the local shop and in a shared space, and no file under `tests/api/` or `resources/api.resource` refers to `/api/cart`.
-- [ ] 2.4 Check the suite against its own conventions. Verify:
+- [x] 2.2 Write `tests/ui/checkout.robot` with the four tests of design D1. Verify: after a reset, the file passes locally, and each test starts with an empty cart. Running the file twice in a row passes both times.
+- [x] 2.3 Write `tests/api/smoke.robot` with the two smoke tests of design D1. Verify: it passes against the local shop and in a shared space, and no file under `tests/api/` or `resources/api.resource` refers to `/api/cart`.
+- [x] 2.4 Check the suite against its own conventions. Verify:
   - every test name starts with `<STORY>_<AC>` or the test carries `smoke`;
   - every test carries a story or `smoke` tag and exactly one of `ui` or `api`;
   - exactly two tests carry `broken`;
@@ -27,7 +27,7 @@
 
 ## 3. Conventions document
 
-- [ ] 3.1 Write `docs/conventions.md` per design D8. Verify: it states the seven conventions of `workshop/test-conventions`, each with a reason; it names `resources/legacy.resource` as the known deviation; it does not mention the inline locator; and every example locator in it follows its own rules.
+- [x] 3.1 Write `docs/conventions.md` per design D8. Verify: it states the seven conventions of `workshop/test-conventions`, each with a reason; it names `resources/legacy.resource` as the known deviation; it does not mention the inline locator; and every example locator in it follows its own rules.
 
 ## 4. The expected-outcome matrix
 
