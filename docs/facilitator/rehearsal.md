@@ -56,3 +56,48 @@ Observed along the way, and now covered by the wiring or `hooks/README.md`:
   `resources/shop.resource` reported that space in `data-workshop-space`.
 - The server does not read `robot.toml`, so `shop/variables.py` failed to import until `PYTHONPATH=.` was added to
   every configuration.
+
+## Labs with Claude Code (2026-09-24)
+
+A fresh clone, a freshly reset local shop, Claude Code 2.1.281 headless (`claude -p`), one session per prompt group,
+the labs in order. Prompts were the labs' own. Where a lab has participants edit a file by hand, the agent drafted it
+from the same instructions, and the transcript says so. Tokens are input (mostly cached) and output, summed over the
+lab's sessions.
+
+| Lab | Result | Duration | Tokens (in / out) |
+|---|---|---|---|
+| 0 | checklist holds: `setup-check` green, 11 passed and the 2 `broken` failed, the agent explained the repository | 1.5 min | 135 k / 2 k |
+| 2 | checklist holds: `AGENTS.md` with the five sections in 34 lines, one section in `docs/agent-environment.md`, `CLAUDE.md` unchanged, before and after saved | 4 min | 1.4 M / 23 k |
+| 3 | checklist holds after one fix (below): skills installed into the repository, the convention-2 skill loaded on the review prompt and not on the unrelated one | 9 min | 1.7 M / 57 k |
+| 4 | checklist holds: `discover` and `libdoc` through the plugin's skill, the debugger stopped at the assertion, the Module 4 test fixed and untagged, the REPL explored the price range | 8 min | 3.2 M / 34 k |
+
+Found and fixed:
+- **Lab 3:** Claude Code guards `.claude/`. It asks before any write there, and in prompt mode refuses even with an
+  allow rule. The agent's rewrite of the skill was refused twice. Lab 3's stretch goal now says to approve the write;
+  the rehearsal approved it (`bypassPermissions`) and re-ran the lab from step 6.
+- **Lab 4:** the plugin is installed with `--scope project` for Claude Code, so that the fork records it in
+  `.claude/settings.json`. Lab 7 then merges its hooks into that file instead of copying over it.
+- **Lab 4, REPL:** with no display available, the agent explored headless and said so. On a laptop, the browser
+  window opens.
+
+## Labs 2 to 4 with Codex (2026-09-24)
+
+The second-agent spot check: a second fresh clone, Codex 0.156.1 (`codex exec`, workspace-write sandbox with network
+access), the same prompts, the Codex rows of each lab's table.
+
+| Lab | Result | Duration | Tokens (in / out) |
+|---|---|---|---|
+| 2 | as with Claude Code: `AGENTS.md` in 29 lines, before and after saved | 3.5 min | 750 k / 9 k |
+| 3 | skills installed into `.agents/skills/`; Codex *read* the convention skill for the review prompt and not for the unrelated one; the rewrite of the skill was refused (below) | 9 min | 1.5 M / 24 k |
+| 4 | plugin installed for the user, `discover`, `libdoc` and `robot-debug` used, the Module 4 test fixed and untagged | 9 min | 3.4 M / 17 k |
+
+Where Codex diverged, and what changed:
+- **Skills are read, not invoked.** Codex loads a skill by reading its `SKILL.md`; there is no separate "skill loaded"
+  event. Lab 3's step 7 says Claude Code prints `Skill(<name>)`. For Codex, look for it reading the file.
+- **`.agents/` is read-only in the sandbox.** Codex could not rewrite the skill, and offered a patch instead.
+  Participants edit it by hand anyway; `docs/environments.md` and Lab 3's stretch goal now say so.
+- **uv's cache.** The sandbox cannot write `~/.cache/uv`; Codex set `UV_CACHE_DIR` to a temporary folder by itself.
+  Named in `docs/environments.md`.
+- **Network.** Test runs need `sandbox_workspace_write.network_access=true`, as `docs/environments.md` says.
+- **Plugin scope.** `codex plugin add` installs for the user only. The rehearsal removed the plugin and its
+  marketplace afterwards.

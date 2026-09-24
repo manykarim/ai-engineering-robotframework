@@ -45,14 +45,23 @@ The labs give a table wherever the agents differ. Here are all those differences
 | 7: hooks | `.claude/settings.json`, merged with the plugin entry of Lab 4 | `.codex/hooks.json`, trust them when asked | `.github/hooks/workshop.json`, in a trusted folder |
 | 7: subagents | `.claude/agents/*.md`, `/agents` | `.codex/agents/*.toml`, ask for one by name | `.github/agents/*.agent.md`, `/agent`; start the reviewer interactively, not with `copilot -p` |
 
-## Codex and the network
+## Codex and its sandbox
 
-Codex runs shell commands in a sandbox that blocks network access by default. Test runs reach the shop over the
-network, so allow it when Codex asks, or start Codex with network access for the workspace:
+Codex runs shell commands in a sandbox, which shows in three ways during the labs:
 
-```bash
-codex -c sandbox_workspace_write.network_access=true
-```
+- **Network.** The sandbox blocks network access by default, and test runs reach the shop over the network. Allow it
+  when Codex asks, or start Codex with network access for the workspace:
+
+  ```bash
+  codex -c sandbox_workspace_write.network_access=true
+  ```
+
+- **uv's cache.** uv keeps a download cache in your home folder, outside the workspace. Codex notices, and points
+  `UV_CACHE_DIR` somewhere writable by itself. Nothing to do, but don't be surprised by it in the transcript.
+- **Agent configuration.** `.agents/` and `.codex/` are read-only inside the sandbox. Codex asks before it changes
+  a skill there, or you edit the file yourself, as Lab 3 does anyway.
+
+Claude Code has the same guard for `.claude/`: it asks before it writes there.
 
 ## Cost
 

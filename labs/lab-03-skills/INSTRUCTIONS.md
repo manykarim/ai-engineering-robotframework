@@ -75,6 +75,10 @@ Give your skill teeth. Change `scripts/check.py` in your skill's folder so that 
 convention 1. For convention 2, for example, report every argument in a test file that looks like a locator. Then tell
 the agent in `SKILL.md` to run it, and repeat step 7.
 
+If you let your agent make the change: the skill folders are agent configuration, and agents guard them. Claude Code
+asks before it writes into `.claude/`, and Codex's sandbox keeps `.agents/` read-only until you approve the write.
+Approve it, or edit the files yourself.
+
 ## If your agent fails
 
 Steps 4 to 6 need only an editor. For the rest, follow

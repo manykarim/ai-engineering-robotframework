@@ -12,15 +12,18 @@ and Codex (`codex exec --json`), in order, together with the rehearsal's own lin
     {"type": "workshop.note", "text": "..."}                         a remark, in Markdown
 
 Writes the prompts, the agent's answers, its tool calls with shortened results, and the commands.
-Drops reasoning. Rewrites the repository path to <repo> and the home directory to ~. Refuses to
+Drops reasoning. Rewrites the repository path to <repo>, the home directory to ~, and the
+user and host names to user and host. Refuses to
 write, with exit status 1, when the result still contains a secret: a value of a key, token,
 secret or password setting in the given --secrets files, or anything shaped like an API key.
 """
 from __future__ import annotations
 
 import argparse
+import getpass
 import json
 import re
+import socket
 import sys
 from pathlib import Path
 
@@ -156,16 +159,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("events", nargs="+", type=Path)
     parser.add_argument("--title", required=True)
     parser.add_argument("--out", required=True, type=Path)
-    parser.add_argument("--repo", type=Path, help="the clone the session ran in; rewritten to <repo>")
+    parser.add_argument("--repo", type=Path, action="append", default=[],
+                        help="a checkout the session ran in or saw; rewritten to <repo> (repeatable)")
     parser.add_argument("--secrets", action="append", type=Path, default=[], help=".env files whose secrets must not appear")
     parser.add_argument("--agent", default="", help='for example "Claude Code 2.1.281"')
     args = parser.parse_args(argv)
 
     text, totals = render(args.events, args.title, args.agent)
-    for path in filter(None, [args.repo and str(args.repo.resolve()), args.repo and str(args.repo)]):
-        text = text.replace(path, "<repo>")
+    for repo in args.repo:
+        for path in dict.fromkeys([str(repo.resolve()), str(repo)]):
+            text = text.replace(path, "<repo>")
     text = text.replace(str(Path.home()), "~")
-    text = re.sub(r"/tmp/claude-\d+/[^\s`'\")]*", "<scratch>", text)
+    for name, placeholder in ((getpass.getuser(), "user"), (socket.gethostname(), "host")):
+        if len(name) > 2:
+            text = re.sub(rf"\b{re.escape(name)}\b", placeholder, text)
+    text = re.sub(r"/tmp/claude-\d+(?:/[^\s`'\")]*)?", "<scratch>", text)
 
     found = [f"a value from {', '.join(map(str, args.secrets))}" for value in secret_values(args.secrets) if value in text]
     found += [f"something shaped like a secret ({pattern.pattern[:30]}...)" for pattern in SECRET_SHAPES if pattern.search(text)]
