@@ -1,0 +1,18 @@
+# Robot Framework settings for RobotCode. Run tests with `uv run robotcode robot`
+# (plain `robot` ignores this file), or pick a profile: `uv run robotcode -p shared robot`.
+
+python-path = ["."]
+output-dir = "results"
+# Resolves ${SHOP_URL} and ${SHOP_SPACE} from the environment or .env.
+variable-files = ["shop/variables.py"]
+# Stops the run before the first test when those settings cannot work.
+pre-run-modifiers = { "shop/preflight.py" = [] }
+default-profiles = ["local"]
+
+[profiles.local]
+description = "The shop on this machine (docker compose -f shop/compose.yaml up -d). No space needed."
+extend-env = { SHOP_PROFILE = "local" }
+
+[profiles.shared]
+description = "The shared workshop instance. Requires SHOP_SPACE, your GitHub handle."
+extend-env = { SHOP_PROFILE = "shared" }
