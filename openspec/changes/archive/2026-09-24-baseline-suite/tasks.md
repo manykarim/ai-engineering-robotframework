@@ -54,4 +54,4 @@
 
 ## 6. Close-out
 
-- [ ] 6.1 Validate and archive. Verify: `openspec validate baseline-suite --strict` passes. After the merge, `openspec archive baseline-suite -y` creates `openspec/specs/workshop/baseline-suite` and `workshop/test-conventions`, each with its Purpose.
+- [x] 6.1 Validate and archive. Verify: `openspec validate baseline-suite --strict` passes. After the merge, `openspec archive baseline-suite -y` creates `openspec/specs/workshop/baseline-suite` and `workshop/test-conventions`, each with its Purpose.
