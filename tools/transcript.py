@@ -7,7 +7,9 @@ Reads the JSON event streams of Claude Code (`claude -p --output-format stream-j
 and Codex (`codex exec --json`), in order, together with the rehearsal's own lines:
 
     {"type": "workshop.step", "title": "...", "prompt": "..."}      a lab step and the prompt it gives
+    {"type": "workshop.prompt", "prompt": "..."}                   a prompt given to the agent
     {"type": "workshop.command", "command": "...", "output": "..."}  a command the participant runs
+    {"type": "workshop.note", "text": "..."}                         a remark, in Markdown
 
 Writes the prompts, the agent's answers, its tool calls with shortened results, and the commands.
 Drops reasoning. Rewrites the repository path to <repo> and the home directory to ~. Refuses to
@@ -85,6 +87,8 @@ def render(paths: list[Path], title: str, agent: str) -> tuple[str, dict]:
                 out += [f"## {event['title']}", ""]
                 if event.get("prompt"):
                     out += ["**Prompt:**", "", quote(event["prompt"]), ""]
+            elif kind == "workshop.prompt":
+                out += ["**Prompt:**", "", quote(event["prompt"]), ""]
             elif kind == "workshop.command":
                 out += [f"**The participant runs** `{event['command']}`:", "", fence(short(event.get("output", ""))), ""]
             elif kind == "workshop.note":
