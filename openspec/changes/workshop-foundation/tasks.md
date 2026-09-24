@@ -10,6 +10,8 @@
 - [x] 1.3 Install the browser binaries through the batteries package (design D4). Verify in a clean Linux container without Node.js on `PATH`: `uv sync --locked` followed by `uv run rfbrowser install --with-deps chromium` lets a headless Browser session open `about:blank`. Then recreate `.venv` and confirm the browser binary is gone, which proves the D4 consequence that `setup-check` must catch.
 - [ ] 1.4 Verify the platforms the specs promise. Verify: `uv sync --locked`, `uv run rfbrowser install chromium` and a headless launch succeed on Windows x64 and on macOS 13 or newer on Apple silicon, with the outputs recorded in the pull request.
 
+  **Windows x64 verified 2026-09-24; macOS outstanding.** The check ran in an isolated temp folder with a standalone uv 0.8.15, with the uv cache and Python installs redirected into that folder, so nothing touched the machine's own uv: `uv sync --locked` exit 0, `rfbrowser install chromium` exit 0, and a headless session PASS. The machine's installed uv 0.6.17 was refused cleanly with "Required uv version `>=0.8.15` does not match the running version `0.6.17`", which is why `SETUP.md` says `uv self update`. Outstanding: the same three steps on macOS 13 or newer on Apple silicon.
+
 ## 2. Shop access
 
 - [x] 2.1 Add `shop/compose.yaml` (design D7), pinned to the newest demo-webshop `X.Y.Z` tag at implementation time, never `edge` or `sha-`, on port 9090 with no volume. Verify:
@@ -46,6 +48,8 @@
 ## 4. Agent context
 
 - [ ] 4.1 Write `AGENTS.md` (under 30 lines, with the content of design D10) and `CLAUDE.md` (a single `@AGENTS.md` import). Verify:
+
+  **Claude Code verified 2026-09-24; Codex and Copilot outstanding.** `AGENTS.md` has 22 lines and none of the terms Labs 2 to 4 teach. A nested, non-interactive Claude Code session in the repository root, with every file tool disabled, quoted "This file is deliberately short: Lab 2 builds it out." verbatim from its loaded context. Outstanding: Codex, which is installed here but whose sign-in has expired (`codex login`), and GitHub Copilot, whose CLI is not installed here.
   - `wc -l AGENTS.md` is below 30;
   - the file names none of the conventions or RobotCode habits taught in Labs 2 to 4;
   - Claude Code started in the repository root shows the content of `AGENTS.md` in its loaded memory;
@@ -54,7 +58,7 @@
 - [x] 4.3 Add the namespace `context` and the `rules.specs` neutrality rule, scoped to `shop/*`, to `openspec/config.yaml` (design D10). Verify: `openspec instructions specs --change workshop-foundation --json` returns both the context and the rule, and `openspec validate --all --strict` passes.
 
   **Done 2026-09-24.** The context and the neutrality rule are both returned by `openspec instructions specs`. `openspec validate --all --strict` reports 2 passed, 3 failed: the failures are `baseline-suite`, `workshop-labs` and `ci-and-site`, which are proposal-only by decision and have no spec deltas yet. This is expected until they are detailed, and unrelated to the configuration. Both complete changes, `workshop-foundation` and `shop-specs`, pass `--strict`.
-- [ ] 4.4 Check secret hygiene. Verify:
+- [x] 4.4 Check secret hygiene. Verify:
   - a secret scan (gitleaks or equivalent) over the tracked tree finds nothing;
   - `git check-ignore .env` confirms the maintainer's local `.env`, which holds deployment tokens, is ignored;
   - `.env.example` lists setting names only.

@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import tomllib
 import urllib.error
 import urllib.request
@@ -45,6 +46,8 @@ ROBOTCODE_HABITS = ("discover", "libdoc", "robot-debug", "repl", "results")
 AGENTS = ("claude", "codex", "copilot")
 HEAL_SETTINGS = ("HEAL_MODEL", "HEAL_BASE_URL", "HEAL_API_KEY")
 SECRET_NAME = re.compile(r"KEY|TOKEN|SECRET|PASSWORD|PASSWD", re.I)
+#: How long to wait for a local shop that is still starting (seconds).
+STARTUP_GRACE = 60
 
 # SETUP.md headings the fixes point to (their GitHub anchors).
 GUIDE = {
@@ -253,23 +256,37 @@ class SetupCheck:
             self.add("shop-image", "Shop image", "M0", "fail", f"{ref} is not on this machine",
                      "docker compose -f shop/compose.yaml pull", GUIDE["local"])
 
+    def local_shop_starting(self) -> bool:
+        """Whether a container of the pinned image is running and has not finished starting yet."""
+        status, out = run(["docker", "ps", "--filter", f"ancestor={self.image}:{self.tag}", "--format", "{{.Status}}"], timeout=30)
+        return status == 0 and "health: starting" in out
+
     def shop_health(self) -> None:
         if self.shop.shared and self.offline:
             self.add("shop-health", "Shop health", "M0", "skip", "offline mode")
             return
+        guide = GUIDE["shared" if self.shop.shared else "local"]
         request = urllib.request.Request(self.shop.url + "/health", headers={"User-Agent": USER_AGENT, **self.shop.headers()})
-        try:
-            with urllib.request.urlopen(request, timeout=10) as response:
-                version = json.loads(response.read()).get("version", "?")
-        except urllib.error.HTTPError as error:
-            self.add("shop-health", "Shop health", "M0", "fail", f"{self.shop.url} refused the health check with HTTP {error.code}",
-                     "check SHOP_URL, and any proxy between you and the shop", GUIDE["shared" if self.shop.shared else "local"])
-            return
-        except (urllib.error.URLError, TimeoutError, ConnectionError, ValueError):
-            fix = "docker compose -f shop/compose.yaml up -d" if not self.shop.shared else "check SHOP_URL and your network"
-            self.add("shop-health", "Shop health", "M0", "fail", f"nothing answers at {self.shop.url}", fix,
-                     GUIDE["shared" if self.shop.shared else "local"])
-            return
+        # A local shop that was just started seeds itself before it answers: a few
+        # seconds usually, up to about 40 on a slow machine. While a container of the
+        # pinned image is still starting, wait for it instead of failing a participant
+        # who ran this right after `docker compose up -d`.
+        deadline = time.monotonic() + STARTUP_GRACE
+        while True:
+            try:
+                with urllib.request.urlopen(request, timeout=10) as response:
+                    version = json.loads(response.read()).get("version", "?")
+                break
+            except urllib.error.HTTPError as error:
+                self.add("shop-health", "Shop health", "M0", "fail", f"{self.shop.url} refused the health check with HTTP {error.code}",
+                         "check SHOP_URL, and any proxy between you and the shop", guide)
+                return
+            except (urllib.error.URLError, TimeoutError, ConnectionError, ValueError):
+                if self.shop.shared or time.monotonic() >= deadline or not self.local_shop_starting():
+                    fix = "check SHOP_URL and your network" if self.shop.shared else "docker compose -f shop/compose.yaml up -d"
+                    self.add("shop-health", "Shop health", "M0", "fail", f"nothing answers at {self.shop.url}", fix, guide)
+                    return
+                time.sleep(1)
         if not self.shop.shared and version != self.tag:
             self.add("shop-health", "Shop health", "M0", "fail",
                      f"the shop at {self.shop.url} reports version {version}, shop/compose.yaml pins {self.tag}",
