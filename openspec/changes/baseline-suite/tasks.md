@@ -31,8 +31,8 @@
 
 ## 4. The expected-outcome matrix
 
-- [ ] 4.1 Write `docs/facilitator/suite-outcomes.yaml` and `suite-outcomes.md` per design D6, derived from the D1 inventory and the drift and defect tables before anything is run. Verify: every test of the suite appears in the data, every reason uses the vocabulary `broken`, `drift:<kind>` or `defect:<criterion>`, and the Markdown names the D5 inline locator.
-- [ ] 4.2 Write `tools/verify_outcomes.py` per design D6. Verify:
+- [x] 4.1 Write `docs/facilitator/suite-outcomes.toml` and `suite-outcomes.md` per design D6, derived from the D1 inventory and the drift and defect tables before anything is run. Verify: every test of the suite appears in the data, every reason uses the vocabulary `broken`, `drift:<kind>` or `defect:<criterion>`, and the Markdown names the D5 inline locator.
+- [x] 4.2 Write `tools/verify_outcomes.py` per design D6. Verify:
   - run against the local `0.3.0` shop, it applies all six presets and reports no difference;
   - on a copy of the data with one expected outcome changed, it names that test and preset and exits non-zero;
   - afterwards the space status names `clean`.
@@ -40,7 +40,7 @@
 
 ## 5. Healing
 
-- [ ] 5.1 Check the healing profile without a model. Verify:
+- [x] 5.1 Check the healing profile without a model. Verify:
   - under `stage4`, `uv run robotcode -p heal robot` produces the same passed and failed tests as a plain run;
   - `results/heal/summary.json` records every failure as suppressed, with the reason that no model is configured;
   - `git status -- tests resources` is clean.
@@ -50,7 +50,7 @@
   - `heal_report.html` lists each heal as a proposal;
   - `tests/` and `resources/` are unchanged;
   - the model and the tokens used are recorded in the pull request.
-- [ ] 5.3 Add the precedence note to the "Healing API key" section of `SETUP.md`: `robotframework-heal` loads the nearest `.env` itself and lets it override the environment for its settings, the opposite of `SHOP_*`. Verify: the note is present, and every `setup-check` guide reference still resolves.
+- [x] 5.3 Add the precedence note to the "Healing API key" section of `SETUP.md`: `robotframework-heal` loads the nearest `.env` itself and lets it override the environment for its settings, the opposite of `SHOP_*`. Verify: the note is present, and every `setup-check` guide reference still resolves.
 
 ## 6. Close-out
 

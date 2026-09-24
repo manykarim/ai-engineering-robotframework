@@ -1,0 +1,74 @@
+# Which tests of the shipped suite fail under each preset, and why.
+# Derived from the test inventory (baseline-suite design D1) and the shop's drift
+# and defect tables; checked against the pinned shop by tools/verify_outcomes.py.
+#
+# A test that is not listed under a preset is expected to pass.
+# Reasons: "broken" (fails on purpose), "drift:<kind>" (its locator kind drifts
+# in this preset: id, class or data-test), "defect:<criterion>" (a planted defect
+# breaks the criterion the test verifies).
+
+# Every test of the suite and the kind of locator its one fragile element uses
+# (design D1): "stable" (the stable contract only), "id", "class", "data-test",
+# "api", or "broken". A test added to the suite must be added here.
+[tests]
+"WEB-002_AC-1 Every Card Offers Add To Cart" = "stable"
+"WEB-002_AC-1 Card Prices Are The Product Prices" = "class"
+"WEB-002_AC-2 Categories Filter Group" = "stable"
+"WEB-002_AC-4 Rating Filter" = "broken"
+"WEB-002_AC-7 Audio Filter Shows Only Audio" = "data-test"
+"WEB-002_AC-10 Reset Filters" = "stable"
+"WEB-002_AC-12 Handpicked Highlights" = "broken"
+"WEB-006_AC-1 Order Total Adds Up" = "data-test"
+"WEB-006_AC-7 Successful Order" = "id"
+"WEB-006_AC-11 Validation Errors Next To Fields" = "stable"
+"WEB-006_AC-12 Cart Cleared After Order" = "stable"
+"Health Reports Ok" = "api"
+"Catalogue Lists Twelve Products" = "api"
+
+[presets.clean]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+
+[presets.stage2]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+"WEB-002_AC-1 Card Prices Are The Product Prices" = ["drift:class"]
+"WEB-006_AC-7 Successful Order" = ["drift:id"]
+
+[presets.stage3]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+"WEB-002_AC-7 Audio Filter Shows Only Audio" = ["drift:data-test"]
+"WEB-006_AC-1 Order Total Adds Up" = ["drift:data-test"]
+"WEB-006_AC-7 Successful Order" = ["drift:id"]
+
+[presets.stage4]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+"WEB-002_AC-1 Card Prices Are The Product Prices" = ["drift:class"]
+"WEB-002_AC-7 Audio Filter Shows Only Audio" = ["drift:data-test"]
+"WEB-006_AC-1 Order Total Adds Up" = ["drift:data-test"]
+"WEB-006_AC-7 Successful Order" = ["drift:id"]
+
+[presets.buggy]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+"WEB-002_AC-1 Every Card Offers Add To Cart" = ["defect:WEB-002_AC-1"]
+"WEB-002_AC-1 Card Prices Are The Product Prices" = ["defect:WEB-002_AC-1"]
+"WEB-006_AC-1 Order Total Adds Up" = ["defect:WEB-006_AC-1"]
+
+[presets.drift_and_bug]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+"WEB-002_AC-1 Card Prices Are The Product Prices" = ["drift:class", "defect:WEB-002_AC-1"]
+"WEB-002_AC-7 Audio Filter Shows Only Audio" = ["drift:data-test"]
+"WEB-006_AC-1 Order Total Adds Up" = ["drift:data-test", "defect:WEB-006_AC-1"]
+"WEB-006_AC-7 Successful Order" = ["drift:id"]
+
+# drift_and_bug with the heal profile and a configured model (verify_outcomes.py --heal):
+# healing repairs every drifted locator, and only defects and broken tests stay red.
+[heal.drift_and_bug]
+"WEB-002_AC-4 Rating Filter" = ["broken"]
+"WEB-002_AC-12 Handpicked Highlights" = ["broken"]
+"WEB-002_AC-1 Card Prices Are The Product Prices" = ["defect:WEB-002_AC-1"]
+"WEB-006_AC-1 Order Total Adds Up" = ["defect:WEB-006_AC-1"]

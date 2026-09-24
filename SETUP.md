@@ -137,6 +137,10 @@ HEAL_API_KEY=...
 **Set a spending cap on the key before you use it.** An agent or a healing run can make many requests quickly.
 Never commit `.env`, and never paste its content into an issue.
 
+`robotframework-heal` reads `.env` itself, and its `HEAL_*` values there **override** the same variables in your
+shell. That is the opposite of `SHOP_URL` and `SHOP_SPACE`, where your shell wins. To try another model for a
+single run, change `.env` rather than exporting the variable.
+
 ## Platforms
 
 Tested: Windows x64, macOS 13 or newer (Apple silicon and Intel), and Linux x64 and arm64 with glibc 2.28 or

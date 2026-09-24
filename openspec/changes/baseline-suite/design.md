@@ -86,10 +86,10 @@ Both carry the `broken` tag and fail under every preset, so the matrix lists the
 
 ### D6. The matrix as data, and its verification
 
-`docs/facilitator/suite-outcomes.yaml` lists, for each of `clean`, `stage2`, `stage3`, `stage4`, `buggy` and `drift_and_bug`, the failing tests with a reason code (`broken`, `drift:<kind>` or `defect:<criterion>`). `docs/facilitator/suite-outcomes.md` explains it for facilitators and the Module 8 triage.
+`docs/facilitator/suite-outcomes.toml` (TOML rather than YAML: Python's standard `tomllib` reads it, where YAML would lean on PyYAML, present only as a transitive dependency) records each test's locator kind and lists, for each of `clean`, `stage2`, `stage3`, `stage4`, `buggy` and `drift_and_bug`, the failing tests with a reason code (`broken`, `drift:<kind>` or `defect:<criterion>`). `docs/facilitator/suite-outcomes.md` explains it for facilitators and the Module 8 triage.
 
 `tools/verify_outcomes.py` does the following for each preset:
-1. apply the preset through the `shop` helper, in the configured space;
+1. apply `clean` and then the preset through the `shop` helper, in the configured space. Presets compose - `buggy` keeps the current locator stage - so each preset is measured from `clean` (found when a run of `buggy` after `stage4` failed two drift-only tests);
 2. run `uv run robotcode robot` into a temporary output directory;
 3. read `output.xml`;
 4. compare the failing set with the data.
