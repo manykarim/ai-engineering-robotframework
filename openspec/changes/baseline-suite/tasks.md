@@ -36,7 +36,7 @@
   - run against the local `0.3.0` shop, it applies all six presets and reports no difference;
   - on a copy of the data with one expected outcome changed, it names that test and preset and exits non-zero;
   - afterwards the space status names `clean`.
-- [ ] 4.3 Verify the matrix on the shared instance. Verify: `verify_outcomes.py` with the shared profile in a throwaway space reports no difference, the space reads `clean` afterwards, and the status of `default` is unchanged.
+- [x] 4.3 Verify the matrix on the shared instance. Verify: `verify_outcomes.py` with the shared profile in a throwaway space reports no difference, the space reads `clean` afterwards, and the status of `default` is unchanged.
 
 ## 5. Healing
 
