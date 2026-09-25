@@ -95,6 +95,16 @@ Get Highlight Prices
     END
     RETURN    ${prices}
 
+Get Highlight Names
+    [Documentation]    The product names shown in "Handpicked highlights", in page order.
+    @{links}=    Get Texts    ${HIGHLIGHTS} >> role=link
+    @{names}=    Create List
+    FOR    ${text}    IN    @{links}
+        ${name}=    Replace String Using Regexp    ${text}    \\$[0-9,]+\\.[0-9]{2}    ${EMPTY}
+        Append To List    ${names}    ${name.strip()}
+    END
+    RETURN    ${names}
+
 Format Price
     [Documentation]    ``249.99`` as the shop shows it: ``$249.99``.
     [Arguments]    ${amount}
