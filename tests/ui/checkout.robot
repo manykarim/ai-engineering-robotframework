@@ -26,7 +26,7 @@ WEB-006_AC-1 Order Total Adds Up
 
 WEB-006_AC-7 Successful Order
     [Documentation]    A valid order shows a confirmation with an order number ORD- plus 8 hex characters.
-    Fill Checkout Form By Field Ids    test@example.com    Test User    123 Test Street, City
+    Fill Checkout Form    test@example.com    Test User    123 Test Street, City
     Place Order
     ${message}=    Get Order Confirmation
     ${numbers}=    Get Regexp Matches    ${message}    \\bORD-[0-9A-F]{8}\\b
