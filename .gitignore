@@ -17,3 +17,6 @@ browser/
 
 # Documentation site (ci-and-site).
 node_modules/
+
+# The Robot Framework MCP server's working files (Lab 6).
+.robotmcp_artifacts/
