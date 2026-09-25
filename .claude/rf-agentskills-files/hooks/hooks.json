@@ -1,0 +1,52 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/tmp/claude-1000/-mnt-c-workspace-ai-engineering-robotframework/6fe17ce9-00bd-4179-bc22-dbf725b60a81/scratchpad/rehearsal/repo/.claude/rf-agentskills-files/scripts/validate_robot.mjs\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/tmp/claude-1000/-mnt-c-workspace-ai-engineering-robotframework/6fe17ce9-00bd-4179-bc22-dbf725b60a81/scratchpad/rehearsal/repo/.claude/rf-agentskills-files/scripts/maybe_inject_rf_context.mjs\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/tmp/claude-1000/-mnt-c-workspace-ai-engineering-robotframework/6fe17ce9-00bd-4179-bc22-dbf725b60a81/scratchpad/rehearsal/repo/.claude/rf-agentskills-files/scripts/check_rf_environment.mjs\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"/tmp/claude-1000/-mnt-c-workspace-ai-engineering-robotframework/6fe17ce9-00bd-4179-bc22-dbf725b60a81/scratchpad/rehearsal/repo/.claude/rf-agentskills-files/scripts/maybe_remind_robot_tests.mjs\""
+          },
+          {
+            "type": "command",
+            "command": "node \"/tmp/claude-1000/-mnt-c-workspace-ai-engineering-robotframework/6fe17ce9-00bd-4179-bc22-dbf725b60a81/scratchpad/rehearsal/repo/.claude/rf-agentskills-files/scripts/validate_robot_project.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
