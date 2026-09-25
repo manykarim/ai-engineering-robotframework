@@ -101,3 +101,37 @@ Where Codex diverged, and what changed:
 - **Network.** Test runs need `sandbox_workspace_write.network_access=true`, as `docs/environments.md` says.
 - **Plugin scope.** `codex plugin add` installs for the user only. The rehearsal removed the plugin and its
   marketplace afterwards.
+
+## Labs 5 to 8 with Claude Code (2026-09-24 and 25)
+
+Continued in the same clone. Lab 5 ran with `--strict-mcp-config` and no server: no MCP tool was called. Agent time
+is the sum of the sessions' own durations; the clone's machine slept overnight during Lab 5.
+
+| Lab | Result | Agent time | Tokens (in / out) |
+|---|---|---|---|
+| 5 | checklist holds for all three stories (WEB-004, WEB-003, WEB-005): each change proposed, reviewed against the *Plan review* list, applied with all tasks done, run green, and archived to `openspec/specs/suite/<area>`; the Module 5 test fixed from the specification alone and untagged | 28 min for WEB-004 (propose 14, review 5, apply 7, archive 3); 48 min for the two other stories | 14.6 M / 143 k for WEB-004 |
+| 6 | checklist holds: the server connected, WEB-004_AC-3 rebuilt in 31 MCP calls, the agent kept the better version and deleted the other | 7 min | 3.1 M / 35 k |
+| 7 | checklist holds except the filing (below): all three hooks behaved, the inline locator moved into a keyword, `buggy` failed exactly the 3 defect tests, an issue drafted for one of them, and after the reset the suite was green and commits allowed | 5 min | 1.6 M / 21 k |
+| 8 | checklist holds: 4 tests failed under `drift_and_bug`, 2 with healing (the two defects), no test file changed; the stretch goal repaired `WEB-006_AC-7 Successful Order` onto the field labels, and it passes under `drift_and_bug` and `clean` | 6 min | 2.2 M / 29 k |
+
+After all labs, the rehearsed suite has 30 tests, and all of them pass in a freshly reset shop.
+
+Found and changed:
+- **Lab 5 is tight.** Propose, pair review and apply fill the 30 minutes. Lab 5 now tells participants that the
+  propose step takes minutes, and offers a two-criteria slice; the run sheet makes it the overrun action.
+- **Lab 5, the first rehearsal of WEB-004** stopped half-way through apply: the agent started a check in the
+  background, and a headless session ends with the agent's answer. That is a property of prompt mode, not of the
+  lab. Participants work interactively. The rehearsal was repeated with foreground commands only.
+- **Lab 6** writes `.robotmcp_artifacts/` into the repository root; it is now ignored by git.
+- **Lab 7, step 7** was not rehearsed: the rehearsal ran in the workshop's own repository, not in a fork, and filing
+  a real issue there was not wanted. The draft in `results/issue.md` was complete. **Open: file one issue from a
+  test fork before the workshop.**
+
+## Still to do before the workshop tag
+
+| Check | Who | State |
+|---|---|---|
+| The toolchain on macOS 13+ on Apple silicon (`setup-check` green, the suite runs) | a maintainer with a Mac | open |
+| One human walkthrough of Labs 2 to 6, to find what an agent rehearsal cannot: unclear wording | a maintainer | open |
+| Lab 7's filing step, from a test fork | a maintainer | open |
+| Lab 9 and its transcript | `ci-and-site` | open |

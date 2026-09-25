@@ -40,7 +40,9 @@ about what it adds.
    The story is how a product owner wrote it. The specification is the same behaviour, stated precisely enough to
    test. When they differ, the specification wins.
 
-2. **Propose** (5 minutes). Start the propose workflow with your slice. For WEB-004:
+   Short on time, or told so by the facilitator? Take only the first two criteria of your slice.
+
+2. **Propose** (10 minutes). Start the propose workflow with your slice. For WEB-004:
 
    | Claude Code | Codex | GitHub Copilot |
    |---|---|---|
@@ -50,20 +52,21 @@ about what it adds.
    > labs/lab-05-prompt-to-green/stories/WEB-004_search_products.md as Robot Framework UI tests. The expected
    > behaviour is in openspec/specs/shop/search.
 
-   It creates a change in `openspec/changes/<name>/`: a proposal, specs, a design and tasks. No test yet.
+   It creates a change in `openspec/changes/<name>/`: a proposal, specs, a design and tasks. No test yet. The agent
+   reads the specification and the suite first, so this takes several minutes: read your story meanwhile.
 
-3. **Pair review the plan** (7 minutes, in your breakout). Share your screen with your partner and go through the
+3. **Pair review the plan** (6 minutes, in your breakout). Share your screen with your partner and go through the
    change together, with the *Plan review* list in [checklist.md](checklist.md). Review it like a junior engineer's
    plan: is this what we want built? Fix what you find, by editing the files or by telling your agent, before
    anything is built. Then swap.
 
-4. **Apply** (8 minutes). Let the agent build what the plan says:
+4. **Apply** (7 minutes). Let the agent build what the plan says:
 
    | Claude Code | Codex | GitHub Copilot |
    |---|---|---|
    | `/opsx:apply` | `$openspec-apply-change` | `/opsx-apply` |
 
-5. **Run and refine** (4 minutes). Run your new tests yourself:
+5. **Run and refine** (2 minutes). Run your new tests yourself:
 
    ```bash
    uv run robotcode robot tests/ui/<your file>.robot
@@ -76,7 +79,7 @@ about what it adds.
    uv run --no-sync python hooks/no_inline_locators.py tests/ui/<your file>.robot
    ```
 
-6. **Debug in conversation** (4 minutes). One of the two tests that fail on purpose is this lab's:
+6. **Debug in conversation** (3 minutes). One of the two tests that fail on purpose is this lab's:
 
    > The test "WEB-002_AC-4 Rating Filter" fails. Find the cause using only the files of this repository, including
    > its specifications. Do not open a browser and do not use an MCP server. Explain the cause and your evidence
