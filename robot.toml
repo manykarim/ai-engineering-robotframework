@@ -24,5 +24,6 @@ extend-listeners = { "Heal" = [] }
 # Written out although they are the defaults: fixes are proposals only, and a
 # failing assertion is never healed away. The time budget per failure is doubled
 # from heal's 60 s, so that a slow or busy model endpoint does not turn a healable
-# failure into an unhealed one.
-extend-env = { HEAL_FIX_TIER = "report", HEAL_HEAL_ASSERTIONS = "false", HEAL_MAX_FAILURE_SECONDS = "120" }
+# failure into an unhealed one. The last setting silences the banner that the healing library's AI framework
+# otherwise prints into the console.
+extend-env = { HEAL_FIX_TIER = "report", HEAL_HEAL_ASSERTIONS = "false", HEAL_MAX_FAILURE_SECONDS = "120", PYDANTIC_AI_NO_BANNER = "1" }

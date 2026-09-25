@@ -36,4 +36,5 @@ None.
 - **New files**: `.github/workflows/`, `.github/ISSUE_TEMPLATE/`, `CONTRIBUTING.md`, `website/`.
 - **Depends on** `workshop-foundation` (install path), `baseline-suite` (what CI runs) and `workshop-labs` (what the site renders). The site skeleton can start as soon as the foundation exists.
 - **Manual steps**, documented as tasks: enabling Pages, creating the Discussions categories, and the upstream secret.
+- **Takes over from `workshop-labs`** the rehearsal of Lab 9 and its fallback transcript, which need the workflows.
 - **Not in scope**: lab content, skills and the suite itself.

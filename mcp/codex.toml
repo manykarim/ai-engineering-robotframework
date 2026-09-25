@@ -1,0 +1,8 @@
+# The Robot Framework MCP server, started from this repository's own environment.
+# Copy into .codex/config.toml (project) - or add it with: codex mcp add robotframework -- uv run --no-sync rf-mcp
+[mcp_servers.robotframework]
+command = "uv"
+args = ["run", "--no-sync", "rf-mcp"]
+startup_timeout_sec = 60
+# robot.toml puts the repository root on the Python path; the MCP server does not read robot.toml.
+env = { PYTHONPATH = "." }

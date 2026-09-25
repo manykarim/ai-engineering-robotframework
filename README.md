@@ -26,11 +26,18 @@ guide, including the shared instance for machines without Docker, is [SETUP.md](
 
 | Path | What |
 |---|---|
+| `labs/` | The labs of the day, one folder each, with instructions and a checklist. Start at `labs/README.md`. |
+| `GLOSSARY.md` | The words of the day, in about ten minutes. |
 | `AGENTS.md` | The project context every coding agent reads. Deliberately short: Lab 2 builds it out. |
+| `tests/`, `resources/` | The test suite, deliberately imperfect, and its keywords. `docs/conventions.md` says how tests are written here. |
+| `skills/`, `hooks/`, `agents/`, `mcp/` | What the labs install: a skill template and a Jira skill, three hooks, three subagents, and the MCP server's configuration for each agent. |
+| `transcripts/` | Recorded walkthroughs of the labs, for when your agent fails. |
 | `shop/` | The pinned shop (`compose.yaml`) and a helper: `uv run --no-sync python -m shop status`. |
 | `setup-check/` | The environment check. |
-| `robot.toml` | Robot Framework settings and the `local` and `shared` profiles. |
-| `openspec/` | Specifications: `shop/*` describes the shop, `workshop/*` this repository. |
+| `robot.toml` | Robot Framework settings and the `local`, `shared` and `heal` profiles. |
+| `openspec/` | Specifications: `shop/*` describes the shop, `suite/*` what your tests verify, `workshop/*` this repository. |
+| `docs/` | Conventions, environments and agent choice, and `docs/facilitator/` for the people running the day. |
+| `tools/` | Maintainer checks: the lab contract, the suite's expected outcomes, transcripts. |
 
 ## License
 
