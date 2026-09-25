@@ -78,7 +78,7 @@
 
 ## 6. The solutions branch
 
-- [ ] 6.1 Build `solutions` from the rehearsal clone: one commit per lab that produces files, in lab order, each message starting with the lab folder's name (design D8). Verify:
+- [x] 6.1 Build `solutions` from the rehearsal clone: one commit per lab that produces files, in lab order, each message starting with the lab folder's name (design D8). Verify:
   - `git log --oneline main..solutions` shows the lab commits;
   - in a freshly reset space, the whole suite on `solutions` passes, including the two tests `main` ships broken and the rehearsed Module 5 tests.
 - [ ] 6.2 After this change is merged, rebase `solutions` onto `main` and push it. Verify:
