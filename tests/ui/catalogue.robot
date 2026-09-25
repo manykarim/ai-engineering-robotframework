@@ -74,11 +74,16 @@ WEB-002_AC-10 Reset Filters
     Should Be Equal As Integers    ${cards}    12
 
 WEB-002_AC-12 Handpicked Highlights
-    [Documentation]    "Handpicked highlights" shows the three highest prices, highest first.
-    [Tags]    broken
+    [Documentation]    "Handpicked highlights" shows the three most expensive products, highest price first.
     @{catalogue}=    Get Catalogue From API
-    ${expected}=    Evaluate    [str(p) for p in sorted((float(x["price"]) for x in $catalogue), reverse=True)[:3]]
+    @{top}=    Evaluate    sorted($catalogue, key=lambda product: product["price"], reverse=True)[:3]
     Go To Catalogue
-    ${shown}=    Get Highlight Prices
-    Should Be True    $shown == $expected
-    ...    msg=The highlights should show the three highest prices, highest first.
+    @{names}=    Get Highlight Names
+    @{prices}=    Get Highlight Prices
+    Length Should Be    ${names}    3
+    FOR    ${product}    ${name}    ${price}    IN ZIP    ${top}    ${names}    ${prices}
+        Should Be Equal    ${name}    ${product}[name]
+        ...    msg=The highlights should show the three most expensive products, highest price first.
+        ${expected}=    Format Price    ${product}[price]
+        Should Be Equal    ${price}    ${expected}    msg=${name} should cost ${expected}.
+    END

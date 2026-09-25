@@ -29,3 +29,6 @@ Before writing or changing a test or a keyword, read [docs/conventions.md](docs/
 - Never read, print or copy `.env`.
 - Never install tools the repository does not pin: no `pip install`, no `rfbrowser init`, no new dependencies.
 - Never change `openspec/specs/shop/` to match what the shop does.
+
+Use RobotCode through uv (`uv run robotcode ...`) to discover tests and keywords, read library docs, debug
+failing tests and read results.
