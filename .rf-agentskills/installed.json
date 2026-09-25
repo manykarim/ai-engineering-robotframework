@@ -1,0 +1,475 @@
+{
+  "version": 1,
+  "installations": [
+    {
+      "agent": "claude-code",
+      "scope": "project",
+      "installed_at": "2026-09-24T19:53:01Z",
+      "bundle_version": "0.6.0",
+      "files": [
+        {
+          "path": ".claude/skills/appium/SKILL.md",
+          "sha256": "76ad728d4d322eafc9965cec7e5e0f4ae7ef387c55ba633b46ebde48aa80a1fa",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/assets/examples/android-basic.robot",
+          "sha256": "7a3e2e9fc2dcae3a6eb168abd232cadc9720801053e29bc6080e1ca94b1ef051",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/assets/examples/device-actions.robot",
+          "sha256": "18dc38e9834a8fc5202ae72850cb72ce4e2881e1710270b9b5e7f16a5e8d1488",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/assets/examples/gestures-example.robot",
+          "sha256": "925cb38fdd93b579487277aaf81e8ce0e06a3d253f28a46681b1651f1bc8e010",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/assets/examples/hybrid-app.robot",
+          "sha256": "bb886a4c807a66057a97b0b2d7259011fc741ce0fca4c6de3fb47b28b562d823",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/assets/examples/ios-basic.robot",
+          "sha256": "f0254aabe981ea0f0b84ca58b41b8fb76c859440546b17fa790649f5c35404b6",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/android-specific.md",
+          "sha256": "f76f12532b7b452a2ee79c52c9f8aa8916f6f89d9086b570b26d62194b68956c",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/device-capabilities.md",
+          "sha256": "04bc0abf5dfe3c4b046b9451b1277ec949302c0a3ef42114f20d79f5aa7de9cd",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/gestures-touch.md",
+          "sha256": "6508c52a2f5d220165904361f5604cb6d5d96a6da2d8cc86aed36511960884b8",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/ios-specific.md",
+          "sha256": "f50dfd0adeedb59bf7acb32049bdd396ee3435b9d9923d85d7b793d6a84f00c9",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/keywords-reference.md",
+          "sha256": "d751ae3a5ba097b61d84f4812a219ebfe2d04ecccabfea9ae9ca9da4410d2d49",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/locators-mobile.md",
+          "sha256": "e33d1787734564a2d9348412957d84f45694855cbe02a94d86104da9a147f02a",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/appium/references/troubleshooting.md",
+          "sha256": "beefcb02a4787395fa32456d7802a5ee27a5190f1b3b16750570f61d64a8bab4",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/SKILL.md",
+          "sha256": "256df9888dfe93d488e21d4c9466d65035bcaa2550e3c0040d0bdc7d410af685",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/assets/examples/authentication-flow.robot",
+          "sha256": "db578fcff28db5f8f5f0d5e709a51411caa702a4762567b76a3d57dbb12a7189",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/assets/examples/basic-web-test.robot",
+          "sha256": "84d85676c4719c70164064e59d46a491bc562f266350ee311157ae539523006a",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/assets/examples/file-operations.robot",
+          "sha256": "7e76276fc93b3d68e1cd211186fcb6e9357594200097b95d8884e80540bb0de6",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/assets/examples/form-handling.robot",
+          "sha256": "196207a5014a2c0077e74088758a96e61e72440c82d229c2cea0619c71053862",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/assets/examples/iframe-shadow-dom.robot",
+          "sha256": "2f14a7404dfca3a9bbe01d08ffa39ae2b52dbec191d1f11e0baaab2f83f6bc4c",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/assertion-engine.md",
+          "sha256": "4f6eb56b7f4042de1972d5317a2db1af8988d5fceb98333fb9d35b339d5cdc94",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/authentication-storage.md",
+          "sha256": "17c282fa6f81d63467af3db95baa8656f7182ad1a5ed1a5508b0bccd50b5a1bc",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/browser-context-page.md",
+          "sha256": "7af69143d8a908e21229abf00138a604e70ae48e67614fb3f30a4475ffd25378",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/downloads-uploads.md",
+          "sha256": "2f072628f00936e574026ef1201eac5a759fe44777d622d7459e880c12236835",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/iframes-shadow-dom.md",
+          "sha256": "753de9aed569bed7e029bacacd1a9c167c74ed2f82aa759fa68feabb942d6675",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/keywords-reference.md",
+          "sha256": "3b716df052fd5656821ec14de3993ff34270510bf4c867ba4f305d4cf2ba9c0d",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/locators.md",
+          "sha256": "a3ecc163048882263b08df27271e20ac0db7f300bfb0eb71166baacf1e0127e2",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/tabs-windows.md",
+          "sha256": "5326e9223edd21458f218e1f8041f4ca3dc1c9b9f627ee30f08ff87963ac341e",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/browser/references/troubleshooting.md",
+          "sha256": "0544ab9749760f166573771831ed521fa062b820c5ed46aaebaf6c17c9887421",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/keyword-builder/SKILL.md",
+          "sha256": "374abea7d5482bfdb2d242b33f269d0e3f2c6a67fd6885c26a96c4d97e9de316",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/libdoc-explain/SKILL.md",
+          "sha256": "1a8d43e82f8022f961a8f510c623c948dd5549ae9ca64bb3a2a041a91e73eaf3",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/libdoc-search/SKILL.md",
+          "sha256": "fc27227cb586bc6aae168f40f99cd9c4afab877a3dfd2efc3194893f8113b3c5",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/SKILL.md",
+          "sha256": "7e7f364a5f71b58f45882336ca60b17d73cf3c5c9cd7ead78c11acea8e87f384",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/assets/examples/calculator.robot",
+          "sha256": "b1ff7fb18fc6b2bec608545874f9f08b9c1e07ea0fbe06f9456aff0b3a810e1b",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/assets/examples/mock-deterministic.robot",
+          "sha256": "61b7f4a6d5741f73e715e5e9e2a904266b8395c25984ea22af89b6f08aa3b023",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/references/cli-and-inspector.md",
+          "sha256": "426d8af5a6c963a9c3b3455715be1ebd231e39e4272ffaae76c02b393e67eff0",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/references/keywords-reference.md",
+          "sha256": "a4988521a9b08867bd5b93e2332befb8e4f12fe0706497f6ee960c6b94859e3f",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/references/locators-and-queries.md",
+          "sha256": "db0d50d18bcf152360329541aca448f97ab826cbfabe5fced6f35b411b1969ac",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/references/platform-setup.md",
+          "sha256": "c371db86578133bbb268c6ee48f8abd7625f5168486524e67f44fc129ba18b9d",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/platynui/references/status-and-migration.md",
+          "sha256": "d31f9d24e41e62ed9f984be034084c3c2422b4431b41265287c5a1143b9a7d76",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/SKILL.md",
+          "sha256": "d3dde6b06f0a0d1c398aadf2bce272d95df95aa11ddcc7b721227e3abbee82b2",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/assets/examples/authentication-patterns.robot",
+          "sha256": "bf2389b392268da0cb3b45300e46712aebe39769098a118b4c91a729ac7a314c",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/assets/examples/basic-crud.robot",
+          "sha256": "e3fdb2991a8ce9c8768f9e9a65147ae7e67c2742233bfe462427b3652fbefd16",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/assets/examples/file-upload.robot",
+          "sha256": "9be2864d113cb82d4a6d08672fa9461f636fef19da9506d57b4c1648b9adf6d6",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/assets/examples/session-handling.robot",
+          "sha256": "8aca06016f83d1a7d22e68d9b389148bb813f2704d0738f9a547f8b1b7620d5a",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/references/authentication.md",
+          "sha256": "6391b80d313d6dfe5a4d333af6959e9e8fdd0bc9c6aee4fbd365a82243b5edc5",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/references/http-methods.md",
+          "sha256": "6df5be8ceecc6f1f5a484b189d99b8c61207a622fab4c71afe8c16dba7198956",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/references/keywords-reference.md",
+          "sha256": "54b932a755b1658a910a9e44dbcb7e6f3fa76c9d64042fd9c586cbbbc41d064d",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/references/request-options.md",
+          "sha256": "8f1b1f3e03b66c44c2b2fb0ab06677ef902eb631cfd728edfee4fced0db172b7",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/references/response-validation.md",
+          "sha256": "910557267ede54b808a22574b1298ef0630033ed48b48faaaefad0197a30469d",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/requests/references/troubleshooting.md",
+          "sha256": "589987c87187007cdaed52df69ac55820af3173187ec784926caf175295f38a7",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/resource-architect/SKILL.md",
+          "sha256": "7681152388b99494d661cf40687c8262bdf08529121364b3b7d1e8f091400784",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/SKILL.md",
+          "sha256": "cb28acf615e3d6a12f656fcf153aa720303ca43544c7c8cf3ae10aef30735eba",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/assets/examples/basic-rest.robot",
+          "sha256": "4c32d85f6318b64aaab0c07886e9ab82a9cf6bc4b20e38f9a75de3b9f53f434c",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/assets/examples/json-manipulation.robot",
+          "sha256": "0b8fc6d3f9bf744e72b4c5609f57ba2235fc5984f446b50fe82dbc55d03eba49",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/assets/examples/oauth-flow.robot",
+          "sha256": "94da923db38c077f2f9d941ca9d3561faf9af2225e966b4ece3dbf762af737e0",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/assets/examples/schema-validation.robot",
+          "sha256": "7000fd2c9fb8052cd16bb50cd5265743396141c18a049bcbe8990f5c54366fac",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/references/authentication.md",
+          "sha256": "c9d5172b5efe2914e597531f592fd9663cb911a768f92d5c814e85e1e584327c",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/references/json-handling.md",
+          "sha256": "4341409ecf2ca2c59784e467dc77b19545fac3686b83e4787db023603a73d566",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/references/keywords-reference.md",
+          "sha256": "3a8cdb167ccca2d69c536786381e41e8e1f30bae11ae13a47f6dcd5bdcd7c0ef",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/references/schema-validation.md",
+          "sha256": "a89627f3231557476aba251f961c5478624f09c6a25cb71fc38627f60e7fd27a",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/restinstance/references/troubleshooting.md",
+          "sha256": "b5fb9186d39758d2908c04971c530026707bfe8da48f0c50f666bb88d4b4ad60",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/results/SKILL.md",
+          "sha256": "8ff2f907cb953faeda2a9a7c7ff7eb21256721451f3f2e045b3c6d9419c664cb",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/SKILL.md",
+          "sha256": "ee0d10733b7882c02d245ba916cb9ff9ca217bee529b55288be649393a02fd53",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/assets/examples/basic-web-test.robot",
+          "sha256": "4a163d2a1d6ea9bb9a83407d1f70185969a63030908e907935a98b1f9e1760ae",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/assets/examples/form-handling.robot",
+          "sha256": "a0def7531e60564715cbd3f256b7f18316d4aff5c4e578e1dea9b6c98fdff0ab",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/assets/examples/multi-window.robot",
+          "sha256": "2294761e54363ed94afc78b13a31826d76f41b0f0838f38e6177583d80dca31f",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/assets/examples/selenium-grid.robot",
+          "sha256": "73f59108870e31c749466db9a0fc4a455f2d40761123a38e166f8fdc59e1890d",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/assets/examples/wait-patterns.robot",
+          "sha256": "2217b7e660bfdfca1ba02f9b3981aea77e9a7f82ad4659ef3f0c553e3e27c95e",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/frames-windows.md",
+          "sha256": "1917f06e2e18927475949f5b673f9704db8b74d5880bc9a10f980c1975d2968a",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/javascript-execution.md",
+          "sha256": "64a4fd1b840a289551eca00e3960e4f470de05ad65fafcc985c57f4d7de85f79",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/keywords-reference.md",
+          "sha256": "631b48fe36308df6664880252c8356a534de9d5e4bf669f8623eec11b17047bf",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/locators.md",
+          "sha256": "d7a9af556706b7cf5f1df7bff1e5ec75edb8bb3a2d3f18fda1ef29ee7ce77c4c",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/screenshots-logs.md",
+          "sha256": "84080301930a230130606dcd59ea84d73dc62db948041ce58a4716552faaf85d",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/troubleshooting.md",
+          "sha256": "66bfbdc704bcedb7c6bb5c06b7f2f36d1beb16b5a3b1ee8118f79e508cbb7d42",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/waiting-strategies.md",
+          "sha256": "bb4ec7b3e60d302fc77cdd4cea06f23bcff93cac20ca8fe61b9b2249499b2acd",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/selenium/references/webdriver-setup.md",
+          "sha256": "6444483fb5851387184fd366e6dec3063fec6256d14b85376cb1314d75675fe7",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/skills/testcase-builder/SKILL.md",
+          "sha256": "fba65f36f9816a6a4bbc929f14df697051c6885ad4959cb406a2b005a9e4e7c5",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/check_rf_environment.mjs",
+          "sha256": "71248a7f0b3ae265c57c0d46bf6dcc9bb17cef74cee36cc3d024ca129da9d842",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/keyword_builder.py",
+          "sha256": "1b7c3ee4badd17b55a63a9013929afedecdafeb9a0812dc35cfcbe24774c52f9",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/maybe_inject_rf_context.mjs",
+          "sha256": "abc3a7bd38eeecb7c1037ca576e7914af2364517539190e950dee1056184d2a7",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/maybe_remind_robot_tests.mjs",
+          "sha256": "b1896fed23b259343c61b780fff43ad8e7bbb8f3e337b4367deae6b5b8e04785",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/resource_architect.py",
+          "sha256": "6b7986a72e68e62436f8fa7798d8c8f93acc5da1a2b1c430dff41e3ba53ec9ee",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/rf_libdoc.py",
+          "sha256": "fcabd2eb7e6244d0311012107de0039d52b13a54ac30666b6b99cd186aadd12e",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/rf_results.py",
+          "sha256": "fa78b69c852529263234c3f294f2b247de47d851a08ee43a8d37012b650db5d5",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/testcase_builder.py",
+          "sha256": "87350061ff22f9e65b390c6129009d512af616bd128cf1700c680a282bcedb13",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/validate_robot.mjs",
+          "sha256": "d69c1307d40482efc165c9fbf4b7c8dabecf7d8d07df479c468b58fe825294fb",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/validate_robot_project.mjs",
+          "sha256": "76ccd6b58e2590c7a5a8f77aea9d107993acd344ec9465ae6da16b87b8fe46db",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/servers/rf-tools-server.py",
+          "sha256": "6aa1f1abdcd261a6fbec72738ad7bf42789ec9fa6e39bb1a943392cf10606a2b",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/hooks/README.md",
+          "sha256": "586f037781ec6c578c86bac7bec14d99293524fc502683fb104db149d50395bb",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/hooks/hooks.json",
+          "sha256": "a4fa0c5e8b40156d8aed11baab021675a59fe1cc44cb41240a53c660b2b89795",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/.claude-plugin/plugin.json",
+          "sha256": "5960de97d25b26c0e22be897de2d697a3ad857242e88ff049a970b599f247f40",
+          "transform": "plugin_root_substitution"
+        },
+        {
+          "path": ".claude/rf-agentskills-files/scripts/python_runtime.json",
+          "sha256": "ec541beabac58dba8ccd46622bbdf0349bfc1c9dd7eaf2f9177b3e14f276d05f",
+          "transform": "python_runtime_pin"
+        }
+      ],
+      "config_merges": [],
+      "notes": []
+    }
+  ]
+}
