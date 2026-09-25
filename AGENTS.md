@@ -1,22 +1,31 @@
 # AGENTS.md
 
-Participant repository of the workshop "Agentic Engineering with Robot Framework".
-The system under test is the demo shop, which runs from a published image.
+Participant repository of the workshop "Agentic Engineering with Robot Framework": a Robot Framework suite that
+tests the demo shop.
 
-This file is deliberately short: Lab 2 builds it out.
+Before installing anything or running tests, read docs/agent-environment.md.
 
-## Setup
+## System under test
 
-- Install: `uv sync --locked`, then `uv run --no-sync rfbrowser install chromium`.
-- Check the environment: `uv run --no-sync python setup-check/check.py`.
-
-## The shop
-
+- The demo shop: a web shop with a UI and an API, run from a published image pinned in `shop/compose.yaml`.
 - Local (default): `docker compose -f shop/compose.yaml up -d`, then `http://localhost:9090`.
-- Shared instance: set `SHOP_URL` and `SHOP_SPACE` (your GitHub handle) in `.env`.
-- Status, presets and resets: `uv run --no-sync python -m shop status`.
+- Shared: one instance for everyone, one space per participant, configured in `.env`.
+- `uv run --no-sync python -m shop status` shows the shop's version, the space and the presets that hold.
 
-## Running tests
+## Conventions
 
-- `uv run robotcode robot <path>`; add `-p shared` for the shared instance.
-- Plain `robot` ignores `robot.toml` and does not know where the shop is.
+Before writing or changing a test or a keyword, read [docs/conventions.md](docs/conventions.md).
+
+## Specifications
+
+- `openspec/specs/shop/` describes what the shop does, one requirement per criterion, such as `WEB-002_AC-5`.
+- It is the reference for expected behaviour: assert what the spec says, not what the shop happens to do.
+- `openspec/specs/workshop/` describes this repository, not the shop. Tests do not need it.
+
+## Boundaries
+
+- Never edit `resources/legacy.resource`.
+- Never apply a preset or reset the shop from a test, nor on your own initiative.
+- Never read, print or copy `.env`.
+- Never install tools the repository does not pin: no `pip install`, no `rfbrowser init`, no new dependencies.
+- Never change `openspec/specs/shop/` to match what the shop does.
