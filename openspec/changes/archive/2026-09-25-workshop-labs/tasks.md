@@ -81,10 +81,10 @@
 - [x] 6.1 Build `solutions` from the rehearsal clone: one commit per lab that produces files, in lab order, each message starting with the lab folder's name (design D8). Verify:
   - `git log --oneline main..solutions` shows the lab commits;
   - in a freshly reset space, the whole suite on `solutions` passes, including the two tests `main` ships broken and the rehearsed Module 5 tests.
-- [ ] 6.2 After this change is merged, rebase `solutions` onto `main` and push it. Verify:
+- [x] 6.2 After this change is merged, rebase `solutions` onto `main` and push it. Verify:
   - the suite on the pushed branch passes;
   - `main` still has the thin `AGENTS.md` and none of the lab results.
 
 ## 7. Close-out
 
-- [ ] 7.1 Validate and archive. Verify: `openspec validate workshop-labs --strict` passes. After the merge, the archive creates `workshop/labs`, `workshop/lab-assets`, `workshop/facilitation` and `workshop/solutions` with their Purpose, and renames and updates `workshop/agent-context`'s namespace requirement.
+- [x] 7.1 Validate and archive. Verify: `openspec validate workshop-labs --strict` passes. After the merge, the archive creates `workshop/labs`, `workshop/lab-assets`, `workshop/facilitation` and `workshop/solutions` with their Purpose, and renames and updates `workshop/agent-context`'s namespace requirement.
