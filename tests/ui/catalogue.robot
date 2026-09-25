@@ -45,9 +45,8 @@ WEB-002_AC-2 Categories Filter Group
 
 WEB-002_AC-4 Rating Filter
     [Documentation]    A rating filter offers an unchecked minimum-rating checkbox.
-    [Tags]    broken
     Go To Catalogue
-    Checkbox Should Be Unchecked    4 stars and up
+    Checkbox Should Be Unchecked    4 stars & up
 
 WEB-002_AC-7 Audio Filter Shows Only Audio
     [Documentation]    With only "Audio" checked, the grid shows only audio products.
