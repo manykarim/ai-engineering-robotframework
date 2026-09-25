@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "robotframework-agent-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "robotcodedev/robotframework-agent-plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "robotcode@robotframework-agent-plugins": true
+  }
+}
