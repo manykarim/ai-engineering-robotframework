@@ -30,12 +30,16 @@ The OpenSpec workflow - explore, propose, apply and archive - SHALL be available
 - **WHEN** a participant using Claude Code, Codex or GitHub Copilot looks for the propose workflow
 - **THEN** the agent offers it as a command or skill
 
-### Requirement: Two spec namespaces
-The OpenSpec configuration SHALL describe two namespaces: `shop/*` for the behaviour of the shop, which agents use as reference when writing tests, and `workshop/*` for the guarantees of this repository, which participants' agents do not need.
+### Requirement: Spec namespaces
+The OpenSpec configuration SHALL describe three namespaces: `shop/*` for the behaviour of the shop, which agents use as reference when writing tests; `suite/*` for what a participant's own tests verify, where the changes participants propose in Module 5 write their specs; and `workshop/*` for the guarantees of this repository, which participants' agents do not need. A change that adds or changes tests MUST NOT write to `shop/*` or `workshop/*`.
 
 #### Scenario: Context for a new artifact
 - **WHEN** an agent requests the instructions for any OpenSpec artifact
-- **THEN** the returned project context explains both namespaces and which one describes the shop
+- **THEN** the returned project context explains the three namespaces, which one describes the shop, and which one a change that adds tests writes to
+
+#### Scenario: A participant proposes tests for a story
+- **WHEN** a participant proposes a change that automates criteria of a shop story
+- **THEN** the change's delta specs are created under `suite/*`, and the main specs under `shop/*` and `workshop/*` are unchanged by its archive
 
 ### Requirement: Neutral shop specifications
 The OpenSpec configuration SHALL carry, as a rule for spec artifacts, that requirements under `shop/*` describe correct behaviour only and never name a feature flag, a locator stage, a planted bug, a locator or the purpose of a check. The rule MUST be scoped to `shop/*` so that it does not constrain `workshop/*`.
