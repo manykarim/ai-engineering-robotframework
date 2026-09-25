@@ -65,7 +65,7 @@ WEB-002_AC-10 Reset Filters
     Go To Catalogue
     Check Category    Audio
     Apply Filters
-    Click    role=link[name="Reset"]
+    Reset Filters
     Filter Checkboxes Should All Be Unchecked
     ${range}=    Get Price Range Values
     Should Be Equal    ${range}    ${{ ["39.50", "899.00"] }}
