@@ -61,19 +61,19 @@
   - the file is under 1,800 words (about ten minutes).
 - [x] 4.2 Write `docs/environments.md`: the local shop, the shared instance, no Docker, and the agent choice with where the labs differ. Verify: every lab difference named in a per-agent table of Labs 3-7 appears in it.
 - [x] 4.3 Write `docs/facilitator/run-sheet.md`: one row per module with time, preset, demonstration, lab, fallback and overrun action; the cut order and the beginner plan; the preset commands for the room; the workshop-key procedure of design D4; and the Module 5 whiteboard template. Verify: the times equal the timetable, and every preset named matches its lab.
-- [ ] 4.4 Write `docs/facilitator/cold-open.md` with commands, expected output and the backup `transcripts/cold-open.md`. Verify: each command runs against the local shop and shows the output the script expects.
+- [x] 4.4 Write `docs/facilitator/cold-open.md` with commands, expected output and the backup `transcripts/cold-open.md`. Verify: each command runs against the local shop and shows the output the script expects.
 - [x] 4.5 Write `docs/facilitator/triage-playbook.md`. Verify: every `setup-check` check that can fail is named with its fix, and each name matches a check in `setup-check/check.py`.
 - [x] 4.6 Update `README.md`'s "What is in here" with the new folders and guides. Verify: every path listed exists.
 
 ## 5. Rehearsal
 
 - [x] 5.1 Write `tools/transcript.py` (design D7). Verify: on a recorded Claude Code and a recorded Codex event stream, it writes Markdown with prompts, tool calls and answers; it rewrites the clone path and home directory; and it refuses when the stream contains a planted fake key.
-- [ ] 5.2 Rehearse Labs 0 and 2-8 with Claude Code, headless, in lab order in one fresh clone and a freshly reset space. Save a transcript per lab, and fix every instruction the run showed to be wrong or missing. Verify: each lab's checklist holds in the clone, and `rehearsal.md` records the date, agent version, duration and tokens per lab.
+- [x] 5.2 Rehearse Labs 0 and 2-8 with Claude Code, headless, in lab order in one fresh clone and a freshly reset space. Save a transcript per lab, and fix every instruction the run showed to be wrong or missing. Verify: each lab's checklist holds in the clone, and `rehearsal.md` records the date, agent version, duration and tokens per lab.
 - [x] 5.3 Rehearse Lab 5 with Claude Code and no MCP server (`--strict-mcp-config`). Verify: the slice's tests pass, and the run used no MCP tool.
 - [x] 5.4 Rehearse Labs 2-4 with Codex in a second fresh clone. Verify: `rehearsal.md` lists where Codex diverged from the instructions, and each divergence is either fixed in the lab or named in its per-agent table.
 - [x] 5.5 Record the Lab 8 healing report for the no-model path in `transcripts/lab-08-healing/`: the heals with old and new locator, the results, and a triage table. Verify: the secret scan finds nothing, and the report matches the `[heal.drift_and_bug]` outcomes.
-- [ ] 5.6 Record the cold open in `transcripts/cold-open.md`. Verify: it follows `cold-open.md` step by step.
-- [ ] 5.7 Scan `transcripts/` for secrets and local paths. Verify: no key, token, `.env` value, home directory or clone path is found.
+- [x] 5.6 Record the cold open in `transcripts/cold-open.md`. Verify: it follows `cold-open.md` step by step.
+- [x] 5.7 Scan `transcripts/` for secrets and local paths. Verify: no key, token, `.env` value, home directory or clone path is found.
 - [ ] 5.8 Carried over from `workshop-foundation` 1.4: install and check the toolchain on macOS 13+ on Apple silicon, with a maintainer's Mac. Verify: `setup-check` is green there, and `rehearsal.md` records it.
 
 ## 6. The solutions branch

@@ -17,6 +17,11 @@ uv run --no-sync python setup-check/check.py
 ```
 
 `setup-check` must show *Healing endpoint* as passed: the cold open heals with your own `HEAL_*` settings in `.env`.
+
+Rehearsed it in this clone already? Then `results/heal/history.sqlite` remembers the repairs, and the live run reuses
+them without asking the model: faster and deterministic, and the console says *"proactively replaced known-broken
+locator ... (from history)"*. Keep it for a safe run on stage, or `rm -rf results/heal` for a fresh heal.
+
 Open three windows side by side: a terminal, your agent (Claude Code) in the repository root, and the shop in a
 browser at `http://localhost:9090/products`. Open `transcripts/cold-open.md` in a browser tab and leave it there.
 
@@ -27,7 +32,7 @@ browser at `http://localhost:9090/products`. Open `transcripts/cold-open.md` in 
 | 1 | "Here is a user story criterion. Let's hand it to an agent." | Give Claude Code the prompt below. | The agent reads the spec and the conventions, adds a keyword to a resource and a test in `tests/ui/cold_open.robot`, runs it: **1 test, 1 passed**. |
 | 2 | "Now the shop gets a redesign overnight." | `uv run --no-sync python -m shop preset stage4`, then reload the shop in the browser. | The page looks the same to a person. |
 | 3 | "And the suite?" | `uv run robotcode robot --exclude broken` | **12 tests, 8 passed, 4 failed**: card prices, audio filter, order total and successful order. They are all locator failures. Your new test still passes: it uses the stable contract. |
-| 4 | "Same suite, unchanged, with a healing listener attached." | `uv run robotcode -p heal robot --exclude broken` | **12 tests, 12 passed.** The console reports each heal. |
+| 4 | "Same suite, unchanged, with a healing listener attached." | `uv run robotcode -p heal robot --exclude broken` | **12 tests, 12 passed.** The console reports each heal in a `heal:` line. |
 | 5 | "Every heal is a proposal, not a silent edit." | Open `results/heal/heal_report.html`; then `git status -- tests resources`. | About five heals, each with the old and new locator. `git status` shows only your new test and keyword: the heals changed no file. |
 | 6 | "Today you build every piece of this yourself, rung by rung." | Back to the slides: the ladder. | |
 
