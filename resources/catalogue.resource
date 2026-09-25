@@ -63,6 +63,11 @@ Apply Filters
     Click    ${FILTERS} >> role=button[name="Apply filters"]
     Wait For Elements State    ${GRID}    visible
 
+Reset Filters
+    [Documentation]    Clicks the "Reset" link, found by its visible text.
+    Click    ${FILTERS} >> a:has-text("Reset")
+    Wait For Elements State    ${GRID}    visible
+
 Get Category Checkbox Count
     ${count}=    Get Element Count    ${FILTERS} >> role=group[name="Categories"] >> role=checkbox
     RETURN    ${count}
