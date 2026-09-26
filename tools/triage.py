@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -30,6 +31,9 @@ INPUT_LIMIT = 20_000  # characters of failures and diff sent to the model
 MAX_TOKENS = 1_200
 TIMEOUT = 120  # seconds
 USER_AGENT = "ai-engineering-robotframework-triage"
+# Reasoning models behind OpenAI-compatible endpoints may put their thinking into the answer; a block the token
+# limit cut off has no end tag.
+THINKING = re.compile(r"<think>.*?(?:</think>|\Z)", re.DOTALL)
 ENABLE = ("Add a Claude credential (`ANTHROPIC_API_KEY` or `CLAUDE_CODE_OAUTH_TOKEN`), or the `TRIAGE_MODEL`, "
           "`TRIAGE_BASE_URL` and `TRIAGE_API_KEY` secrets of any OpenAI-compatible endpoint, to get a root-cause "
           "analysis here. `SETUP.md` explains both; set a spending cap first.")
@@ -80,7 +84,10 @@ def ask_model(failed: list[tuple[str, str, str]], diff: str) -> str:
                  "User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
         answer = json.load(response)
-    return answer["choices"][0]["message"]["content"].strip()
+    analysis = THINKING.sub("", answer["choices"][0]["message"].get("content") or "").strip()
+    if not analysis:
+        raise ValueError("the model returned no answer")
+    return analysis
 
 
 def main(argv: list[str] | None = None) -> int:
