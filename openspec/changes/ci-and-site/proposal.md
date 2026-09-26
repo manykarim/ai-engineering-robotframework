@@ -6,10 +6,12 @@ Module 9 runs on each participant's fork: a pushed break must reach a pull reque
 
 - **`run-tests.yml`**: runs the suite against the shop, started as a service container from the pinned image, and uploads the results.
 - **`agent-triage.yml`**: when the suite fails, the run's `robotcode results` go to an agent, which posts a root-cause comment on the pull request.
-  - It is pinned throughout: action SHAs, the model version, timeouts and a token budget.
-  - The LLM key is a repository or fork secret, documented with a bold spending-cap warning.
-  - **Without a key it degrades** to posting the `robotcode results` summary alone, so the lab still works. The agent and provider are decided in the design.
-- **`heal-suggestions.yml`** (Lab 9 stretch): `robotframework-heal` at its `patch` tier turns heals into a suggestion pull request, never an automatic merge.
+  - With a Claude credential (an API key, or the OAuth token of a Claude subscription), the agent is the Claude Code GitHub Action.
+  - Otherwise, with the `TRIAGE_*` settings of any OpenAI-compatible endpoint, a pinned script makes one model call.
+  - **Without either, it degrades** to posting the `robotcode results` summary alone, so the lab still works.
+  - It is pinned throughout: action SHAs, the model versions, timeouts and a turn or token budget. The credentials are repository or fork secrets, documented with a bold spending-cap warning.
+- **`heal-suggestions.yml`** (Lab 9 stretch): `robotframework-heal` at its `patch` tier turns heals into a suggestion pull request, never an automatic merge. Without a healing model it ends with a notice instead of failing.
+- **`docs-site.yml`**: builds the site on pull requests and deploys it from `main`, in the workshop's repository only.
 - **Fork-safe by rule**: nothing fails, deploys or spends money merely because a fork enabled Actions. Anything upstream-only is guarded by the repository name.
 - **Participation**:
   - issue templates: `setup-problem.yml` asks for `setup-check --json` output; `bug-report.yml` doubles as the Lab 7 target format;
@@ -36,5 +38,5 @@ None.
 - **New files**: `.github/workflows/`, `.github/ISSUE_TEMPLATE/`, `CONTRIBUTING.md`, `website/`.
 - **Depends on** `workshop-foundation` (install path), `baseline-suite` (what CI runs) and `workshop-labs` (what the site renders). The site skeleton can start as soon as the foundation exists.
 - **Manual steps**, documented as tasks: enabling Pages, creating the Discussions categories, and the upstream secret.
-- **Takes over from `workshop-labs`** the rehearsal of Lab 9 and its fallback transcript, which need the workflows.
-- **Not in scope**: lab content, skills and the suite itself.
+- **Takes over from `workshop-labs`** the rehearsal of Lab 9 and its fallback transcript, which need the workflows, and rebases the `solutions` branch once more.
+- **Not in scope**: lab content, skills and the suite itself. The one exception is Lab 9's text, which names the secrets and workflows this change defines.
