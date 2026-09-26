@@ -9,7 +9,7 @@
 
 ## 2. Workflows
 
-- [ ] 2.1 Write `.github/workflows/run-tests.yml` (design D2). Verify:
+- [x] 2.1 Write `.github/workflows/run-tests.yml` (design D2). Verify:
   - `actionlint` passes;
   - on a push to a branch of the workshop's repository, the run is green, `robot-results` can be downloaded, and the job summary shows the results summary;
   - a pushed break fails the run and names the test.
