@@ -49,11 +49,11 @@ Every third-party action SHALL be referenced by a full commit SHA, with the rele
 - **THEN** every `uses:` line ends in a 40-character SHA followed by a release comment
 
 ### Requirement: Heal suggestions on demand
-A workflow started by hand SHALL run the suite with the healing profile against a drifted shop and, when heals were made, open a pull request that proposes them as changes. It MUST NOT merge that pull request or push to the default branch. Without a configured healing model, it SHALL end successfully with a notice that healing needs one.
+A workflow started by hand SHALL run the suite with the healing profile against a drifted shop and, when heals were made, push them to a new branch and open a pull request that proposes them as changes. Where the repository does not allow GitHub Actions to open pull requests, the default for every repository and fork, it SHALL end successfully and link the branch, so that a person opens the pull request. It MUST NOT merge anything or push to the default branch. Without a configured healing model, it SHALL end successfully with a notice that healing needs one.
 
 #### Scenario: Starting the heal suggestions
 - **WHEN** a participant with a healing model configured starts the workflow
-- **THEN** a pull request appears whose diff replaces the drifted locators, and nothing is merged
+- **THEN** a branch appears whose diff replaces the drifted locators, with a pull request or a link to open one, and nothing is merged
 
 #### Scenario: No healing model
 - **WHEN** the workflow is started without `HEAL_*` settings

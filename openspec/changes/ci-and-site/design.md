@@ -67,6 +67,7 @@ In every tier, the workflow, not the agent, posts `triage.md` with `gh pr commen
 
 `heal-suggestions.yml` starts the shop, applies the preset given as input with the shop helper (default `stage4`: drift without planted defects), and runs `uv run robotcode -p heal -p heal-patch robot --exclude broken`. A new profile `heal-patch` in `robot.toml` sets `HEAL_FIX_TIER=patch`, so the run writes `results/heal/heal.patch`.
 - When the patch is not empty, the workflow applies it on a new branch `heal-suggestions/<run id>`, commits it, and opens a pull request with the heal report's summary as its body.
+- Every repository and fork starts with *Allow GitHub Actions to create and approve pull requests* switched off. The first run with a model hit exactly that. The workflow then keeps the pushed branch, writes a link to open the pull request into the job summary, and ends successfully. A person opens the pull request, which the lesson wants anyway.
 - Without `HEAL_MODEL`, the workflow writes a notice to the job summary and ends successfully.
 - The job has a timeout of 30 minutes. The heal profile's budget per failure applies.
 
