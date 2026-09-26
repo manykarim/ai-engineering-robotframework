@@ -15,8 +15,10 @@ report.html
 playwright-log.txt
 browser/
 
-# Documentation site (ci-and-site).
+# Documentation site (ci-and-site): dependencies, build output and cache.
 node_modules/
+website/build/
+website/.docusaurus/
 
 # The Robot Framework MCP server's working files (Lab 6).
 .robotmcp_artifacts/

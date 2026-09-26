@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions, and showing your setup
+    url: https://github.com/manykarim/ai-engineering-robotframework/discussions
+    about: Ask in Discussions, and share your AGENTS.md or skills in "Show your setup".

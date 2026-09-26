@@ -41,4 +41,4 @@ guide, including the shared instance for machines without Docker, is [SETUP.md](
 
 ## License
 
-See [LICENSE](LICENSE).
+See [LICENSE](https://github.com/manykarim/ai-engineering-robotframework/blob/main/LICENSE).

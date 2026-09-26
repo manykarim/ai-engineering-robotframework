@@ -155,6 +155,27 @@ Never commit `.env`, and never paste its content into an issue.
 shell. That is the opposite of `SHOP_URL` and `SHOP_SPACE`, where your shell wins. To try another model for a
 single run, change `.env` rather than exporting the variable.
 
+## CI and the triage agent (Module 9)
+
+Module 9 runs this repository's GitHub Actions on **your fork**. Enable Actions there before the workshop: open
+the fork's *Actions* tab and confirm. Nothing else is needed: without any secret, a failing pull request still gets
+a comment that lists the failed tests.
+
+To have an agent add the root cause to that comment, set **one** of these as secrets of your fork, under *Settings >
+Secrets and variables > Actions* or with `gh secret set <NAME>`:
+
+| You have | Secrets |
+|---|---|
+| a Claude subscription | `CLAUDE_CODE_OAUTH_TOKEN`, created with `claude setup-token` |
+| an Anthropic API key | `ANTHROPIC_API_KEY` |
+| any OpenAI-compatible endpoint, for example your healing key | `TRIAGE_MODEL`, `TRIAGE_BASE_URL` and `TRIAGE_API_KEY` |
+
+The stretch goal of Lab 9 uses your healing settings as secrets too: `HEAL_MODEL`, `HEAL_BASE_URL` and
+`HEAL_API_KEY`.
+
+**Set a spending cap on every key before you add it.** The workflows cap the agent's turns and tokens, but a key
+without a cap is a key without a limit.
+
 ## Platforms
 
 Tested: Windows x64, macOS 13 or newer (Apple silicon and Intel), and Linux x64 and arm64 with glibc 2.28 or

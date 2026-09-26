@@ -1,0 +1,64 @@
+# Runs the suite against the pinned shop on every push and pull request (spec: workshop/ci).
+# Needs no secret. The tests tagged `broken` fail on purpose and are left out, so `main` is green.
+name: Run tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: run-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  suite:
+    name: Robot Framework suite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Start the shop (the image shop/compose.yaml pins)
+        run: docker compose -f shop/compose.yaml up -d
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.8.15"
+          enable-cache: true
+
+      - name: Restore the environment, with its browser
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('uv.lock', '.python-version') }}
+
+      - name: Install
+        run: |
+          uv sync --locked
+          uv run --no-sync rfbrowser install --with-deps chromium
+
+      - name: Wait for the shop
+        run: uv run --no-sync python -m shop wait
+
+      - name: Run the suite
+        run: uv run robotcode robot --exclude broken
+
+      - name: Summarise the results
+        if: always()
+        run: |
+          if [ -f results/output.xml ]; then
+            uv run --no-sync robotcode results summary >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload the results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: robot-results
+          path: results/
+          retention-days: 14
+          if-no-files-found: ignore

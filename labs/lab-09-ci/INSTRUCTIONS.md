@@ -1,9 +1,3 @@
-<!--
-  Maintainers: this lab uses the workflows run-tests.yml, agent-triage.yml and heal-suggestions.yml, which arrive
-  with the OpenSpec change ci-and-site. Until that change is applied, this lab cannot run, and its walkthrough is
-  recorded there.
--->
-
 # Lab 9 - CI
 
 Put an agent where it helps most and risks least: in CI, explaining failures. Push a change that breaks a test,
@@ -25,18 +19,27 @@ open a pull request on your fork, and watch an agent explain your mistake in pub
    | Workflow | Runs | Does |
    |---|---|---|
    | `run-tests.yml` | on every push and pull request | runs the suite against the pinned shop and uploads the results |
-   | `agent-triage.yml` | when a pull request's tests fail | posts a root-cause comment, written by an agent from `robotcode results` |
+   | `agent-triage.yml` | when a pull request's tests fail | posts one comment with the failed tests and, with a credential, an agent's root cause |
    | `heal-suggestions.yml` | when you start it | turns heals into a suggestion pull request (the stretch goal) |
 
-2. **Optionally give the triage agent a key.** The header of `.github/workflows/agent-triage.yml` names the secret
-   it reads. **Set a spending cap on the key first**, then:
+   A fourth workflow builds this workshop's website. It runs only in the workshop's own repository, never on your
+   fork.
+
+2. **Optionally give the triage agent a credential.** Without one, the lab still works: the comment then lists
+   the failed tests, without an analysis. With one, an agent adds the root cause. **Set a spending cap on any key
+   first.**
+
+   | You have | Set these secrets on your fork | The analysis comes from |
+   |---|---|---|
+   | a Claude subscription | `CLAUDE_CODE_OAUTH_TOKEN`, from `claude setup-token` | the Claude Code Action |
+   | an Anthropic API key | `ANTHROPIC_API_KEY` | the Claude Code Action |
+   | a key for any OpenAI-compatible endpoint, for example your healing key | `TRIAGE_MODEL`, `TRIAGE_BASE_URL`, `TRIAGE_API_KEY` | one call to that model |
 
    ```bash
-   gh secret set <SECRET_NAME> --repo <your-handle>/ai-engineering-robotframework
+   gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo <your-handle>/ai-engineering-robotframework
    ```
 
-   Without a key, the lab still works: the comment then holds the `robotcode results` summary, without the agent's
-   analysis.
+   `gh secret set` asks for the value, so it never lands in your shell history.
 
 3. **Make a branch and break something.** For example, change an expected value in a test you wrote today, or in
    `tests/api/smoke.robot`. Commit it yourself, in the terminal:
@@ -78,7 +81,8 @@ open a pull request on your fork, and watch an agent explain your mistake in pub
 
 Start the heal-suggestion workflow from the *Actions* tab (*Run workflow*). It runs the suite against a drifted shop
 with healing on, and opens a pull request that proposes the heals as changes. Review it the way you triaged heals in
-Lab 8: merge nothing you would reject.
+Lab 8: merge nothing you would reject. It needs your healing model as the secrets `HEAL_MODEL`, `HEAL_BASE_URL` and
+`HEAL_API_KEY`; without them, it ends with a notice and changes nothing.
 
 ## If your agent fails
 
