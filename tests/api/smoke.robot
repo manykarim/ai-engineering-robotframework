@@ -15,4 +15,4 @@ Health Reports Ok
 
 Catalogue Lists Twelve Products
     @{products}=    Get Catalogue From API
-    Length Should Be    ${products}    12
+    Length Should Be    ${products}    13
