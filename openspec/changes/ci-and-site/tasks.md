@@ -34,7 +34,7 @@
   - the bug-report fields match, in order, the sections Lab 7 drafts;
   - the setup form warns against pasting `.env`.
 - [x] 3.2 Write `CONTRIBUTING.md` (design D7). Verify: it names the OpenSpec flow and the three checks, and every command in it runs.
-- [ ] 3.3 Enable Discussions on the workshop's repository through the API, and document the categories as a manual step for the maintainer in the pull request. Verify: the repository reports `has_discussions: true`.
+- [x] 3.3 Enable Discussions on the workshop's repository through the API, and document the categories as a manual step for the maintainer in the pull request. Verify: the repository reports `has_discussions: true`.
 
 ## 4. The site
 
