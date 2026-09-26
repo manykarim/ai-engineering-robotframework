@@ -39,7 +39,7 @@ See `proposal.md` for the motivation, and `specs/` for the requirements. The fac
 
 ### D2. Running the suite in CI
 
-- The shop is a service container from the pinned image, on port 9090. `uv run --no-sync python -m shop wait` waits for its health.
+- The shop starts with `docker compose -f shop/compose.yaml up -d`, not as a service container. `shop/compose.yaml` is the one place the shop's version is pinned, and a service container would pin it a second time. `uv run --no-sync python -m shop wait` waits for its health.
 - `astral-sh/setup-uv` installs uv at the version `pyproject.toml` requires. `uv sync --locked` creates the environment, and `actions/cache` keeps `.venv` and the uv cache, keyed on `uv.lock`.
 - `uv run --no-sync rfbrowser install --with-deps chromium` installs the browser and its system libraries into `.venv`.
 - `uv run robotcode robot --exclude broken` runs the suite. `results/` is uploaded as the artifact `robot-results` in every case, and the job summary gets `robotcode results summary`.
@@ -88,6 +88,12 @@ In every tier, the workflow, not the agent, posts `triage.md` with `gh pr commen
 - **The deployment** goes to `https://manykarim.github.io/ai-engineering-robotframework/`, through the Pages actions, from `main` only. Pull requests build without deploying.
 
 *Alternative:* copying files into `website/docs` at build time. Rejected: two copies drift, and links would be rewritten twice.
+
+The first build found two things GitHub tolerates and the site does not. Both are fixed in a way that works in both places:
+- `README.md` linked `LICENSE`, which is not a page. It now links the file on GitHub.
+- `transcripts/lab-08-healing/README.md` would have been the index of a folder named like the transcript `transcripts/lab-08-healing.md`, and both claim one route. The recorded report is now `transcripts/lab-08-healing-report.md`.
+
+Until Lab 9 is rehearsed on `main`, `transcripts/lab-09-ci.md` shows what the lab produces, including a real summary-tier comment, so that Lab 9's link resolves.
 
 ### D7. Participation
 

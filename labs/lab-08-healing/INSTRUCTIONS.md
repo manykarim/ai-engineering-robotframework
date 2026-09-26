@@ -40,7 +40,7 @@ it.
      The report is `results/heal/heal_report.html`. Open it in your browser. Every heal is a proposal: the old
      locator, the new one, and whether the step then passed. Your test files are not changed.
 
-   - *Without a healing model*, use [the recorded healing report](../../transcripts/lab-08-healing/README.md) of the
+   - *Without a healing model*, use [the recorded healing report](../../transcripts/lab-08-healing-report.md) of the
      same preset. It lists the same information.
 
 4. **Triage every heal.** For each one, decide, and write down why:

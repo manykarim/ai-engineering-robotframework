@@ -1,0 +1,5 @@
+/* Tables in the labs are wide: let them scroll instead of squeezing their cells. */
+.markdown table {
+  display: block;
+  overflow-x: auto;
+}

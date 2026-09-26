@@ -1,0 +1,52 @@
+name: Shop defect
+description: A defect of the demo shop, found by a test run. Lab 7 files one of these.
+title: "Shop: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One defect per issue. The summary states the wrong behaviour, not the test: "Cart badge stays at 0 after
+        adding a product" rather than "WEB-005_AC-2 fails". Never paste `.env`, an API key or a token.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered, as a person would do them in the browser.
+      placeholder: |
+        1. Open /products
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: criterion
+    attributes:
+      label: Criterion
+      description: The acceptance criterion the behaviour breaks, from openspec/specs/shop/.
+      placeholder: WEB-005_AC-2
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+      description: What the criterion's requirement in openspec/specs/shop/ says should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+      description: What happens instead.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: "The failing test and its message, for example from `uv run robotcode results show --failed`."
+      render: text
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: "Shop version, preset and space, from `uv run --no-sync python -m shop status`."
+      placeholder: "0.3.0, preset buggy, space octocat"

@@ -1,0 +1,43 @@
+name: Setup problem
+description: setup-check stays red, or something will not install. Before the workshop, this is where to get help.
+title: "Setup: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sorry it does not work yet. The output of `setup-check` tells us almost everything, so please include it.
+
+        **Never paste `.env`, an API key or a token here: this repository is public.** `setup-check` hides secrets in
+        its output; anything else you paste, check yourself first.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, "macOS, Apple silicon", "macOS, Intel", Linux, Other]
+    validations:
+      required: true
+  - type: dropdown
+    id: shop
+    attributes:
+      label: How you run the shop
+      options: ["Local shop, with Docker", "Shared instance", "Not running yet"]
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Your coding agent
+      options: [Claude Code, Codex, GitHub Copilot, Other, None yet]
+  - type: textarea
+    id: check
+    attributes:
+      label: Output of setup-check
+      description: "Run `uv run --no-sync python setup-check/check.py --json` in the repository and paste the whole output."
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you tried
+      description: The fixes setup-check suggested, and what happened when you tried them.

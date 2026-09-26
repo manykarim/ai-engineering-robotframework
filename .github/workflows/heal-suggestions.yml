@@ -1,0 +1,126 @@
+# Proposes heals as a pull request: the suite runs against a drifted shop with robotframework-heal at its patch
+# tier, and the heals become a suggestion pull request that nobody merges automatically (spec: workshop/ci, D4).
+#
+# Start it by hand from the Actions tab. It needs a healing model in your repository's or fork's secrets:
+# HEAL_MODEL, HEAL_BASE_URL and HEAL_API_KEY, the same settings as in .env (SETUP.md, "Healing API key").
+# SET A SPENDING CAP on the key. Without them, the workflow ends with a notice and changes nothing.
+name: Heal suggestions
+
+on:
+  workflow_dispatch:
+    inputs:
+      preset:
+        description: "Shop preset to heal against: stage2-stage4 drift the layout only"
+        type: choice
+        default: stage4
+        options: [stage2, stage3, stage4]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  heal:
+    name: Heal and propose
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      HAS_MODEL: ${{ secrets.HEAL_MODEL != '' && secrets.HEAL_BASE_URL != '' && secrets.HEAL_API_KEY != '' }}
+      PRESET: ${{ inputs.preset }}
+    steps:
+      - name: Without a healing model
+        if: env.HAS_MODEL != 'true'
+        run: |
+          {
+            echo "### No healing model configured"
+            echo
+            echo "Healing needs a model. Add the secrets HEAL_MODEL, HEAL_BASE_URL and HEAL_API_KEY to this"
+            echo "repository (Settings > Secrets and variables > Actions), with a spending cap on the key."
+            echo "SETUP.md, section \"Healing API key\", describes the settings. Nothing was changed."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: env.HAS_MODEL == 'true'
+
+      - name: Start the shop (the image shop/compose.yaml pins)
+        if: env.HAS_MODEL == 'true'
+        run: docker compose -f shop/compose.yaml up -d
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        if: env.HAS_MODEL == 'true'
+        with:
+          version: "0.8.15"
+          enable-cache: true
+
+      - name: Restore the environment, with its browser
+        if: env.HAS_MODEL == 'true'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('uv.lock', '.python-version') }}
+
+      - name: Install
+        if: env.HAS_MODEL == 'true'
+        run: |
+          uv sync --locked
+          uv run --no-sync rfbrowser install --with-deps chromium
+
+      - name: Drift the shop
+        if: env.HAS_MODEL == 'true'
+        run: |
+          uv run --no-sync python -m shop wait
+          uv run --no-sync python -m shop preset "$PRESET"
+
+      - name: Run the suite with healing, at the patch tier
+        if: env.HAS_MODEL == 'true'
+        env:
+          HEAL_MODEL: ${{ secrets.HEAL_MODEL }}
+          HEAL_BASE_URL: ${{ secrets.HEAL_BASE_URL }}
+          HEAL_API_KEY: ${{ secrets.HEAL_API_KEY }}
+        # Tests may still fail after healing (a defect never heals); the heals are what this job is for.
+        run: uv run robotcode -p heal -p heal-patch robot --exclude broken || true
+
+      - name: Summarise the heals
+        if: env.HAS_MODEL == 'true'
+        run: |
+          {
+            echo "### Heals against \`$PRESET\`"
+            echo
+            if [ -f results/heal/summary.json ]; then
+              python3 -c "import json; s = json.load(open('results/heal/summary.json')); print('- healed: %s, unhealed: %s, tokens: %s' % (s['healed'], s['unhealed'], s['total_tokens']))"
+            else
+              echo "- no heal happened"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open the suggestion pull request
+        if: env.HAS_MODEL == 'true'
+        run: |
+          if [ ! -s results/heal/heal.patch ]; then
+            echo "No heal to propose." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          branch="heal-suggestions/${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git apply results/heal/heal.patch
+          git commit -am "Heal suggestions against the $PRESET preset"
+          git push origin "$branch"
+          {
+            echo "robotframework-heal repaired these locators while the suite ran against the \`$PRESET\` preset."
+            echo "Each change is a proposal: review it like any other change, and merge nothing you would reject."
+            echo
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          } > pr-body.md
+          gh pr create --title "Heal suggestions against $PRESET" --body-file pr-body.md --head "$branch"
+
+      - name: Upload the results and the healing report
+        if: always() && env.HAS_MODEL == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: heal-results
+          path: results/
+          retention-days: 14
+          if-no-files-found: ignore

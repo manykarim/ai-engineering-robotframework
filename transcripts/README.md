@@ -17,6 +17,6 @@ Where the lab has you edit a file by hand, the rehearsal had the agent do it, an
 | Lab 5 - Prompt to green | [lab-05-prompt-to-green.md](lab-05-prompt-to-green.md) |
 | Lab 6 - MCP | [lab-06-mcp.md](lab-06-mcp.md) |
 | Lab 7 - Hooks and the toolbelt | [lab-07-hooks-toolbelt.md](lab-07-hooks-toolbelt.md) |
-| Lab 8 - Healing | [lab-08-healing.md](lab-08-healing.md), and the [recorded healing report](lab-08-healing/README.md) for the no-model path |
+| Lab 8 - Healing | [lab-08-healing.md](lab-08-healing.md), and the [recorded healing report](lab-08-healing-report.md) for the no-model path |
 | Lab 9 - CI | `lab-09-ci.md`, recorded with the CI workflows |
 | Cold open | [cold-open.md](cold-open.md), the facilitators' backup for the first five minutes |

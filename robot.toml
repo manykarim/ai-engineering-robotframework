@@ -27,3 +27,7 @@ extend-listeners = { "Heal" = [] }
 # failure into an unhealed one. The last setting silences the banner that the healing library's AI framework
 # otherwise prints into the console.
 extend-env = { HEAL_FIX_TIER = "report", HEAL_HEAL_ASSERTIONS = "false", HEAL_MAX_FAILURE_SECONDS = "120", PYDANTIC_AI_NO_BANNER = "1" }
+
+[profiles.heal-patch]
+description = "With -p heal: write every heal as results/heal/heal.patch too, for a suggestion pull request (CI)."
+extend-env = { HEAL_FIX_TIER = "patch" }
