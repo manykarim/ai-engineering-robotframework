@@ -29,7 +29,7 @@
 
 ## 3. Participation
 
-- [ ] 3.1 Write `.github/ISSUE_TEMPLATE/setup-problem.yml`, `bug-report.yml` and `config.yml` (design D7). Verify:
+- [x] 3.1 Write `.github/ISSUE_TEMPLATE/setup-problem.yml`, `bug-report.yml` and `config.yml` (design D7). Verify:
   - GitHub's issue chooser on the pushed branch shows both forms and the Discussions link;
   - the bug-report fields match, in order, the sections Lab 7 drafts;
   - the setup form warns against pasting `.env`.
@@ -46,7 +46,7 @@
   - a page with `${SHOP_URL}` in prose builds and shows it literally;
   - a deliberately broken link and a broken anchor each fail the build;
   - outside `website/`, only link fixes that work on GitHub as well were needed, and the pull request lists them.
-- [ ] 4.3 Enable GitHub Pages with "GitHub Actions" as the source, and deploy once from `main` after the merge. Verify: the site answers at `https://manykarim.github.io/ai-engineering-robotframework/`, and a lab page's links work there.
+- [x] 4.3 Enable GitHub Pages with "GitHub Actions" as the source, and deploy once from `main` after the merge. Verify: the site answers at `https://manykarim.github.io/ai-engineering-robotframework/`, and a lab page's links work there.
 
 ## 5. Lab 9
 
