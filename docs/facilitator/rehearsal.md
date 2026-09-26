@@ -127,6 +127,36 @@ Found and changed:
   a real issue there was not wanted. The draft in `results/issue.md` was complete. **Open: file one issue from a
   test fork before the workshop.**
 
+## Lab 9 on GitHub Actions (2026-09-26)
+
+Rehearsed in the workshop's own repository, with pull request #15 from the branch `lab-09-break`, following the
+lab's steps. Two breaks on purpose in `tests/api/smoke.robot`: the expected health status `ok` changed to `okay`,
+then the catalogue's expected length 12 to 13. The pull request was closed without merging.
+
+| Check | Result | Runs |
+|---|---|---|
+| *Run tests* on a pushed break | failed on the push and again on the pull request, naming `Health Reports Ok` | 36240802192, 36240803925 |
+| Triage, summary tier (no secret) | one comment by `github-actions[bot]`: 10 passed, 1 failed, the table, and the line naming the secrets | 36241005949 |
+| Triage, `TRIAGE_*` tier (MiniMax-M3 through the maintainer's endpoint) | the second break updated the same comment, still one: the table with both failures, and a root cause per test that names the right diff hunk and quotes the failure message; after the fixes below, the same comment again, clean | 36241140426, 36241604738 |
+| Triage, Claude tier | **open**: no Claude credential is set on the repository | - |
+| *Heal suggestions* without `HEAL_*` | succeeded with the notice; nothing changed | 36241043507 |
+| *Heal suggestions* with `HEAL_*`, preset `stage4` | healed the drifted locators and pushed them to `heal-suggestions/<run id>`: five lines of `resources/legacy.resource`, nothing else, nothing merged | 36241089067, 36241288079 |
+
+Found and changed:
+- **GitHub Actions may not open pull requests.** The first heal run with a model pushed its branch, then failed:
+  every repository and fork starts with *Allow GitHub Actions to create and approve pull requests* switched off.
+  The workflow now ends successfully and links the branch in the job summary and a notice, so that the participant
+  opens the pull request. Lab 9's stretch goal says so. The rehearsal left the setting off, as on a fork.
+- **A reasoning model's thinking landed in the comment.** MiniMax-M3 starts its answer with a `<think>` block.
+  `tools/triage.py` now drops a leading thinking block, and falls back to the summary when nothing else is left.
+- **Long failure messages lost their verdict.** The table cut each message after 300 characters, which dropped
+  "should be 13 but is 12" from the catalogue test. It now keeps the start and the end.
+- **The analysis adds claims.** Both root causes were right, but the model also asserted things the evidence does
+  not show (which product ids it could see, that "the other products are stable"). That is the discussion Lab 9's
+  question *Would you trust it?* is for; facilitators can use this comment as the example.
+- **Heals differ from run to run.** The two runs replaced `${GRID} >> .product-grid` with different locators, one
+  of them no longer using `${GRID}`. Reviewing the suggestion is the lesson, as in Lab 8.
+
 ## Still to do before the workshop tag
 
 | Check | Who | State |
@@ -134,4 +164,4 @@ Found and changed:
 | The toolchain on macOS 13+ on Apple silicon (`setup-check` green, the suite runs) | a maintainer with a Mac | open |
 | One human walkthrough of Labs 2 to 6, to find what an agent rehearsal cannot: unclear wording | a maintainer | open |
 | Lab 7's filing step, from a test fork | a maintainer | open |
-| Lab 9 and its transcript | `ci-and-site` | open |
+| Lab 9's Claude tier, with a Claude credential set on the repository | a maintainer | open |

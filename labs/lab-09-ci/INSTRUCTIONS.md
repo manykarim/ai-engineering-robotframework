@@ -82,7 +82,8 @@ open a pull request on your fork, and watch an agent explain your mistake in pub
 Start the heal-suggestion workflow from the *Actions* tab (*Run workflow*). It runs the suite against a drifted shop
 with healing on, and opens a pull request that proposes the heals as changes. Review it the way you triaged heals in
 Lab 8: merge nothing you would reject. It needs your healing model as the secrets `HEAL_MODEL`, `HEAL_BASE_URL` and
-`HEAL_API_KEY`; without them, it ends with a notice and changes nothing.
+`HEAL_API_KEY`; without them, it ends with a notice and changes nothing. Forks do not let GitHub Actions open pull
+requests by default: then the run's summary links the branch with the heals, and you open the pull request yourself.
 
 ## If your agent fails
 

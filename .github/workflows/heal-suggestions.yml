@@ -114,7 +114,21 @@ jobs:
             echo
             echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           } > pr-body.md
-          gh pr create --title "Heal suggestions against $PRESET" --body-file pr-body.md --head "$branch"
+          # Repositories, and every fork, start with "Allow GitHub Actions to create and approve pull requests"
+          # switched off. Then the branch is the suggestion, and a person opens the pull request from the link.
+          if ! gh pr create --title "Heal suggestions against $PRESET" --body-file pr-body.md --head "$branch" 2> pr-error.txt; then
+            if grep -q "not permitted to create" pr-error.txt; then
+              link="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/pull/new/${branch}"
+              {
+                echo "The heals are on the branch \`$branch\`. This repository does not let GitHub Actions open pull"
+                echo "requests, so open it yourself: $link"
+              } >> "$GITHUB_STEP_SUMMARY"
+              echo "::notice title=Open the pull request yourself::$link"
+            else
+              cat pr-error.txt
+              exit 1
+            fi
+          fi
 
       - name: Upload the results and the healing report
         if: always() && env.HAS_MODEL == 'true'
