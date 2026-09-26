@@ -49,7 +49,7 @@ See `proposal.md` for the motivation, and `specs/` for the requirements. The fac
 
 `agent-triage.yml` downloads `robot-results` from the triggering run, checks out the pull request's head, and writes the comment in one of three ways:
 
-1. **A Claude credential is set** (`ANTHROPIC_API_KEY` or `CLAUDE_CODE_OAUTH_TOKEN`): the Claude Code Action runs with a fixed prompt. The prompt says: read the failed tests with `uv run --no-sync robotcode results show --failed -o <output.xml>`, read the pull request's diff from a file the workflow wrote, find the change that caused each failure, and write the analysis to `triage.md`.
+1. **A Claude credential is set** (`ANTHROPIC_API_KEY` or `CLAUDE_CODE_OAUTH_TOKEN`): the Claude Code Action runs with a fixed prompt. The prompt says: read the failed tests with `uv run --no-sync robotcode results show --failed -o <output.xml>`, read the pull request's diff from a file the workflow wrote, find the change that caused each failure, and write the analysis to `triage-analysis.md`, which `tools/triage.py` puts under the results summary.
    - `claude_args` pins the model (`claude-sonnet-5`) and 15 turns, and allows only `Read`, `Grep`, `Glob`, `Write` and `Bash(uv run --no-sync robotcode results:*)`.
    - The job's timeout is 15 minutes.
    - The RobotCode plugin is installed through the action's `plugins` input, so the agent in CI has the habits the labs teach.
@@ -57,7 +57,10 @@ See `proposal.md` for the motivation, and `specs/` for the requirements. The fac
    - The input is the failed tests, their messages and the diff, capped at 20,000 characters.
    - The call has `max_tokens` 1,200 and a timeout of 120 s.
    - The script writes `triage.md`. Participants can reuse the provider of their healing key.
+   - Reasoning models may start their answer with a `<think>` block, as the rehearsal's model did. The script drops a leading block, and falls back to the summary if nothing is left.
 3. **Otherwise**, `tools/triage.py --summary-only` writes the results summary and a line naming the secrets that would add an analysis.
+
+In the results summary, a failure message longer than 300 characters keeps its start and its end, where an assertion's verdict usually is.
 
 In every tier, the workflow, not the agent, posts `triage.md` with `gh pr comment --edit-last --create-if-none`, so each pull request keeps one comment that later failures update. The comment starts with the results summary from the run, then the analysis, then a footer naming the tier and the model. The agent cannot push, comment or run anything but `robotcode results`. A prompt injection in the diff can at most change the text of `triage.md`, which a person reads.
 
@@ -94,7 +97,7 @@ The first build found two things GitHub tolerates and the site does not. Both ar
 - `README.md` linked `LICENSE`, which is not a page. It now links the file on GitHub.
 - `transcripts/lab-08-healing/README.md` would have been the index of a folder named like the transcript `transcripts/lab-08-healing.md`, and both claim one route. The recorded report is now `transcripts/lab-08-healing-report.md`.
 
-Until Lab 9 is rehearsed on `main`, `transcripts/lab-09-ci.md` shows what the lab produces, including a real summary-tier comment, so that Lab 9's link resolves.
+Until the rehearsal (D8), `transcripts/lab-09-ci.md` was a placeholder with a real summary-tier comment, so that Lab 9's link resolved. The rehearsal replaced it.
 
 ### D7. Participation
 
@@ -114,7 +117,7 @@ The rehearsal runs on the workshop's own repository, with a pull request that br
 - **with `TRIAGE_*`**, set from the maintainer's healing provider;
 - **with a Claude credential**. This one needs the maintainer to run `claude setup-token` and set the secret; the rehearsal records it as a manual step if that has not happened.
 
-The pull request is closed afterwards. `transcripts/lab-09-ci.md` records the run, and `tools/check_labs.py` drops Lab 9 from its list of transcripts recorded elsewhere.
+The pull request is closed afterwards. `transcripts/lab-09-ci.md` records the run, and `tools/check_labs.py` drops Lab 9 from its list of transcripts recorded elsewhere. `docs/facilitator/rehearsal.md` lists what the rehearsal found and changed.
 
 Lab 9 produces no files, so `solutions` gets no Lab 9 commit. It is rebased onto `main` once more after this change.
 
@@ -122,7 +125,8 @@ Lab 9 produces no files, so `solutions` gets no Lab 9 commit. It is rebased onto
 
 - [A Claude subscription token in a fork is the participant's own quota] → Documented in `SETUP.md` and Lab 9 as optional, with the spending-cap warning. The summary tier needs nothing.
 - [The `TRIAGE_*` endpoint is any provider, with any quality] → The comment's footer names the tier and the model, so a weak analysis is attributable. The summary is always above it.
-- [`workflow_run` runs the default branch's version of `agent-triage.yml`] → Intended: a pull request cannot change how it is triaged. Changes to the triage workflow take effect after merging.
+- [`workflow_run` runs the default branch's version of `agent-triage.yml`] → Intended: a pull request cannot change the workflow, its permissions or its prompt. Changes to them take effect after merging.
+- [The comment writer `tools/triage.py` comes from the pull request's head, and runs with the `TRIAGE_*` secrets] → Triage runs only for pull requests from a branch of the same repository, whose authors can already run workflows with its secrets by pushing. Pull requests from other forks get no triage (D1). The workflow sets the script aside before the agent runs, so the agent cannot change it. It also lets a fix to the script be tried on a pull request, as the rehearsal did.
 - [Browser installation dominates CI time] → `.venv` is cached on `uv.lock`, and only the system libraries are reinstalled on each run.
 - [About forty forks run the suite at once on the workshop day] → Each fork runs on its own GitHub-hosted runners and its own shop container. Nothing touches the shared instance.
 - [The site renders facilitator material publicly] → It is public in the repository already, as the master document intends.

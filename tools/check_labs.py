@@ -34,8 +34,6 @@ SECTIONS = ("## Steps", "## Stretch", "## If your agent fails")
 
 # Where relative links may point: what the documentation site renders.
 LINK_ROOTS = ("labs/", "docs/", "transcripts/", "SETUP.md", "GLOSSARY.md")
-# Transcripts that another change records; a link to them may dangle until then.
-RECORDED_ELSEWHERE = {"transcripts/lab-09-ci.md": "recorded with the CI workflows (ci-and-site)"}
 
 # Answers participant-facing text must not give away (spec: Labs do not give the answers away).
 GIVEAWAYS = [
@@ -127,7 +125,7 @@ def check_links(root: Path, path: Path, pending: bool) -> list[str]:
             problems.append(f"{rel}: link '{target}' points outside {', '.join(LINK_ROOTS)}; name it as a code path")
             continue
         if not resolved.exists():
-            if repo_path in RECORDED_ELSEWHERE or (pending and repo_path.startswith("transcripts/")):
+            if pending and repo_path.startswith("transcripts/"):
                 continue
             problems.append(f"{rel}: link '{target}' does not resolve")
             continue
