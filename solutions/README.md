@@ -17,6 +17,7 @@ checklist first, and with the reference second.
 | Lab 7 - Hooks and the toolbelt | [lab-07-hooks-toolbelt.md](lab-07-hooks-toolbelt.md) | [transcript](../transcripts/lab-07-hooks-toolbelt.md) |
 | Lab 8 - Healing | [lab-08-healing.md](lab-08-healing.md) | [transcript](../transcripts/lab-08-healing.md) |
 | Lab 9 - CI | [lab-09-ci.md](lab-09-ci.md) | [transcript](../transcripts/lab-09-ci.md) |
+| Bonus 1 - A library | [bonus-1-library.md](bonus-1-library.md) | [transcript](../transcripts/bonus-1-library.md) |
 | Bonus 2 - A tool | [bonus-2-tool.md](bonus-2-tool.md) | [transcript](../transcripts/bonus-2-tool.md) |
 
 ## Where the reference lives
