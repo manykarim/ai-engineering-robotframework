@@ -1,0 +1,37 @@
+# AGENTS.md
+
+## Toolstack
+
+- Python 3.12 with uv.
+- Run-time dependencies: Robot Framework 7.5, AssertionEngine, PythonLibCore and requests, pinned in `pyproject.toml`.
+- Unit tests: `uv run pytest`.
+- Robot tests live in `atest/` and run against the local shop at `http://localhost:9090`:
+  `uv run robot --outputdir results atest`.
+- Keyword documentation:
+  `uv run python -m robot.libdoc "demoshop_library.DemoShopLibrary::url=http://localhost:9090" docs/DemoShopLibrary.html`.
+- Packaging: `uv build`.
+
+## References
+
+- `references/demoshop-openapi.json`: the API of the shop version under test.
+- Robot Framework 7.5 User Guide:
+  [Creating test libraries](https://robotframework.org/robotframework/7.5/RobotFrameworkUserGuide.html#creating-test-libraries)
+  and [Library scope](https://robotframework.org/robotframework/7.5/RobotFrameworkUserGuide.html#library-scope).
+
+## Concepts
+
+- Every `Get` keyword takes `assertion_operator`, `assertion_expected` and `message`, and checks with
+  AssertionEngine's `verify_assertion` (see `references/assertion_engine.py` and
+  `references/assertionengine-readme.md`).
+- The library is built on PythonLibCore.
+- It is imported with `url` and an optional `space`, which it sends as the `X-Workshop-Space` header.
+- Each library instance keeps one cart.
+
+## Examples
+
+- `references/browser-get-text.md` and `references/browser-get-element-count.md`: imitate their keyword names,
+  arguments and documentation.
+
+## Specification
+
+- OpenSpec, under `openspec/changes/`.
