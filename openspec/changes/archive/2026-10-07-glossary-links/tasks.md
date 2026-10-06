@@ -14,4 +14,4 @@
 - [x] 2.1 Run the checks and open the pull request. Verify:
   - `openspec validate --all --strict` passes;
   - the site builds, with the glossary's new anchors `#context-engineering` and `#spec-driven-development`.
-- [ ] 2.2 Archive after the merge. Verify: `workshop/facilitation`'s *A glossary* reads as in the change.
+- [x] 2.2 Archive after the merge. Verify: `workshop/facilitation`'s *A glossary* reads as in the change.
