@@ -20,7 +20,7 @@ and what to do when it goes wrong or runs late. Print it. Times are CET, as in t
 | 15:05-15:45 | 7 - Hooks, Subagents & the CLI Toolbelt (40 min: 15 / 20 / 5) | `buggy`, applied by each participant in step 4 | Hooks firing; `gh issue create` from a real run; 10 minutes on prompt injection | [Lab 7](../../labs/lab-07-hooks-toolbelt/INSTRUCTIONS.md) | Steps 3-5, 7-8 need no agent; transcript | Cut stretch B (Jira) |
 | 15:45-16:15 | 8 - Self-Healing Tests (30 min: 15 / 12 / 3) | `drift_and_bug`, applied by each participant in step 1 | A live healing run, and its report triaged ([answers](https://manykarim.github.io/ai-engineering-robotframework/docs/facilitator/suite-outcomes#module-8-the-triage-answers)) | [Lab 8](../../labs/lab-08-healing/INSTRUCTIONS.md) | The [recorded report](https://manykarim.github.io/ai-engineering-robotframework/transcripts/lab-08-healing-report) | **First cut:** demo only, skip the lab |
 | 16:15-16:50 | 9 - CI & Toolchain Integration (35 min: 15 / 15 / 5) | `clean` (CI starts its own shop) | A pushed break explained in a pull request on your fork | [Lab 9](../../labs/lab-09-ci/INSTRUCTIONS.md) | Transcript | Cut the stretch (heal suggestions) |
-| 16:50-17:00 | 10 - Wrap-Up, Roadmap & Q&A (10 min) | - | The ladder once more; the Monday plan: `AGENTS.md`, then the RobotCode plugin and RF Agent Skills, then one CI triage step | Questions | - | - |
+| 16:50-17:00 | 10 - Wrap-Up, Roadmap & Q&A (10 min) | - | The ladder once more; the Monday plan: `AGENTS.md`, then the RobotCode plugin and RF Agent Skills, then one CI triage step, then the bonus chapters for building your own library or tool | Questions | - | - |
 
 Buffer lives in debriefs and stretch goals, never in lab time.
 

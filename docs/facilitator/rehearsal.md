@@ -177,6 +177,36 @@ Found and changed:
 - **Codex was not run again.** The change removed a trap without changing a step, so the Codex run of Lab 4 above
   still stands for everything it recorded.
 
+## Bonus labs with Claude Code (2026-10-06)
+
+Claude Code 2.1.289 headless, with the labs' own commands and prompts. Each lab ran in a fresh folder next to a
+fresh clone of the change's branch. Where a lab has you write a file (`AGENTS.md`, `config.yaml`), the agent drafted
+it from the lab's own list, and the transcript says so. The review of step 6 put the lab's questions to the agent.
+
+| Lab | Result | Agent time | Tokens (in / out) |
+|---|---|---|---|
+| Bonus 2 | checklist holds: the agent loaded only the project's `AGENTS.md`; 76 unit tests and 5 Robot tests pass; `uv build`; on the workshop's catalogue suite, the dry run recorded one issue per failed test, sent nothing, and the run failed the same tests as without it | 19 min recorded, plus an interrupted apply of about 15 | 5.7 M / 114 k |
+| Bonus 1 | checklist holds: the agent loaded only the project's `AGENTS.md`; 76 unit tests and 26 Robot tests against the shop pass; `Get Product Price    1    ==    249.99` passes and `==    1` fails with AssertionEngine's message; libdoc and `uv build` | 24 min recorded, plus an interrupted apply of about 45 | 6.6 M / 134 k |
+
+Found and changed:
+- **Bonus 2: the listener must import from its source folder alone.** In the first rehearsal, the package read its
+  own version from installed package metadata. Step 8 runs it from the workshop's clone with `--pythonpath`, where
+  it is not installed. The import failed, Robot Framework skipped the listener with an error, and the run went on.
+  The lab now says it in `AGENTS.md`'s concepts and in the review, and was rehearsed again from the start.
+- **Bonus 1: libdoc needs the library's `url`.** libdoc imports the library, and the lab's first command passed no
+  arguments. The agent paused instead of guessing. The lab now gives `::url=http://localhost:9090`, and the
+  rehearsal told the agent and continued.
+- **Bonus 1 takes about two hours, not 75 minutes.** Propose, review and apply took the agent more than an hour.
+  The agents planned 22 and 17 tasks for one slice. The reference pages say to review the tasks' size.
+- **`uv init` copies the author's name and email** from the git configuration into `pyproject.toml`. The reference
+  projects carry a neutral author. Participants who publish a package should check it.
+- **Transcripts.** Claude Code's notice for a large tool output names `~/.claude/projects/<path with dashes>`.
+  Labs 5 and 8 carried such a path. `tools/transcript.py` now rewrites it, and the two transcripts were fixed.
+- **The rehearsal tool's time limit** interrupted one apply session per lab. A new `/opsx:apply` continued from
+  the ticked tasks. The interrupted sessions are not recorded, and the transcripts say so.
+- **No real GitHub issue was created.** The listener's live path is covered by its unit tests. Its stretch goal,
+  a live run against a fork, is open below.
+
 ## Still to do before the workshop tag
 
 | Check | Who | State |
@@ -185,3 +215,4 @@ Found and changed:
 | One human walkthrough of Labs 2 to 6, to find what an agent rehearsal cannot: unclear wording | a maintainer | open |
 | Lab 7's filing step, from a test fork | a maintainer | open |
 | Lab 9's Claude tier, with a Claude credential set on the repository | a maintainer | open |
+| Bonus 2's stretch goal: the listener live against a test fork, then the issues closed. Not needed for the tag | a maintainer | open |

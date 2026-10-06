@@ -176,6 +176,23 @@ for expected behaviour. The specs your own changes write go to `openspec/specs/s
 A requirement as a product owner writes it, with acceptance criteria such as `WEB-004_AC-3`. Tests name the criterion
 they verify.
 
+## Building libraries and tools
+
+### Assertion engine
+
+The assertion operators of Browser's `Get` keywords (`Get Text    h1    ==    Welcome`), as a library of its own
+that other libraries use for their keywords: [AssertionEngine](https://github.com/MarketSquare/AssertionEngine).
+
+### PythonLibCore
+
+The structure Browser and other libraries are built on: keywords in several classes, one library to Robot
+Framework. [PythonLibCore](https://github.com/robotframework/PythonLibCore).
+
+### Listener
+
+Python code Robot Framework calls during a run: when a suite, test or keyword starts and ends. The heal profile is
+one. [Bonus 2](labs/bonus-2-tool/INSTRUCTIONS.md) builds one.
+
 ## This repository
 
 ### Shop

@@ -39,7 +39,7 @@ See proposal.md for why. The facts this design builds on:
 |---|---|---|
 | lab folder | `labs/bonus-1-library/` | `labs/bonus-2-tool/` |
 | header *Module* | `Bonus 1 - Building a library with an agent` | `Bonus 2 - Building a tool with an agent` |
-| header *Time* | `about 75 minutes, self-paced` | `about 60 minutes, self-paced` |
+| header *Time* | `about 120 minutes, self-paced` | `about 60 minutes, self-paced` |
 | preset | `clean` | `clean` |
 | the participant's project | `../demoshop-library/` | `../robotframework-github-reporter/` |
 
@@ -179,8 +179,10 @@ The glossary stays within about ten minutes.
 
 1. **A branch from `main`:** the contract and the sidebar, the guide, the glossary, Module 10, and both labs' text.
 2. **Rehearse Bonus 2, then Bonus 1,** from that text, and fix the text as the rehearsals show.
-3. **Append to `solutions`:** the reference projects, then the transcripts and reference pages. The push redeploys the site.
-4. **Open the `main` pull request.** `check_labs.py` and the site build pass against the branch.
-5. **After the merge:** rebase `solutions` onto `main`, archive the change, and tag `main`.
+3. **Commit to a local copy of `solutions`:** the reference projects, then the transcripts and reference pages.
+4. **Open the `main` pull request.** `check_labs.py` checks the bonus labs' links against the local commits, and the site build passes.
+5. **After the merge:** rebase the bonus commits onto `main`, push `solutions`, which redeploys the site, archive the change, and tag `main`.
+
+The bonus commits wait for the merge. Their reference pages link to the bonus labs on `main`, so pushing them first would start a site build on `solutions` that fails on those links: nothing would deploy, but the run would be red.
 
 **Rollback:** revert the pull request. The branch commits can stay, since nothing links to them.

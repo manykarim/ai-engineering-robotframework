@@ -179,6 +179,8 @@ def main(argv: list[str] | None = None) -> int:
         if len(name) > 2:
             text = re.sub(rf"\b{re.escape(name)}\b", placeholder, text)
     text = re.sub(r"/tmp/claude-\d+(?:/[^\s`'\")]*)?", "<scratch>", text)
+    # Claude Code names a project's folder after its path, with dashes: ~/.claude/projects/-tmp-claude-1000--mnt-c-...
+    text = re.sub(r"(\.claude/projects/)-[A-Za-z0-9._-]+", r"\1<project>", text)
 
     found = [f"a value from {', '.join(map(str, args.secrets))}" for value in secret_values(args.secrets) if value in text]
     found += [f"something shaped like a secret ({pattern.pattern[:30]}...)" for pattern in SECRET_SHAPES if pattern.search(text)]
