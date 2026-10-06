@@ -14,7 +14,7 @@
   - every command in it ran;
   - `tools/check_labs.py` passes;
   - the site builds.
-- [ ] 2.2 Add *Assertion engine*, *PythonLibCore* and *Listener* to `GLOSSARY.md` (design D8). Verify: each entry is at most three lines, and `tools/check_labs.py` passes.
+- [x] 2.2 Add *Assertion engine*, *PythonLibCore* and *Listener* to `GLOSSARY.md` (design D8). Verify: each entry is at most three lines, and `tools/check_labs.py` passes.
 
 ## 3. Bonus 2: a listener that reports to GitHub
 
@@ -32,7 +32,7 @@
 
 ## 4. Bonus 1: a DemoShop library
 
-- [ ] 4.1 Write `labs/bonus-1-library/INSTRUCTIONS.md` and `checklist.md` (design D3). Verify:
+- [x] 4.1 Write `labs/bonus-1-library/INSTRUCTIONS.md` and `checklist.md` (design D3). Verify:
   - `tools/check_labs.py` accepts the lab, the transcript and reference links pending until 4.3;
   - every command that saves a reference ran.
 - [ ] 4.2 Rehearse the lab with Claude Code in a fresh sibling folder (design D6). Verify:
