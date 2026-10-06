@@ -1,0 +1,27 @@
+[project]
+name = "demoshop-library"
+version = "0.1.0"
+description = "Robot Framework library for testing the DemoShop through its REST API, with inline assertions"
+readme = "README.md"
+authors = [
+    { name = "Workshop rehearsal" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "requests==2.34.2",
+    "robotframework==7.5",
+    "robotframework-assertion-engine==5.0.1",
+    "robotframework-pythonlibcore==4.6.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.15,<0.9.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
