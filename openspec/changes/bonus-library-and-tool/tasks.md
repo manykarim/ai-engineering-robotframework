@@ -4,12 +4,12 @@
   - with only the day's labs, it passes as before;
   - a scratch copy with a bonus folder whose *Time* lacks `self-paced` is reported;
   - an unknown folder under `labs/` is still reported.
-- [ ] 1.2 Add the *Bonus* category to `website/sidebars.js`, keeping *Labs* to `lab-*`, and a *Bonus labs* table to `labs/README.md` (design D1). Verify: after `npm run reference`, the site builds, and the sidebar shows *Labs* with the nine labs and *Bonus* with the two bonus labs.
+- [x] 1.2 Add the *Bonus* category to `website/sidebars.js`, keeping *Labs* to `lab-*`, and a *Bonus labs* table to `labs/README.md` (design D1). Verify: after `npm run reference`, the site builds, and the sidebar shows *Labs* with the nine labs and *Bonus* with the two bonus labs.
 - [x] 1.3 Name the bonus chapters in Module 10's Monday plan, in the curriculum and the run sheet (design D7). Verify: the diff of both files is that one addition, and the timetable is unchanged.
 
 ## 2. The chapter
 
-- [ ] 2.1 Write `docs/building-with-agents.md` (design D2), add it to *Guides* on the site and to `PARTICIPANT_FILES` in `tools/check_labs.py`. Verify:
+- [x] 2.1 Write `docs/building-with-agents.md` (design D2), add it to *Guides* on the site and to `PARTICIPANT_FILES` in `tools/check_labs.py`. Verify:
   - every URL in it answers with HTTP 200, at Robot Framework 7.5 where it names a version;
   - every command in it ran;
   - `tools/check_labs.py` passes;
@@ -21,12 +21,12 @@
 - [x] 3.1 Write `labs/bonus-2-tool/INSTRUCTIONS.md` and `checklist.md` (design D4). Verify:
   - `tools/check_labs.py` accepts the lab's header, sections and links, the transcript and reference links pending until 3.3;
   - every command that saves a reference ran.
-- [ ] 3.2 Rehearse the lab with Claude Code in a fresh sibling folder (design D6). Verify:
+- [x] 3.2 Rehearse the lab with Claude Code in a fresh sibling folder (design D6). Verify:
   - the project's unit tests and Robot tests pass;
   - `uv build` builds it;
   - the workshop's suite with the listener in a dry run lists the two tests broken on purpose, sends nothing, and has the same result as without it;
   - the agent loaded the project's `AGENTS.md` and not the clone's.
-- [ ] 3.3 Record its transcript, write its reference page, and add the project as `bonus/bonus-2-tool/` to the `solutions` branch (design D5). Verify:
+- [x] 3.3 Record its transcript, write its reference page, and add the project as `bonus/bonus-2-tool/` to the `solutions` branch (design D5). Verify:
   - the transcript scan finds no secret, local path, user or host;
   - the project's checks pass from the branch checkout.
 

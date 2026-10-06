@@ -39,7 +39,7 @@ See proposal.md for why. The facts this design builds on:
 |---|---|---|
 | lab folder | `labs/bonus-1-library/` | `labs/bonus-2-tool/` |
 | header *Module* | `Bonus 1 - Building a library with an agent` | `Bonus 2 - Building a tool with an agent` |
-| header *Time* | `about 75 minutes, self-paced` | `about 60 minutes, self-paced` |
+| header *Time* | `about 120 minutes, self-paced` | `about 60 minutes, self-paced` |
 | preset | `clean` | `clean` |
 | the participant's project | `../demoshop-library/` | `../robotframework-github-reporter/` |
 

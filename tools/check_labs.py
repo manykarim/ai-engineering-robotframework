@@ -38,7 +38,7 @@ LABS = {
 }
 # The bonus labs: self-paced after the day, so an estimated time instead of a timetable share.
 BONUS = {
-    "bonus-1-library": ("Bonus 1", 75, "clean"),
+    "bonus-1-library": ("Bonus 1", 120, "clean"),
     "bonus-2-tool": ("Bonus 2", 60, "clean"),
 }
 HEADER_ROWS = ("Module", "Time", "Shop preset", "You need", "You start from")

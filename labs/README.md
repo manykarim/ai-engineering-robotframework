@@ -25,7 +25,7 @@ the timetable. Both follow [Building libraries and tools with an agent](../docs/
 
 | Lab | Chapter | Time | Shop preset |
 |---|---|---|---|
-| [Bonus 1 - A library](bonus-1-library/INSTRUCTIONS.md) | Building a library with an agent | about 75 min | `clean` |
+| [Bonus 1 - A library](bonus-1-library/INSTRUCTIONS.md) | Building a library with an agent | about 2 hours | `clean` |
 | [Bonus 2 - A tool](bonus-2-tool/INSTRUCTIONS.md) | Building a tool with an agent | about 60 min | `clean` |
 
 ## How a lab works

@@ -9,7 +9,7 @@ imitate. Then it works from a specification, slice by slice, as in Lab 5. The me
 | | |
 |---|---|
 | Module | Bonus 1 - Building a library with an agent |
-| Time | about 75 minutes, self-paced |
+| Time | about 120 minutes, self-paced |
 | Shop preset | `clean` |
 | You need | The workshop's clone with its environment, the local shop running, and OpenSpec (Lab 5) |
 | You start from | A new folder next to your workshop clone |
@@ -53,7 +53,8 @@ imitate. Then it works from a specification, slice by slice, as in Lab 5. The me
      - Robot tests in `atest/`, against the local shop at `http://localhost:9090`, run with
        `uv run robot --outputdir results atest`;
      - the keyword documentation is generated with
-       `uv run python -m robot.libdoc demoshop_library.DemoShopLibrary docs/DemoShopLibrary.html`;
+       `uv run python -m robot.libdoc "demoshop_library.DemoShopLibrary::url=http://localhost:9090" docs/DemoShopLibrary.html`: libdoc
+       imports the library, so it needs the `url` the library takes;
      - packaging with `uv build`.
    - **References:**
      - `references/demoshop-openapi.json`, the API of the shop version under test;
@@ -106,7 +107,7 @@ imitate. Then it works from a specification, slice by slice, as in Lab 5. The me
    ```bash
    uv run pytest
    uv run robot --outputdir results atest
-   uv run python -m robot.libdoc demoshop_library.DemoShopLibrary docs/DemoShopLibrary.html
+   uv run python -m robot.libdoc "demoshop_library.DemoShopLibrary::url=http://localhost:9090" docs/DemoShopLibrary.html
    uv build
    ```
 
