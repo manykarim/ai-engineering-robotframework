@@ -1,0 +1,55 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+context: |
+  Toolstack:
+  - Python 3.12 with uv; Robot Framework 7.5 is the only run-time dependency.
+  - HTTP goes through the standard library's urllib.request, so the listener runs in any project's environment.
+  - Unit tests: `uv run pytest`; Robot tests: `uv run robot --outputdir results atest`; packaging: `uv build`.
+
+  References:
+  - references/github-issues.json.
+  - The Robot Framework 7.5 User Guide, listener interface and listener version 3:
+    https://robotframework.org/robotframework/7.5/RobotFrameworkUserGuide.html#listener-interface
+    https://robotframework.org/robotframework/7.5/RobotFrameworkUserGuide.html#listener-version-3
+  - ListenerV3 in the Robot API, whose code is robot/api/interfaces.py in the project's .venv:
+    https://robot-framework.readthedocs.io/en/v7.5/autodoc/robot.api.html#robot.api.interfaces.ListenerV3
+
+  Concepts:
+  - A version 3 listener, registered with `--listener module.Class:name=value`.
+  - The reporter never fails or changes a test: every error of its own becomes a warning.
+  - The token comes from GITHUB_TOKEN or GH_TOKEN, never from an argument or a file.
+  - The dry run is the default.
+  - It imports from its source folder alone, as it is run with `--pythonpath`;
+    it reads nothing about itself from installed package metadata.
+
+  Examples:
+  - references/example-listener.py.
+
+  Specification:
+  - OpenSpec, with changes under openspec/changes/.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
