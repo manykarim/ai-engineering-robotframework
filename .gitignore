@@ -22,10 +22,3 @@ website/.docusaurus/
 
 # The Robot Framework MCP server's working files (Lab 6).
 .robotmcp_artifacts/
-
-# The answers live on the solutions branch, never on main (spec: workshop/solutions): the transcripts, the
-# reference pages and the facilitators' answer sheet. A site build adds them here (website: npm run reference),
-# and git must never offer them for a commit on main.
-/transcripts/
-/solutions/
-/docs/facilitator/suite-outcomes.*
