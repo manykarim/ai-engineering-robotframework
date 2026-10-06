@@ -50,6 +50,6 @@
   - `openspec validate --all --strict` passes, and `tools/check_labs.py` passes without pending links, against the local `solutions` commits;
   - the pull request's site build passes;
   - no file of the bonus projects is on `main`.
-- [ ] 5.2 After the merge, rebase the bonus commits of `solutions` onto `main` and push them, check the redeployed site, and archive the change. Verify:
+- [x] 5.2 After the merge, rebase the bonus commits of `solutions` onto `main` and push them, check the redeployed site, and archive the change. Verify:
   - both bonus labs, their transcripts and their reference pages answer with HTTP 200 on the site;
   - the specs gain *Bonus labs*, *Reference projects of the bonus labs* and *A guide to building libraries and tools*.
