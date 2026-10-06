@@ -169,7 +169,7 @@ for i,l in enumerate(open('results/heal/events.jsonl')):
 
 ```
 <persisted-output>
-Output too large (42.7KB). Full output saved to: ~/.claude/projects/-tmp-claude-1000--mnt-c-workspace-ai-engineering-robotframework-6fe17ce9-00bd-4179-bc22-dbf725b60a81-scratchpad-rehearsal-
+Output too large (42.7KB). Full output saved to: ~/.claude/projects/<project>
 
 Preview (first 2KB):
 ===  heal-1 WEB-002_AC-1 Card Prices Are The Product Prices
@@ -183,7 +183,7 @@ Preview (first 2KB):
 ... (82 more lines)
 ```
 
-*The agent reads `~/.claude/projects/-tmp-claude-1000--mnt-c-workspace-ai-engineering-robotframework-6fe17ce9-00bd-4179-bc22-dbf725b60a81-scratchpad-rehearsal-repo/4dc550e3-4737-445c-9fc3-12be7a5eeac3/tool-results/bwt0zv1dy.txt`*
+*The agent reads `~/.claude/projects/<project>/4dc550e3-4737-445c-9fc3-12be7a5eeac3/tool-results/bwt0zv1dy.txt`*
 
 *The agent runs `cat -n resources/legacy.resource; echo ----; ls -R results/heal/diffs results/heal/healed_files | head -30; echo ----; ls -la results/; git status --short resources/legacy.resource`*
 

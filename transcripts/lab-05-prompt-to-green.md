@@ -74,7 +74,7 @@ cart
 
 ```
 <persisted-output>
-Output too large (41.7KB). Full output saved to: ~/.claude/projects/-tmp-claude-1000--mnt-c-workspace-ai-engineering-robotframework-6fe17ce9-00bd-4179-bc22-dbf725b60a81-scratchpad-rehearsal-
+Output too large (41.7KB). Full output saved to: ~/.claude/projects/<project>
 
 Preview (first 2KB):
 === openspec/changes/archive/2026-09-25-add-product-detail-ui-tests/design.md
@@ -92,7 +92,7 @@ below come from the local shop at version `0.3.0`: its served HTML for `/product
 
 ```
 <persisted-output>
-Output too large (35.6KB). Full output saved to: ~/.claude/projects/-tmp-claude-1000--mnt-c-workspace-ai-engineering-robotframework-6fe17ce9-00bd-4179-bc22-dbf725b60a81-scratchpad-rehearsal-
+Output too large (35.6KB). Full output saved to: ~/.claude/projects/<project>
 
 Preview (first 2KB):
 === openspec/changes/archive/2026-09-25-add-cart-ui-tests/design.md
@@ -106,9 +106,9 @@ read from:
 ... (22 more lines)
 ```
 
-*The agent reads `~/.claude/projects/-tmp-claude-1000--mnt-c-workspace-ai-engineering-robotframework-6fe17ce9-00bd-4179-bc22-dbf725b60a81-scratchpad-rehearsal-repo/6e039e5c-afd4-4924-9827-186807b90739/tool-results/bit51d5go.txt`*
+*The agent reads `~/.claude/projects/<project>/6e039e5c-afd4-4924-9827-186807b90739/tool-results/bit51d5go.txt`*
 
-*The agent reads `~/.claude/projects/-tmp-claude-1000--mnt-c-workspace-ai-engineering-robotframework-6fe17ce9-00bd-4179-bc22-dbf725b60a81-scratchpad-rehearsal-repo/6e039e5c-afd4-4924-9827-186807b90739/tool-results/b262qxgep.txt`*
+*The agent reads `~/.claude/projects/<project>/6e039e5c-afd4-4924-9827-186807b90739/tool-results/b262qxgep.txt`*
 
 *The agent runs `cat labs/lab-05-prompt-to-green/INSTRUCTIONS.md labs/lab-05-prompt-to-green/checklist.md; echo ===; cat openspec/specs/shop/interpretation-rules/spec.md`*
 
