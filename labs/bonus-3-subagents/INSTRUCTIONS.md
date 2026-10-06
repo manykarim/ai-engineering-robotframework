@@ -73,7 +73,8 @@ stays. The lab builds on Lab 4, which covers the debugger and the REPL, and on L
    > - End with a report: the cause, the evidence, the change as a diff, and the test's result.
 
    Read the file it shows you. Is the description specific enough that the main agent picks this subagent, and
-   only for this job?
+   only for this job? Claude Code asks for permission before it writes into `.claude/`, even when it may edit
+   files without asking: allow this write.
 
 4. **Write the analyzer:**
 
