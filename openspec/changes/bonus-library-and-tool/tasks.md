@@ -35,21 +35,21 @@
 - [x] 4.1 Write `labs/bonus-1-library/INSTRUCTIONS.md` and `checklist.md` (design D3). Verify:
   - `tools/check_labs.py` accepts the lab, the transcript and reference links pending until 4.3;
   - every command that saves a reference ran.
-- [ ] 4.2 Rehearse the lab with Claude Code in a fresh sibling folder (design D6). Verify:
+- [x] 4.2 Rehearse the lab with Claude Code in a fresh sibling folder (design D6). Verify:
   - `uv run pytest` and `uv run robot atest` pass against a freshly reset local shop;
   - `Get Product Price    1    ==    249.99` passes, and `Get Product Price    1    ==    1` fails with AssertionEngine's message;
   - libdoc writes the library's documentation, and `uv build` builds it;
   - the agent loaded the project's `AGENTS.md` and not the clone's.
-- [ ] 4.3 Record its transcript, write its reference page, and add the project as `bonus/bonus-1-library/` to the `solutions` branch (design D5). Verify:
+- [x] 4.3 Record its transcript, write its reference page, and add the project as `bonus/bonus-1-library/` to the `solutions` branch (design D5). Verify:
   - the transcript scan finds no secret, local path, user or host;
   - the project's checks pass from the branch checkout.
 
 ## 5. Close-out
 
-- [ ] 5.1 Push the bonus commits to `solutions` without a force-push, record both rehearsals in `docs/facilitator/rehearsal.md`, and open the `main` pull request (design, migration plan). Verify:
-  - `openspec validate --all --strict` and `tools/check_labs.py` pass, the latter without pending links;
+- [x] 5.1 Record both rehearsals in `docs/facilitator/rehearsal.md`, and open the `main` pull request (design, migration plan). Verify:
+  - `openspec validate --all --strict` passes, and `tools/check_labs.py` passes without pending links, against the local `solutions` commits;
   - the pull request's site build passes;
   - no file of the bonus projects is on `main`.
-- [ ] 5.2 After the merge, rebase `solutions` onto `main`, check the redeployed site, and archive the change. Verify:
+- [ ] 5.2 After the merge, rebase the bonus commits of `solutions` onto `main` and push them, check the redeployed site, and archive the change. Verify:
   - both bonus labs, their transcripts and their reference pages answer with HTTP 200 on the site;
   - the specs gain *Bonus labs*, *Reference projects of the bonus labs* and *A guide to building libraries and tools*.
