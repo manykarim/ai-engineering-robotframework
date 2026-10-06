@@ -62,7 +62,9 @@ specification, slice by slice, as in Lab 5. The method is in
      - a listener, version 3, registered with `--listener module.Class:name=value`;
      - a reporter never fails or changes a test: every error of its own becomes a warning;
      - the token comes from `GITHUB_TOKEN` or `GH_TOKEN`, never from an argument or a file;
-     - the dry run is the default.
+     - the dry run is the default;
+     - it imports from its source folder alone, as step 8 runs it with `--pythonpath`: it reads nothing about
+       itself from installed package metadata.
    - **Examples:** `references/example-listener.py`.
    - **Specification:** OpenSpec, under `openspec/changes/`.
 
@@ -92,6 +94,7 @@ specification, slice by slice, as in Lab 5. The method is in
    - Does it use only the standard library for HTTP, and add no dependency at run time?
    - Can no error of the listener fail, skip or change a test?
    - Is the token read from the environment only, and is the dry run the default?
+   - Does it import from `src/` alone, without being installed?
    - Do the unit tests cover a new issue, a comment on an open one, a dry run, a missing token and an API error?
 
    Ask for changes until the answer to each is yes.
