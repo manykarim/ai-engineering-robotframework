@@ -16,7 +16,8 @@ dependencies = [
   "robotframework-browser==20.5.0",
   "robotframework-browser-batteries==20.5.0",
   "robotframework-requests==0.9.7",
-  # discover, libdoc, robot-debug, repl and results (design D3).
+  # discover, libdoc, robot-debug, repl, results and analyze (design D3). [all]
+  # also brings Robocop, which Bonus 3 uses: keep it when narrowing the extras.
   "robotcode[all]==2.7.0",
   # [web,api] only: [all] pins desktop-automation pre-releases (design D2).
   "rf-mcp[web,api]==0.35.0",

@@ -4,10 +4,10 @@
   - `tools/check_labs.py` reports only the missing `labs/bonus-3-subagents/` until 2.1 exists;
   - Lab 7's diff is that one sentence;
   - the site's sidebar shows three bonus labs after 2.1.
-- [ ] 1.2 Add `analyze code` to `docs/robotcode.md`: the row, the *Analyze* section with the example on `tests resources`, and the `VariableNotFound` trap (design D8). Verify:
+- [x] 1.2 Add `analyze code` to `docs/robotcode.md`: the row, the *Analyze* section with the example on `tests resources`, and the `VariableNotFound` trap (design D8). Verify:
   - the example ran with the shop in `clean`, and prints what the page shows, allowing for shortened output;
   - `tools/check_labs.py` passes.
-- [ ] 1.3 Add *Static analysis* to `GLOSSARY.md`, with a *Read more* line for Robocop's and RobotCode's documentation, and name `analyze` and Robocop in the comment on `robotcode[all]` in `pyproject.toml` (design D9, D12). Verify:
+- [x] 1.3 Add *Static analysis* to `GLOSSARY.md`, with a *Read more* line for Robocop's and RobotCode's documentation, and name `analyze` and Robocop in the comment on `robotcode[all]` in `pyproject.toml` (design D9, D12). Verify:
   - each linked URL answers with HTTP 200;
   - `uv lock --check` passes, and `uv.lock` is unchanged;
   - `uv run robocop --version` prints 9.0.0;
