@@ -19,4 +19,5 @@ Where the lab has you edit a file by hand, the rehearsal had the agent do it, an
 | Lab 7 - Hooks and the toolbelt | [lab-07-hooks-toolbelt.md](lab-07-hooks-toolbelt.md) |
 | Lab 8 - Healing | [lab-08-healing.md](lab-08-healing.md), and the [recorded healing report](lab-08-healing-report.md) for the no-model path |
 | Lab 9 - CI | [lab-09-ci.md](lab-09-ci.md), the workflows' output: Lab 9 needs no agent of your own |
+| Bonus 2 - A tool | [bonus-2-tool.md](bonus-2-tool.md), self-paced after the day |
 | Cold open | [cold-open.md](cold-open.md), the facilitators' backup for the first five minutes |
