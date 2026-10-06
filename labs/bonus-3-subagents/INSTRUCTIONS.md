@@ -1,8 +1,8 @@
 # Bonus 3 - Subagents
 
 Write two [subagents](../../GLOSSARY.md#subagent) of your own, and hand them the work:
-- a **debugger** that stops a failing test at its failure, finds the cause on the live page, and repairs the test,
-  or reports a defect of the shop;
+- a **debugger** that stops a failing test at its failure with RobotCode's debugger, finds the cause on the live
+  page, and repairs the test, checking the repair in the REPL, or reports a defect of the shop;
 - an **analyzer** that checks the suite without running it, with RobotCode and Robocop, and changes files only
   through Robocop.
 
@@ -63,8 +63,9 @@ stays. The lab builds on Lab 4, which covers the debugger and the REPL, and on L
    >   state there: .where, .vars, .print, and keywords run on the paused page. If you can keep the session open
    >   between your steps, drive it interactively. Otherwise drive it in piped rounds: choose each round's commands
    >   from the last round's output, and end each round with .continue or .abort. Never wait at a prompt.
-   > - Try a fix before you write it into a file: at the paused prompt, or on a fresh page in
-   >   uv run robotcode repl --plain.
+   > - Try a fix at the paused prompt before you write it into a file.
+   > - After you write a keyword into resources/, check it on its own in uv run robotcode repl --plain: import the
+   >   resource, open the page with the keywords of resources/shop.resource, and run the keyword there.
    > - Repair a test only so that it verifies what its criterion says, with locators from the stable contract, in
    >   resources/. Never change an expected value, an assertion or a tag so that a test passes. When the shop
    >   contradicts its specification, leave the test failing and report the defect with your evidence.

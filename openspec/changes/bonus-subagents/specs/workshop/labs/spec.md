@@ -43,7 +43,8 @@ The bonus labs SHALL be self-paced, outside the day's timetable and its cut orde
 
 The debugger SHALL:
 - read the test's recorded failure before it runs anything;
-- stop the test at its failure with `robotcode robot-debug`, inspect the live state there, and try a candidate fix at the paused prompt or in `robotcode repl` before it writes the fix into a file;
+- stop the test at its failure with `robotcode robot-debug`, inspect the live state there, and try a candidate fix at the paused prompt before it writes the fix into a file;
+- check a keyword it wrote into a resource file on its own, on a fresh page, in `robotcode repl`, before it runs the test again;
 - repair a test only so that it verifies what its criterion in `openspec/specs/shop/` says, with locators from the stable contract, in a resource file;
 - never change an expected value, an assertion or a tag so that a test passes. When the shop contradicts its specification, the debugger SHALL leave the test failing and report the defect with its evidence;
 - end with a report: the cause, the evidence, the change it made, and the test's result after the change.

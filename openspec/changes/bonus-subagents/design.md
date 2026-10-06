@@ -113,11 +113,16 @@ The brief tells it:
 1. Read the recorded failure with `robotcode results show --failed`.
 2. Run `uv run robotcode robot-debug --plain -t "<test>"`, which stops at the failure. Inspect there with `.where`, `.vars`, `.print`, and keywords on the paused page.
 3. Drive the session interactively if the agent can keep it open between steps. Otherwise, drive it in piped rounds: each round's commands are chosen from the last round's output, and each round ends with `.continue` or `.abort`. Never wait at a prompt.
-4. Try the candidate fix before writing it: at the paused prompt, or in `uv run robotcode repl --plain` on a fresh page, where it checks a locator without running the test.
+4. Try the candidate fix at the paused prompt before writing it.
 5. Read `docs/robotcode.md`, `docs/conventions.md` and the test's criterion in `openspec/specs/shop/` before changing anything.
-6. Repair in `resources/`, onto the stable contract, then run the test again.
+6. Repair in `resources/`, onto the stable contract.
+7. Check a keyword it wrote on its own in `uv run robotcode repl --plain`: import the resource, open the page with `resources/shop.resource`, and run the keyword. Then run the test again.
 
-The brief requires both `robot-debug` and the REPL. The rehearsal records which mode Claude Code used. The Codex and Copilot references keep the same instructions.
+Each tool has its own job:
+- the paused prompt tries a fix in the test's own context;
+- the REPL proves that the keyword in the file works by itself, before the test runs again.
+
+A first rehearsal offered the REPL only as an alternative to the paused prompt. The debugger then never used it, because the paused prompt was enough. The rehearsal records which driving mode Claude Code used. The Codex and Copilot references keep the same instructions.
 
 ### D7. The analyzer's tools, fixes and verdicts
 
@@ -164,7 +169,8 @@ A `reference: …` commit adds `solutions/bonus-3-subagents.md` and `transcripts
 
 - It runs with Claude Code in a fresh clone, through the rehearsal driver, which streams its events.
 - Any session that nears the background time limit is split at a step boundary, and the transcript notes it.
-- `tools/transcript.py` renders the transcript with `--repo` and `--secrets`.
+- `tools/transcript.py` renders the transcript with `--repo` and `--secrets`. It names a subagent's work after the subagent, and shows the task it was handed and its report: otherwise every call reads as the main agent's, which is the one thing this lab's transcript must not blur. On a transcript without subagents, its output is unchanged.
+- Claude Code asks before it writes into `.claude/`, even in `acceptEdits` mode and with an allow rule, and a session without a person cannot ask. The lab tells participants to allow that write. The rehearsal allows it the same way: it writes the content the agent asked to write, unchanged, and the transcript says so.
 - The local shop is reset after every run.
 - The measured time sets *Time*, and `docs/facilitator/rehearsal.md` records the rehearsal.
 

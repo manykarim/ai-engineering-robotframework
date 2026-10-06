@@ -14,8 +14,8 @@ The workshop is today, 2026-10-07, so this is a third self-paced bonus lab for a
   - **`debugger`** debugs one failing test per call:
     - it reads the recorded failure first;
     - it stops at the failure with `robotcode robot-debug` and inspects the live page;
-    - it tries a candidate fix at the paused prompt or in `robotcode repl` before writing it into a file;
-    - it repairs the test onto the stable contract, and runs it again.
+    - it tries a candidate fix at the paused prompt before writing it into a file;
+    - it repairs the test onto the stable contract, checks each keyword it wrote on its own in `robotcode repl`, and runs the test again.
     - It never changes an expected value to agree with the shop. When the shop contradicts its specification, it reports a defect with the evidence instead.
   - **`analyzer`** runs `robotcode analyze code` and `robocop check` and sorts every finding into fix, keep or false positive, with a reason for each. It has no tool to edit files: it changes them only through Robocop's fixes and formatters, shows the diff before it writes, and runs the suite afterwards.
   - The lab applies `drift_and_bug`, and the main agent hands each failed test to the `debugger`, one at a time. Back in `clean`, the `analyzer` converts the suite's `Create List`, `Create Dictionary` and `Catenate` assignments to `VAR`.
@@ -55,6 +55,7 @@ None.
   - `labs/lab-07-hooks-toolbelt/INSTRUCTIONS.md`: one sentence in stretch goal A;
   - `docs/robotcode.md`: the *Analyze* section and one table row;
   - `GLOSSARY.md`;
+  - `tools/transcript.py`: a subagent's work is named after the subagent;
   - the dependency comment in `pyproject.toml`. `uv.lock` is unchanged;
   - `docs/facilitator/rehearsal.md`.
 - **New on `solutions`:**

@@ -1,6 +1,6 @@
 ## 1. Contract, pointers and references on `main`
 
-- [ ] 1.1 Add `"bonus-3-subagents": ("Bonus 3", 60, "drift_and_bug")` to `BONUS` in `tools/check_labs.py`, the Bonus 3 row and the new intro sentence to `labs/README.md`, and one sentence to Lab 7's stretch goal A that points to Bonus 3 (design D1, D12). Verify:
+- [x] 1.1 Add `"bonus-3-subagents": ("Bonus 3", 60, "drift_and_bug")` to `BONUS` in `tools/check_labs.py`, the Bonus 3 row and the new intro sentence to `labs/README.md`, and one sentence to Lab 7's stretch goal A that points to Bonus 3 (design D1, D12). Verify:
   - `tools/check_labs.py` reports only the missing `labs/bonus-3-subagents/` until 2.1 exists;
   - Lab 7's diff is that one sentence;
   - the site's sidebar shows three bonus labs after 2.1.
