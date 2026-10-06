@@ -42,11 +42,17 @@ The standing rule of the day. An agent may propose tests, fixes, issues and heal
 
 ## Tier 1: Context
 
+### Context engineering
+
+Deciding what an agent sees, and when: what it always loads, what it loads for a task, and what stays out.
+Read more: Martin Fowler's [Context Engineering for Coding Agents](https://martinfowler.com/articles/exploring-gen-ai/context-engineering-coding-agents.html).
+
 ### Context file
 
 A Markdown file every session loads before your first prompt. `AGENTS.md` is the cross-agent standard; `CLAUDE.md`
 here only imports it. It holds what is always relevant: how to build and run, where the system under test is, the
 conventions, the boundaries. It never holds secrets, and nothing the agent can find out quickly by itself.
+Read more: Claude Code's [CLAUDE.md files](https://code.claude.com/docs/en/memory#claude-md-files); the [AGENTS.md](https://agents.md/) standard.
 
 ### Modular context
 
@@ -65,6 +71,7 @@ into it costs space and attention, which is why less, well-chosen context works 
 A folder with a `SKILL.md`: a name, a description, instructions, and optionally scripts and reference files. The
 agent reads only the description until a task matches it, then loads the rest. Always relevant: context file.
 Relevant for one kind of task: skill.
+Read more: Claude Code's [skills](https://code.claude.com/docs/en/skills); the [Agent Skills](https://agentskills.io/home) standard.
 
 ### Trigger
 
@@ -128,11 +135,13 @@ Building a test one step at a time against the live system: run a step, look at 
 
 A command the agent runs automatically, before or after it uses a tool, and cannot skip. It can reject the action or
 report back. Hooks turn conventions into guardrails.
+Read more: Claude Code's [hooks guide](https://code.claude.com/docs/en/hooks-guide).
 
 ### Subagent
 
 A separate agent with its own instructions and a limited set of tools, which the main agent hands a task to. A
 reviewer that cannot edit files is one.
+Read more: Claude Code's [subagents](https://code.claude.com/docs/en/sub-agents).
 
 ### Toolbelt
 
@@ -161,10 +170,16 @@ Deciding what each finding is worth: *accept*, *reject* or *investigate*.
 
 ## Spec-driven work
 
+### Spec-driven development
+
+Agreeing on what a change must do, as a specification, before an agent builds it, and checking the result against
+it. Read more: [OpenSpec](https://github.com/Fission-AI/OpenSpec), the tool this workshop uses.
+
 ### OpenSpec
 
 A tool for agreeing on a change before building it. `/opsx:propose` writes a proposal, specs, a design and tasks;
 you review them; `/opsx:apply` builds the change; `/opsx:archive` moves its specs into `openspec/specs/`.
+Read more: OpenSpec's [repository](https://github.com/Fission-AI/OpenSpec).
 
 ### Specification
 
