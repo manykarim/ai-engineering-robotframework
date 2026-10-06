@@ -9,7 +9,7 @@ anchors, and that participant-facing text gives no answer away. Links to the sit
 transcripts, reference pages and answer sheet are checked against the solutions branch,
 where that material lives. Every tracked file on main is scanned for answers. Exits with
 status 1 on any finding. --pending-transcripts accepts links to transcripts that have not
-been recorded yet; --show-patterns prints the answer patterns.
+been recorded yet, and to reference pages not written yet; --show-patterns prints the answer patterns.
 """
 from __future__ import annotations
 
@@ -35,6 +35,11 @@ LABS = {
     "lab-07-hooks-toolbelt": ("7", 20, "buggy"),
     "lab-08-healing": ("8", 12, "drift_and_bug"),
     "lab-09-ci": ("9", 15, "clean"),
+}
+# The bonus labs: self-paced after the day, so an estimated time instead of a timetable share.
+BONUS = {
+    "bonus-1-library": ("Bonus 1", 75, "clean"),
+    "bonus-2-tool": ("Bonus 2", 60, "clean"),
 }
 HEADER_ROWS = ("Module", "Time", "Shop preset", "You need", "You start from")
 SECTIONS = ("## Steps", "## Stretch", "## Compare with the reference", "## If your agent fails")
@@ -63,7 +68,8 @@ _ENCODED = [
      "the cause of the Module 4 broken test", "all"),
 ]
 GIVEAWAYS = [(re.compile(base64.b64decode(b).decode(), f), what, scope) for b, f, what, scope in _ENCODED]
-PARTICIPANT_FILES = ("labs/**/*.md", "GLOSSARY.md", "docs/environments.md", "docs/robotcode.md")
+PARTICIPANT_FILES = ("labs/**/*.md", "GLOSSARY.md", "docs/environments.md", "docs/robotcode.md",
+                     "docs/building-with-agents.md")
 STORY_DIR = "labs/lab-05-prompt-to-green/stories/"  # copied verbatim; not ours to police
 # What the scan of main leaves out: the suite the labs work on, the shop's specifications (correct behaviour,
 # also as archived deltas), the stories copied from the shop's repository, and lock files full of version numbers.
@@ -111,7 +117,10 @@ def check_lab(root: Path, folder: str, spec: tuple[str, int, str]) -> list[str]:
             problems.append(f"{folder}: the header table has no '{row}' row before the steps")
     if table.get("Module") and not table["Module"].startswith(f"{module} "):
         problems.append(f"{folder}: Module should start with '{module} ', is '{table['Module']}'")
-    if table.get("Time") and table["Time"] != f"{minutes} minutes":
+    if folder in BONUS:
+        if table.get("Time") and not (f"{minutes} minutes" in table["Time"] and "self-paced" in table["Time"]):
+            problems.append(f"{folder}: Time should hold '{minutes} minutes' and 'self-paced', is '{table['Time']}'")
+    elif table.get("Time") and table["Time"] != f"{minutes} minutes":
         problems.append(f"{folder}: Time should be '{minutes} minutes' (the timetable), is '{table['Time']}'")
     if table.get("Shop preset") and f"`{preset}`" not in table["Shop preset"]:
         problems.append(f"{folder}: Shop preset should be `{preset}`, is '{table['Shop preset']}'")
@@ -160,7 +169,8 @@ def check_site_link(root: Path, rel: str, target: str, ref: str, pending: bool) 
         text = found.read_text(encoding="utf-8") if found else None
         where = "main"
     if text is None:
-        return [] if pending and page.startswith("transcripts/") else [f"{rel}: link '{target}' has no page on {where}"]
+        pending_page = page.startswith(("transcripts/", "solutions/"))
+        return [] if pending and pending_page else [f"{rel}: link '{target}' has no page on {where}"]
     if anchor and anchor not in {slug(m.group(1)) for m in re.finditer(r"^#{1,6} (.+)$", text, re.M)}:
         return [f"{rel}: link '{target}' has no heading '#{anchor}' on {where}"]
     return []
@@ -240,7 +250,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, default=ROOT, help="repository root (default: %(default)s)")
     parser.add_argument("--solutions", default=SOLUTIONS, help="the solutions branch's ref (default: %(default)s)")
     parser.add_argument("--pending-transcripts", action="store_true",
-                        help="accept links to transcripts that have not been recorded yet")
+                        help="accept links to transcripts and reference pages that have not been written yet")
     parser.add_argument("--show-patterns", action="store_true", help="print the answer patterns, decoded, and exit")
     args = parser.parse_args(argv)
     root = args.root.resolve()
@@ -251,9 +261,10 @@ def main(argv: list[str] | None = None) -> int:
 
     problems = []
     folders = {p.name for p in (root / "labs").iterdir() if p.is_dir()} if (root / "labs").is_dir() else set()
-    problems += [f"labs/{name}: missing lab folder" for name in sorted(set(LABS) - folders)]
-    problems += [f"labs/{name}: not a lab of the timetable" for name in sorted(folders - set(LABS))]
-    for folder, spec in LABS.items():
+    problems += [f"labs/{name}: missing lab folder" for name in sorted((set(LABS) | set(BONUS)) - folders)]
+    problems += [f"labs/{name}: not a lab of the timetable or a bonus lab"
+                 for name in sorted(folders - set(LABS) - set(BONUS))]
+    for folder, spec in {**LABS, **BONUS}.items():
         if folder in folders:
             problems += check_lab(root, folder, spec)
     tracked = set(main_files(root))

@@ -18,6 +18,16 @@ before. Missed a lab? Each lab says how to catch up, so you can always join the 
 
 Module 1 (the cold open) and Module 10 (wrap-up) have no lab.
 
+## Bonus labs
+
+Self-paced, for after the day: build your own Robot Framework library or tool with an agent. They are not part of
+the timetable. Both follow [Building libraries and tools with an agent](../docs/building-with-agents.md).
+
+| Lab | Chapter | Time | Shop preset |
+|---|---|---|---|
+| [Bonus 1 - A library](bonus-1-library/INSTRUCTIONS.md) | Building a library with an agent | about 75 min | `clean` |
+| [Bonus 2 - A tool](bonus-2-tool/INSTRUCTIONS.md) | Building a tool with an agent | about 60 min | `clean` |
+
 ## How a lab works
 
 - **Steps** are either a command to run or a prompt to give your coding agent. Prompts are quoted in full: paste

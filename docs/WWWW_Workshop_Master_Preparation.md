@@ -116,7 +116,7 @@ What belongs in CI (triage, healing suggestions, summaries) and what doesn't (un
 
 ## Module 10 — Wrap-Up, Roadmap & Q&A (10 min)
 
-The ladder once more; the honest advice (most teams should live on rungs 1–3 for a quarter); the Monday plan in ascending effort: (1) write your `AGENTS.md`, (2) install the RobotCode plugin + RF Agent Skills, (3) add one CI triage step. RF AI initiative, contributing skills back, open Q&A.
+The ladder once more; the honest advice (most teams should live on rungs 1–3 for a quarter); the Monday plan in ascending effort: (1) write your `AGENTS.md`, (2) install the RobotCode plugin + RF Agent Skills, (3) add one CI triage step, (4) when you build your own library or tool, the two self-paced bonus chapters. RF AI initiative, contributing skills back, open Q&A.
 
 ---
 
