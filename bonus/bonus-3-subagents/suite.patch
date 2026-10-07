@@ -1,0 +1,146 @@
+diff --git a/resources/api.resource b/resources/api.resource
+index 2596185..ab97018 100644
+--- a/resources/api.resource
++++ b/resources/api.resource
+@@ -8,7 +8,7 @@ Library             RequestsLibrary
+ *** Keywords ***
+ Open Shop API
+     [Documentation]    Creates the API session. It sends ${SHOP_SPACE} when one is set.
+-    &{headers}=    Create Dictionary
++    VAR    &{headers}=    &{EMPTY}
+     IF    "${SHOP_SPACE}"
+         Set To Dictionary    ${headers}    X-Workshop-Space=${SHOP_SPACE}
+     END
+diff --git a/resources/catalogue.resource b/resources/catalogue.resource
+index 0b9bc0b..924acf4 100644
+--- a/resources/catalogue.resource
++++ b/resources/catalogue.resource
+@@ -38,11 +38,21 @@ Get Grid Card Names
+     @{names}=    Get Texts    ${GRID} >> article >> role=heading[level=3]
+     RETURN    ${names}
+ 
++Get Grid Card Prices
++    [Documentation]    The price every grid card shows, by its visible text, in page order.
++    @{prices}=    Get Texts    ${GRID} >> article >> ${CARD PRICE}
++    RETURN    ${prices}
++
++Get Grid Card Elements
++    [Documentation]    The product cards of the grid, as elements, in page order.
++    @{cards}=    Get Elements    ${GRID} >> article
++    RETURN    ${cards}
++
+ Get Texts
+     [Documentation]    The visible text of every element the locator matches.
+     [Arguments]    ${locator}
+     @{elements}=    Get Elements    ${locator}
+-    @{texts}=    Create List
++    VAR    @{texts}=    @{EMPTY}
+     FOR    ${element}    IN    @{elements}
+         ${text}=    Get Text    ${element}
+         Append To List    ${texts}    ${text.strip()}
+@@ -88,7 +98,7 @@ Get Price Range Values
+ Get Highlight Prices
+     [Documentation]    The prices shown in "Handpicked highlights", in page order.
+     @{links}=    Get Texts    ${HIGHLIGHTS} >> role=link
+-    @{prices}=    Create List
++    VAR    @{prices}=    @{EMPTY}
+     FOR    ${text}    IN    @{links}
+         ${price}=    Get Regexp Matches    ${text}    \\$[0-9,]+\\.[0-9]{2}
+         Append To List    ${prices}    ${price}[0]
+diff --git a/resources/checkout.resource b/resources/checkout.resource
+index bc2d44c..e0a88ae 100644
+--- a/resources/checkout.resource
++++ b/resources/checkout.resource
+@@ -50,6 +50,13 @@ Get Summary Amount
+     ${amount}=    Amount From Text    ${text}
+     RETURN    ${amount}
+ 
++Get Summary Total
++    [Documentation]    The order total the order summary shows, as a number: the amount beside the
++    ...                label whose visible text has the word "Total" ("Subtotal" does not count).
++    ${text}=    Get Text    ${SUMMARY} >> text=/\\btotal\\b/i >> xpath=..
++    ${total}=    Amount From Text    ${text}
++    RETURN    ${total}
++
+ Amount From Text
+     [Documentation]    The amount in a text, ``$1,234.50`` as the number 1234.5.
+     ...                A label around it is ignored; with several amounts, the last one counts.
+@@ -73,11 +80,11 @@ Get New Field Message
+     ...                appeared because of the last action, not help text that was already there.
+     [Arguments]    ${label}    ${before}
+     &{now}=    Get Field Messages    ${label}
+-    @{texts}=    Create List
++    VAR    @{texts}=    @{EMPTY}
+     FOR    ${id}    ${text}    IN    &{now}
+         IF    $id not in $before    Append To List    ${texts}    ${text}
+     END
+-    ${message}=    Catenate    @{texts}
++    VAR    ${message}=    @{texts}    separator=${SPACE}
+     RETURN    ${message}
+ 
+ Go To Cart Page
+diff --git a/resources/shop.resource b/resources/shop.resource
+index 04cc723..f6f9e6e 100644
+--- a/resources/shop.resource
++++ b/resources/shop.resource
+@@ -20,7 +20,7 @@ Open Shop Browser
+ Start Shop Test
+     [Documentation]    Opens a fresh context and page for one test.
+     IF    "${SHOP_SPACE}"
+-        &{headers}=    Create Dictionary    X-Workshop-Space=${SHOP_SPACE}
++        VAR    &{headers}=    X-Workshop-Space=${SHOP_SPACE}
+         New Context    baseURL=${SHOP_URL}    extraHTTPHeaders=${headers}
+     ELSE
+         New Context    baseURL=${SHOP_URL}
+diff --git a/tests/ui/catalogue.robot b/tests/ui/catalogue.robot
+index 28a8b37..c7f8533 100644
+--- a/tests/ui/catalogue.robot
++++ b/tests/ui/catalogue.robot
+@@ -29,7 +29,7 @@ WEB-002_AC-1 Card Prices Are The Product Prices
+     &{prices}=    Evaluate    {product["name"]: product["price"] for product in $catalogue}
+     Go To Catalogue
+     @{names}=    Get Grid Card Names
+-    @{shown}=    Get Card Prices
++    @{shown}=    Get Grid Card Prices
+     Length Should Be    ${shown}    12
+     FOR    ${name}    ${price}    IN ZIP    ${names}    ${shown}
+         ${expected}=    Format Price    ${prices}[${name}]
+@@ -54,7 +54,7 @@ WEB-002_AC-7 Audio Filter Shows Only Audio
+     Go To Catalogue
+     Check Category    Audio
+     Apply Filters
+-    @{cards}=    Get Grid Cards
++    @{cards}=    Get Grid Card Elements
+     Should Not Be Empty    ${cards}
+     FOR    ${card}    IN    @{cards}
+         ${category}=    Get Card Category    ${card}
+diff --git a/tests/ui/checkout.robot b/tests/ui/checkout.robot
+index fa0bbcc..4aa610b 100644
+--- a/tests/ui/checkout.robot
++++ b/tests/ui/checkout.robot
+@@ -19,14 +19,14 @@ WEB-006_AC-1 Order Total Adds Up
+     ${subtotal}=    Get Summary Amount    Subtotal
+     ${shipping}=    Get Summary Amount    Shipping
+     ${tax}=    Get Summary Amount    Tax
+-    ${total}=    Get Order Total
++    ${total}=    Get Summary Total
+     ${expected}=    Evaluate    round($subtotal + $shipping + $tax, 2)
+     Should Be Equal As Numbers    ${total}    ${expected}
+     ...    msg=The order total should be subtotal plus shipping plus tax.
+ 
+ WEB-006_AC-7 Successful Order
+     [Documentation]    A valid order shows a confirmation with an order number ORD- plus 8 hex characters.
+-    Fill Checkout Form By Field Ids    test@example.com    Test User    123 Test Street, City
++    Fill Checkout Form    test@example.com    Test User    123 Test Street, City
+     Place Order
+     ${message}=    Get Order Confirmation
+     ${numbers}=    Get Regexp Matches    ${message}    \\bORD-[0-9A-F]{8}\\b
+@@ -34,7 +34,7 @@ WEB-006_AC-7 Successful Order
+ 
+ WEB-006_AC-11 Validation Errors Next To Fields
+     [Documentation]    Invalid fields each get a message next to them, and the shopper stays on the page.
+-    &{before}=    Create Dictionary
++    VAR    &{before}=    &{EMPTY}
+     FOR    ${label}    IN    Email    Full name    Address
+         &{messages}=    Get Field Messages    ${label}
+         Set To Dictionary    ${before}    ${label}=${messages}
