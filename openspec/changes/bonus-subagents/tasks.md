@@ -15,7 +15,7 @@
 
 ## 2. The lab
 
-- [ ] 2.1 Write `labs/bonus-3-subagents/INSTRUCTIONS.md` and `checklist.md` (design D2 to D7):
+- [x] 2.1 Write `labs/bonus-3-subagents/INSTRUCTIONS.md` and `checklist.md` (design D2 to D7):
   - the header;
   - the step that takes the suite back to `upstream/main`;
   - one prompt per subagent with its brief, the example to imitate, and a link to the *Install* table of `agents/README.md`;
@@ -32,7 +32,7 @@
 
 ## 3. Rehearsal and reference
 
-- [ ] 3.1 Rehearse Bonus 3 with Claude Code in a fresh clone, through the streaming driver, with the local shop (design D11). Verify:
+- [x] 3.1 Rehearse Bonus 3 with Claude Code in a fresh clone, through the streaming driver, with the local shop (design D11). Verify:
   - the two subagents were written from the briefs and listed by `/agents`;
   - each of the four failures was handed to `debugger` alone, and its report names cause, evidence, change and result;
   - the tests that fail only on drift pass under `drift_and_bug` and under `clean`;
@@ -41,7 +41,7 @@
   - the suite under `clean` has the same result as before the conversion;
   - the transcript shows `robot-debug` and the REPL, and which driving mode ran;
   - the shop is reset, and the time measured sets *Time* in the lab and in `BONUS`.
-- [ ] 3.2 Record the transcript with `tools/transcript.py`, write `solutions/bonus-3-subagents.md`, and add `bonus/bonus-3-subagents/` to a local `solutions` branch, in a `bonus-3-subagents:` commit and a `reference:` commit (design D10). The folder holds the Claude Code subagents as rehearsed, the Codex and Copilot ones with the same instructions, and `suite.patch`. Verify:
+- [x] 3.2 Record the transcript with `tools/transcript.py`, write `solutions/bonus-3-subagents.md`, and add `bonus/bonus-3-subagents/` to a local `solutions` branch, in a `bonus-3-subagents:` commit and a `reference:` commit (design D10). The folder holds the Claude Code subagents as rehearsed, the Codex and Copilot ones with the same instructions, and `suite.patch`. Verify:
   - the transcript scan finds no secret, local path, user or host;
   - `git apply --check suite.patch` passes on `main`;
   - with the patch, the suite under `clean` fails only the two broken tests, and under `drift_and_bug`, with `broken` excluded, only the tests that fail on a defect;
