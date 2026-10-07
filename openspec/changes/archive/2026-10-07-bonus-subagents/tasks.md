@@ -50,12 +50,12 @@
 
 ## 4. Close-out
 
-- [ ] 4.1 Record the rehearsal in `docs/facilitator/rehearsal.md`, and open the `main` pull request. Verify:
+- [x] 4.1 Record the rehearsal in `docs/facilitator/rehearsal.md`, and open the `main` pull request. Verify:
   - `openspec validate --all --strict` passes;
   - `tools/check_labs.py` passes without pending links, against the local `solutions` commits;
   - the pull request's checks pass;
   - no file of `bonus/bonus-3-subagents/`, no transcript and no reference page is on `main`.
-- [ ] 4.2 After the merge, rebase the Bonus 3 commits of `solutions` onto `main`, run its suite, push with a lease, check the redeploy, and archive the change. Verify:
+- [x] 4.2 After the merge, rebase the Bonus 3 commits of `solutions` onto `main`, run its suite, push with a lease, check the redeploy, and archive the change. Verify:
   - `solutions` passes 30 of 30;
   - the lab, its transcript and its reference page answer with HTTP 200 on the site;
   - the specs gain *The subagents lab*, and the changed *Bonus labs*, *Reference projects of the bonus labs* and *Workshop tool set*.
