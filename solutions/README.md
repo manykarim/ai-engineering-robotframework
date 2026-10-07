@@ -19,6 +19,7 @@ checklist first, and with the reference second.
 | Lab 9 - CI | [lab-09-ci.md](lab-09-ci.md) | [transcript](../transcripts/lab-09-ci.md) |
 | Bonus 1 - A library | [bonus-1-library.md](bonus-1-library.md) | [transcript](../transcripts/bonus-1-library.md) |
 | Bonus 2 - A tool | [bonus-2-tool.md](bonus-2-tool.md) | [transcript](../transcripts/bonus-2-tool.md) |
+| Bonus 3 - Subagents | [bonus-3-subagents.md](bonus-3-subagents.md) | [transcript](../transcripts/bonus-3-subagents.md) |
 
 ## Where the reference lives
 
