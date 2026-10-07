@@ -11,7 +11,7 @@ Test Tags           smoke    api
 *** Test Cases ***
 Health Reports Ok
     ${health}=    Get Shop Health
-    Should Be Equal    ${health}[status]    ok
+    Should Be Equal    ${health}[status]    okay
 
 Catalogue Lists Twelve Products
     @{products}=    Get Catalogue From API
