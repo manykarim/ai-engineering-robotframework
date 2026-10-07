@@ -40,6 +40,7 @@ LABS = {
 BONUS = {
     "bonus-1-library": ("Bonus 1", 120, "clean"),
     "bonus-2-tool": ("Bonus 2", 60, "clean"),
+    "bonus-3-subagents": ("Bonus 3", 60, "drift_and_bug"),
 }
 HEADER_ROWS = ("Module", "Time", "Shop preset", "You need", "You start from")
 SECTIONS = ("## Steps", "## Stretch", "## Compare with the reference", "## If your agent fails")

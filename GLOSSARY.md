@@ -115,6 +115,12 @@ the wrong one for debugging a test that exists.
 
 `robotcode results`: summaries, failures and statistics of the last run, without reading `output.xml` by hand.
 
+### Static analysis
+
+Checking test files without running them. `robotcode analyze code` finds keywords and variables that do not exist;
+Robocop finds style issues and outdated syntax, and fixes some of them.
+Read more: RobotCode's [analyzing code](https://robotcode.io/03_reference/analyzing-code); Robocop's [rules](https://robocop.dev/stable/rules/rules_list/).
+
 ## Tier 4: Live access
 
 ### MCP

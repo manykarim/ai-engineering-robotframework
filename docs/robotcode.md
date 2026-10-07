@@ -14,6 +14,7 @@ command, for example `uv run robotcode -p shared robot-debug ...`.
 |---|---|
 | Which tests, suites and tags exist? | `discover tests`, `discover tags` |
 | Which keyword does this, and how do I call it? | `libdoc Browser list "<pattern>"`, then `libdoc Browser show "<keyword>"` |
+| What is wrong in these files, without running them? | `analyze code tests resources` |
 | Why does this test fail? | `robot-debug -t "<test>"`: it stops at the failure |
 | Does this step work on the page, before any test exists? | `repl` |
 | What failed in the last run? | `results summary`, `results show --failed` |
@@ -62,6 +63,24 @@ Go To Shop Page
 Open Shop Browser
 Start Shop Test
 ```
+
+## Analyze
+
+Checks test and resource files without running them, resolved the way Robot Framework resolves them: keywords and
+variables that do not exist, wrong arguments, imports that fail.
+
+```text
+$ uv run robotcode analyze code tests resources
+resources/shop.resource:17:45: [ERROR] VariableNotFound: Variable '${HEADLESS}' not found.
+Files: 8, Errors: 1, Warnings: 0, Infos: 0, Hints: 0 (in 2.44s)
+```
+
+- Name the folders to check. Without them, it checks everything below the current directory.
+- `--severity error` reports only errors, and `--code KeywordNotFound` only that kind.
+- The exit code adds up what it found: 1 for errors, 2 for warnings, 4 for information, 8 for hints. 0 means
+  nothing.
+- `--format json`, before the command, gives the findings as JSON: `uv run robotcode --format json analyze code tests`.
+- The one error here is a false positive: see [Traps](#traps). A finding is a question, not a verdict.
 
 ## The debugger
 
@@ -161,6 +180,7 @@ What to know about the piped form:
 | `.break "<keyword>"` with quotes at the `(rdb)` prompt | the breakpoint never stops | leave out the quotes there: `.break Go To Catalogue`. On the command line, `--break "<keyword>"` is right |
 | The REPL's exit code | always 0, and its `output.xml` says PASS, whatever failed | read the output, or run a test for a verdict |
 | `.save` | lines that failed are saved too | save a clean session, or delete those lines afterwards |
+| `analyze code` and a variable read with `Get Variable Value` and a default | `VariableNotFound` for `${HEADLESS}` in `resources/shop.resource`, and exit code 1 | nothing: the default makes the line safe. To silence it, put `# robotcode: ignore[variable-not-found]` at the end of that line. A variable table instead would bring back the trap with `-v` above |
 | `results diff` | exits 0 even with new failures | to fail a script on new failures, count `newFailures` in `--format json` |
 | RequestsLibrary's log | every request and response, with headers and body, in `output.xml` and `log.html` | never send a real credential from a test; results uploaded from a public fork are public |
 
@@ -168,5 +188,6 @@ What to know about the piped form:
 
 The RobotCode reference: [discovering tests](https://robotcode.io/03_reference/discovering-tests),
 [the REPL](https://robotcode.io/03_reference/repl), [the debugger](https://robotcode.io/03_reference/robot-debug),
+[analyzing code](https://robotcode.io/03_reference/analyzing-code),
 [analyzing results](https://robotcode.io/03_reference/analyzing-results) and
 [AI agents](https://robotcode.io/03_reference/ai-agents).

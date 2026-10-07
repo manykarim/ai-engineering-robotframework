@@ -87,7 +87,8 @@ decide.
 
 - **A: writer, then reviewer.** Install the subagents for your agent from `agents/` (`agents/README.md` shows
   where), and give your agent the prompt in `agents/README.md`, *Use them*, for one criterion of your Module 5
-  story. The reviewer cannot edit: its findings are yours to accept or reject.
+  story. The reviewer cannot edit: its findings are yours to accept or reject. After the day,
+  [Bonus 3](../bonus-3-subagents/INSTRUCTIONS.md) has you write two subagents of your own.
 - **B: Jira.** Copy `skills/jira-ticket/` into your agent's skill folder, put `JIRA_URL`, `JIRA_EMAIL`,
   `JIRA_API_TOKEN` and `JIRA_PROJECT` into `.env`, and ask your agent to file the same defect in Jira. It shows a
   dry run first, and sends only after you confirm. Without a Jira site, the dry run alone shows what would be sent.

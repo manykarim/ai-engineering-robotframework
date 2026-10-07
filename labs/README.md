@@ -20,13 +20,15 @@ Module 1 (the cold open) and Module 10 (wrap-up) have no lab.
 
 ## Bonus labs
 
-Self-paced, for after the day: build your own Robot Framework library or tool with an agent. They are not part of
-the timetable. Both follow [Building libraries and tools with an agent](../docs/building-with-agents.md).
+Self-paced, for after the day. They are not part of the timetable. Bonus 1 and 2 build your own Robot Framework
+library or tool with an agent, and follow [Building libraries and tools with an agent](../docs/building-with-agents.md).
+Bonus 3 has you write subagents of your own for the workshop's suite, and builds on Labs 4 and 7.
 
 | Lab | Chapter | Time | Shop preset |
 |---|---|---|---|
 | [Bonus 1 - A library](bonus-1-library/INSTRUCTIONS.md) | Building a library with an agent | about 2 hours | `clean` |
 | [Bonus 2 - A tool](bonus-2-tool/INSTRUCTIONS.md) | Building a tool with an agent | about 60 min | `clean` |
+| [Bonus 3 - Subagents](bonus-3-subagents/INSTRUCTIONS.md) | Subagents for debugging and analysis | about 60 min | `drift_and_bug` |
 
 ## How a lab works
 

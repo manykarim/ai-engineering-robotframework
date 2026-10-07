@@ -207,6 +207,34 @@ Found and changed:
 - **No real GitHub issue was created.** The listener's live path is covered by its unit tests. Its stretch goal,
   a live run against a fork, is open below.
 
+## Bonus 3 with Claude Code (2026-10-07)
+
+Claude Code 2.1.289 headless, with the lab's own commands and prompts, in a clone after the day: the lab results of
+`solutions`, Labs 2 to 8, without its reference material, with Bonus 3 merged in. Where the lab says to approve
+something, the rehearsal approved it: "Save it." and "I agree. Write it."
+
+| Run | Result | Agent time | Tokens (in / out) |
+|---|---|---|---|
+| 1 | checklist holds, except the REPL: the debugger tried every fix at the paused prompt, and never used the REPL | 35 min | 1.6 M / 37 k |
+| 2 | checklist holds: both subagents written from the briefs; four hand-overs, one test each; two tests repaired, two defects reported, no expected value changed; 11 `robot-debug` rounds and 3 REPL checks; 23 findings with verdicts; seven `VAR` conversions after the diff, the suite 11 of 11 before and after; the hand edit left as a finding | 36 min, not counting the 6 h 25 min the laptop slept during step 6 | 2.0 M / 44 k |
+
+The token counts are the main sessions'. The subagents' own work is not counted in them.
+
+Found and changed:
+- **The REPL needs a job of its own.** Run 1's brief offered the REPL only as an alternative to the paused prompt,
+  and the debugger never used it. The brief now has the debugger check each keyword it writes on its own in the
+  REPL, and run 2 did so three times.
+- **Claude Code asks before it writes into `.claude/`,** even in `acceptEdits` mode and with an allow rule such as
+  `Edit(./.claude/agents/**)`. The lab now says to allow the write. A headless session cannot ask: the rehearsal
+  wrote the content the agent asked to write, unchanged, and the transcript says so.
+- **Transcripts name subagents.** `tools/transcript.py` labels a subagent's calls with its name, and shows the task
+  it was handed and its report. For transcripts without subagents, its output is unchanged.
+- **What a finding is measured against.** The rehearsal's branch held the day's repairs in its last commit, so the
+  analyzer read step 1's restore as new changes, and listed the two broken tests and the inline locator among its
+  problems. The reference page debriefs it.
+- **Robocop's `--select` takes one rule each.** A comma-separated list selects no rule, and Robocop then reports no
+  issues. The lab says so.
+
 ## Still to do before the workshop tag
 
 | Check | Who | State |
@@ -216,3 +244,4 @@ Found and changed:
 | Lab 7's filing step, from a test fork | a maintainer | open |
 | Lab 9's Claude tier, with a Claude credential set on the repository | a maintainer | open |
 | Bonus 2's stretch goal: the listener live against a test fork, then the issues closed. Not needed for the tag | a maintainer | open |
+| Bonus 3 with Codex or GitHub Copilot: their subagents carry the rehearsed instructions, unrehearsed. Not needed for the tag | a maintainer | open |

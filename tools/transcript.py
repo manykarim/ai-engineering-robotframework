@@ -12,6 +12,7 @@ and Codex (`codex exec --json`), in order, together with the rehearsal's own lin
     {"type": "workshop.note", "text": "..."}                         a remark, in Markdown
 
 Writes the prompts, the agent's answers, its tool calls with shortened results, and the commands.
+A subagent's work is named after the subagent, with the task it was handed and its report.
 Drops reasoning. Rewrites the repository path to <repo>, the home directory to ~, and the
 user and host names to user and host. Refuses to
 write, with exit status 1, when the result still contains a secret: a value of a key, token,
@@ -38,6 +39,7 @@ SECRET_SHAPES = [
 ]
 SECRET_SETTING = re.compile(r"(?i)(KEY|TOKEN|SECRET|PASSWORD)")
 MAX_LINES = 12
+REPORT_LINES = 40  # a subagent's report: the part of its work the main agent sees
 
 
 def short(text: str, lines: int = MAX_LINES) -> str:
@@ -84,6 +86,7 @@ def render(paths: list[Path], title: str, agent: str) -> tuple[str, dict]:
                 f"will differ in wording.*", ""]
     totals = {"input_tokens": 0, "output_tokens": 0, "turns": 0}
     pending: dict[str, str] = {}  # Claude tool_use_id -> tool name
+    subagents: dict[str, str] = {}  # Claude tool_use_id of a hand-over -> the subagent's name
     for path in paths:
         for raw in path.read_text(encoding="utf-8").splitlines():
             try:
@@ -102,12 +105,20 @@ def render(paths: list[Path], title: str, agent: str) -> tuple[str, dict]:
             elif kind == "workshop.note":
                 out += [event["text"], ""]
             elif kind == "assistant":  # Claude Code
+                who = subagents.get(event.get("parent_tool_use_id") or "", "")
+                actor = f"The {who} subagent" if who else "The agent"
                 for part in event.get("message", {}).get("content", []):
                     if part.get("type") == "text" and part.get("text", "").strip():
-                        out += ["**Agent:**", "", plain_links(part["text"].strip()), ""]
+                        out += [f"**{who} (subagent):**" if who else "**Agent:**", "", plain_links(part["text"].strip()), ""]
                     elif part.get("type") == "tool_use":
-                        pending[part.get("id", "")] = part.get("name", "")
-                        out += [f"*The agent {tool_input(part.get('name', ''), part.get('input') or {})}*", ""]
+                        name, data = part.get("name", ""), part.get("input") or {}
+                        pending[part.get("id", "")] = name
+                        if name in ("Agent", "Task"):
+                            subagents[part.get("id", "")] = data.get("subagent_type") or "general-purpose"
+                            out += [f"*{actor} hands the {subagents[part.get('id', '')]} subagent this task:*", "",
+                                    quote(short(data.get("prompt", ""))), ""]
+                        else:
+                            out += [f"*{actor} {tool_input(name, data)}*", ""]
             elif kind == "user":  # Claude Code tool results
                 for part in event.get("message", {}).get("content", []) if isinstance(event.get("message", {}).get("content"), list) else []:
                     if part.get("type") != "tool_result":
@@ -118,7 +129,11 @@ def render(paths: list[Path], title: str, agent: str) -> tuple[str, dict]:
                     content = part.get("content")
                     text = content if isinstance(content, str) else "\n".join(
                         c.get("text", "") for c in content or [] if isinstance(c, dict))
-                    out += [fence(short(text)), ""]
+                    if name in ("Agent", "Task"):
+                        out += [f"*The {subagents.get(part.get('tool_use_id', ''), '')} subagent reports:*", "",
+                                fence(short(text, REPORT_LINES)), ""]
+                    else:
+                        out += [fence(short(text)), ""]
             elif kind == "result":  # Claude Code, end of a session
                 usage = event.get("usage") or {}
                 totals["input_tokens"] += (usage.get("input_tokens", 0) + usage.get("cache_read_input_tokens", 0)
