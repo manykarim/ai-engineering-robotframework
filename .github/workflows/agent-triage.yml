@@ -73,12 +73,13 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ github.token }}
+          show_full_output: true
           plugin_marketplaces: https://github.com/robotcodedev/robotframework-agent-plugins.git
           plugins: robotcode@robotframework-agent-plugins
           claude_args: >-
             --model ${{ env.CLAUDE_MODEL }}
             --max-turns 15
-            --allowedTools "Read,Grep,Glob,Write(triage-analysis.md),Bash(uv run --no-sync robotcode results:*)"
+            --allowedTools "Read,Grep,Glob,Write(triage-analysis.md),Edit(triage-analysis.md),Bash(uv run --no-sync robotcode results:*)"
           prompt: |
             A Robot Framework test run failed for pull request #${{ env.PR }} of this repository.
             1. Read the failed tests with: uv run --no-sync robotcode results show --failed -o results/output.xml
