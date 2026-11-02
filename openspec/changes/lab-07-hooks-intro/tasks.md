@@ -80,8 +80,8 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
 
 ## 4. Check in every agent
 
-- [ ] 4.1 In a fresh clone below `/tmp` in WSL, with the shop clean, wire the four hooks for each agent in turn, in
-  its own clone, and run Lab 7's step 3 prompt (D8):
+- [ ] 4.1 In a fresh clone at a short path (`C:\workspace\h7` on Windows; WSL's agents are too old), with the shop
+  clean, wire the four hooks for each agent in turn and run Lab 7's step 3 prompt (D8):
   - Claude Code 2.1.296;
   - Codex 0.165.0, hooks trusted;
   - Copilot 1.0.92, interactive in a trusted folder.
@@ -92,8 +92,11 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   each answers from the added context without running a command.
 - [ ] 4.3 Start Copilot in a clone where only `.claude/settings.json` carries the hooks, and make an edit that a
   hook refuses (D8). Record whether Copilot runs them. If it does, add the "wire only your agent's file" advice to
-  `docs/hooks.md` and `hooks/README.md`. Check whether Claude Code still accepts `MultiEdit` in a matcher. Record
-  both results, and the agent versions, in `docs/facilitator/rehearsal.md` under *Hooks*.
+  `docs/hooks.md` and `hooks/README.md`. Record the result, and the agent versions, in
+  `docs/facilitator/rehearsal.md` under *Hooks*.
+- [x] 4.3a Remove `MultiEdit`, which the latest Claude Code no longer has (D8): from the Claude Code matcher, from
+  `hooks/hookio.py` and from `tools/transcript.py`. Verify: `git grep MultiEdit` finds it only in this change's
+  artifacts, and the hooks behave unchanged on recorded `Write` and `Edit` payloads.
 - [ ] 4.4 Open a pull request to `main` with groups 1 to 4. Verify: "Run tests" and "Build the site" pass. Merge it
   after the user agrees.
 

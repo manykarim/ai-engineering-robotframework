@@ -66,8 +66,8 @@ def tool_input(name: str, data: dict) -> str:
     """One line for what a tool call does."""
     if name == "Bash":
         return f"runs `{data.get('command', '')}`"
-    if name in ("Write", "Edit", "MultiEdit", "Read"):
-        return f"{ {'Write': 'writes', 'Edit': 'edits', 'MultiEdit': 'edits', 'Read': 'reads'}[name] } `{data.get('file_path', '')}`"
+    if name in ("Write", "Edit", "Read"):
+        return f"{ {'Write': 'writes', 'Edit': 'edits', 'Read': 'reads'}[name] } `{data.get('file_path', '')}`"
     if name in ("Grep", "Glob"):
         return f"searches for `{data.get('pattern', '')}`"
     if name == "Skill":

@@ -2,7 +2,7 @@
 
 Claude Code, Codex and GitHub Copilot each pass a JSON object on stdin, in their own shape:
 
-    Claude Code  {"tool_name": "Write"|"Edit"|"MultiEdit"|"Bash", "tool_input": {...}}
+    Claude Code  {"tool_name": "Write"|"Edit"|"Bash", "tool_input": {...}}
     Codex        {"tool_name": "apply_patch"|"Bash", "tool_input": {"command": <patch or shell>}}
     Copilot      {"toolName": "create"|"edit"|"apply_patch"|"bash", "toolArgs": {...} or <patch>}
 
@@ -113,10 +113,6 @@ def parse(payload: dict) -> Call:
     if tool == "Edit":
         change = (args.get("old_string", ""), args.get("new_string", ""), bool(args.get("replace_all")))
         return Call(agent, "edit", [_replaced(path, [change])])
-    if tool == "MultiEdit":
-        changes = [(e.get("old_string", ""), e.get("new_string", ""), bool(e.get("replace_all")))
-                   for e in args.get("edits", [])]
-        return Call(agent, "edit", [_replaced(path, changes)])
     if tool in ("Bash", "shell"):
         return Call(agent, "shell", command=args.get("command", ""))
     return Call(agent, "other")

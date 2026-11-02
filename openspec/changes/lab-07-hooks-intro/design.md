@@ -35,7 +35,8 @@ See proposal.md for why. What exists today:
     - Copilot: only JSON `additionalContext` adds context.
   - **Copilot also reads `.claude/settings.json`.** Its documentation now lists inline `hooks` there as a source.
     The September rehearsal (`docs/facilitator/rehearsal.md`) saw it read the file but run none of its hooks.
-  - **`MultiEdit`:** it is in our Claude Code matcher, but no longer on Claude Code's tools page.
+  - **`MultiEdit`:** it was in our Claude Code matcher, but Claude Code no longer has the tool: its tools reference
+    lists `Edit`, `Write` and `NotebookEdit` for edits, and its hooks guide matches `Edit|Write`.
 - **Static analysis today:**
   - `uv run robotcode analyze code tests resources` takes 1.3 s for the whole suite.
   - On one file, it takes about 0.2 s of analysis and about 2 s including `uv`.
@@ -217,8 +218,8 @@ your agent's file", and "it refused or answered one action".
     users with both files get every hook twice. The wiring scenario in `workshop/lab-assets` then holds only with
     that advice.
   - If it does not, the rehearsal note stands.
-- **`MultiEdit`:** stays in the Claude Code matcher if Claude Code still accepts it. It is harmless either way, and
-  is dropped from the page's examples.
+- **`MultiEdit`:** removed. The workshop targets the latest Claude Code only, so the matcher is `Write|Edit`, and
+  `hooks/hookio.py` and `tools/transcript.py` drop their `MultiEdit` branches.
 
 ### D9. `solutions`: re-rehearse Lab 7 and rebuild its commit from the rehearsal
 1. Rebase `solutions` onto the new `main` with the sequence editor of the last change, marking
