@@ -1,13 +1,11 @@
 ## MODIFIED Requirements
 
 ### Requirement: Hooks as guardrails
-`hooks/` SHALL provide four hooks:
-- one that runs the tests affected by an edit to a test or resource file and reports the result to the agent;
-- one that checks an edited test or resource file statically, without running it and without the shop, and reports only its errors to the agent, in a few lines at most, and nothing when the file is clean;
-- one that rejects an edit that writes a locator literal into a file under `tests/`;
-- one that blocks a commit when the latest suite run failed or is older than the latest change to `tests/` or `resources/`.
-
-Tests tagged `broken` SHALL NOT count as failures. Each hook SHALL also run as a plain command, outside any agent. On `main`, the static check SHALL report no finding for the shipped suite.
+`hooks/` SHALL provide four hooks, each of which also runs as a plain command:
+- after an edit to a test or resource file, one runs the affected tests and reports the result;
+- after such an edit, one checks the file statically, without the shop, and reports only its errors, briefly;
+- before an edit, one rejects a locator literal written into a file under `tests/`;
+- before a commit, one blocks it when the latest suite run failed or predates the latest change to `tests/` or `resources/`.
 
 #### Scenario: An inline locator is written
 - **WHEN** an agent's edit would add `Click    css=button.buy` to a test file
@@ -20,6 +18,10 @@ Tests tagged `broken` SHALL NOT count as failures. Each hook SHALL also run as a
 #### Scenario: Committing after a red run
 - **WHEN** the latest suite run has a failing test that is not tagged `broken` and the agent runs `git commit`
 - **THEN** the hook blocks the commit and says which tests failed
+
+#### Scenario: Only tests tagged broken failed
+- **WHEN** the only failing tests of the latest, up-to-date suite run are tagged `broken`, and the agent runs `git commit`
+- **THEN** the hook lets the commit through: a test tagged `broken` does not count as a failure
 
 #### Scenario: A misspelled keyword is written
 - **WHEN** an agent's edit calls a keyword that no imported resource or library defines, in a test file
@@ -34,27 +36,11 @@ Tests tagged `broken` SHALL NOT count as failures. Each hook SHALL also run as a
 - **THEN** it reports no finding
 
 ### Requirement: Hooks for every supported agent
-`hooks/` SHALL document how to wire each hook into Claude Code, Codex and GitHub Copilot. The hooks SHALL behave the same in each agent.
-
-`docs/hooks.md` SHALL introduce hooks to a participant who has never written one:
-- what a hook is, and where in the agent's loop it can act;
-- the events the three agents share, under each agent's name for them, what a hook can do at each, and a link to each agent's own documentation of the rest;
-- the three ways a hook answers: refusing an action with a reason, reporting a result, and adding context;
-- the wiring of one hook for each agent, side by side, and what differs between them;
-- the static check as a worked example;
-- a choice of hooks to write for Robot Framework work, and how to write one that works in all three agents.
-
-A hook that adds context, for example at the start of a session, SHALL reach the conversation in each of the three agents.
-
-The page SHALL give no lab's answer away.
+`hooks/` SHALL document how to wire each hook into Claude Code, Codex and GitHub Copilot, and the hooks SHALL behave the same in each agent. A hook that adds context, for example at the start of a session, SHALL reach the conversation in each of the three agents.
 
 #### Scenario: Wiring in a second agent
 - **WHEN** a participant wires the inline-locator hook into Codex or GitHub Copilot as documented
 - **THEN** an edit adding an inline locator is rejected there too
-
-#### Scenario: Reading the hooks page
-- **WHEN** a participant who has never written a hook reads `docs/hooks.md`
-- **THEN** they can name the event to use for a check after every edit of a `.robot` file, and find its name and the wiring in their own agent
 
 #### Scenario: Context at the start of a session
 - **WHEN** a participant wires a session-start hook as `docs/hooks.md` shows it, which adds the shop's status, and asks a new session of any of the three agents which preset the shop is in
@@ -63,3 +49,12 @@ The page SHALL give no lab's answer away.
 #### Scenario: Wiring only one agent
 - **WHEN** a participant wires the provided hooks for one agent only, as documented, and works in that agent
 - **THEN** every hook runs once per matching action, not twice
+
+## ADDED Requirements
+
+### Requirement: A hooks page for newcomers
+`docs/hooks.md` SHALL introduce hooks to a participant who has never written one: what a hook is and where in the agent's loop it acts; the events the three agents share, under each agent's name, with links to their documentation; the three ways a hook answers; the wiring for each agent, side by side; the static check as a worked example; and hooks worth writing for Robot Framework work, in all three agents. The page SHALL give no lab's answer away.
+
+#### Scenario: Reading the hooks page
+- **WHEN** a participant who has never written a hook reads `docs/hooks.md`
+- **THEN** they can name the event to use for a check after every edit of a `.robot` file, and find its name and the wiring in their own agent

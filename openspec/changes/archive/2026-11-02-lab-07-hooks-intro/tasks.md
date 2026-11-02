@@ -134,7 +134,7 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   - the transcript holds no local path;
   - the rebase finishes with the same commit subjects in the same order, apart from the Lab 7 subject;
   - `git range-diff` shows changes only in the three stopped commits.
-- [ ] 5.4 On the rebased `solutions`, run `uv sync --locked`, reset the shop and run the whole suite. Verify: every
+- [x] 5.4 On the rebased `solutions`, run `uv sync --locked`, reset the shop and run the whole suite. Verify: every
   test passes. Then `git push --force-with-lease=solutions:<tip from 5.1> origin solutions`, after the user agrees.
   Verify:
   - `origin/main` is an ancestor of `origin/solutions`;
