@@ -13,17 +13,17 @@ dependencies = [
   # Browser Library plus the batteries package, which ships its own Node
   # runtime: install browsers with `uv run rfbrowser install chromium` and
   # never run `rfbrowser init` (design D4).
-  "robotframework-browser==20.5.0",
-  "robotframework-browser-batteries==20.5.0",
+  "robotframework-browser==21.0.0",
+  "robotframework-browser-batteries==21.0.0",
   "robotframework-requests==0.9.7",
   # discover, libdoc, robot-debug, repl, results and analyze (design D3). [all]
   # also brings Robocop, which Bonus 3 uses: keep it when narrowing the extras.
-  "robotcode[all]==2.7.0",
+  "robotcode[all]==2.8.0",
   # [web,api] only: [all] pins desktop-automation pre-releases (design D2).
-  "rf-mcp[web,api]==0.35.0",
+  "rf-mcp[web,api]==0.36.0",
   "robotframework-heal==0.4.0",
   # Reads the git-ignored .env for SHOP_URL and SHOP_SPACE (design D7).
-  "python-dotenv==1.2.3",
+  "python-dotenv==1.2.4",
 ]
 
 [tool.uv]

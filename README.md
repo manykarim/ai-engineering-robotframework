@@ -6,6 +6,9 @@ access, orchestration. Every rung works on its own, and you leave with your own 
 
 The system under test is a small demo shop that runs from a published container image.
 
+The labs, the setup guide, the glossary and the guides under `docs/` are also published as a website, with
+navigation and search: **[manykarim.github.io/ai-engineering-robotframework](https://manykarim.github.io/ai-engineering-robotframework/)**.
+
 ## Quickstart
 
 With the [prerequisites](SETUP.md#prerequisites) installed:

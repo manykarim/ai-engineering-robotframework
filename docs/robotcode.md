@@ -1,6 +1,6 @@
 # RobotCode cheat sheet
 
-*For RobotCode 2.7.0 with Robot Framework 7.5 and Browser 20.5.0, the versions this repository pins. Every example
+*For RobotCode 2.8.0 with Robot Framework 7.5 and Browser 21.0.0, the versions this repository pins. Every example
 ran here with the shop in `clean`; the output is shortened.*
 
 The commands your agent learns in [Lab 4](../labs/lab-04-robotcode/INSTRUCTIONS.md), on one page, with what they are
@@ -44,7 +44,7 @@ The documentation of a library as installed here, or of one of this repository's
 
 ```text
 $ uv run robotcode libdoc Browser version
-20.5.0
+21.0.0
 $ uv run robotcode libdoc Browser list "Wait For*"
 Wait For
 Wait For Alert
@@ -54,9 +54,13 @@ Wait For Elements State
 $ uv run robotcode libdoc Browser show "Get Title"
 ### Get Title
 #### Arguments
-* `assertion_operator` (type: `AssertionOperator | None`, default: `None`)
-* `assertion_expected` (type: `Any | None`, default: `None`)
-* `message` (type: `str | None`, default: `None`)
+* `assertion_operator` (type: `AssertionOperator | None`, default: `None`) -
+  See `Assertions` for further details. Defaults to
+  None.
+* `assertion_expected` (type: `Any | None`, default: `None`) -
+  Expected value for the state
+* `message` (type: `str | None`, default: `None`) -
+  overrides the default error message for assertion.
 ...
 $ uv run robotcode libdoc resources/shop.resource list
 Go To Shop Page

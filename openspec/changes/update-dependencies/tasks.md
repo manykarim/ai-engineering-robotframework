@@ -2,22 +2,23 @@
 
 ## 1. Pins and lockfile
 
-- [ ] 1.1 On a branch `apply-update-dependencies` from `main`, raise the pins in `pyproject.toml` to `robotcode[all]==2.8.0`, `robotframework-browser==21.0.0`, `robotframework-browser-batteries==21.0.0`, `rf-mcp[web,api]==0.36.0` and `python-dotenv==1.2.4`. Leave the other pins, the extras and the comments as they are. Verify:
+- [x] 1.1 On a branch `apply-update-dependencies` from `main`, raise the pins in `pyproject.toml` to `robotcode[all]==2.8.0`, `robotframework-browser==21.0.0`, `robotframework-browser-batteries==21.0.0`, `rf-mcp[web,api]==0.36.0` and `python-dotenv==1.2.4`. Leave the other pins, the extras and the comments as they are. Verify:
   - PyPI still lists each of these as the latest stable release, and 7.5, 0.9.7 and 0.4.0 as the latest stable releases of `robotframework`, `robotframework-requests` and `robotframework-heal`. If a newer final release has appeared, take it and record it in the PR description;
   - `uv sync --locked` now fails because the lockfile is out of date (`workshop/toolchain`, *Stale lockfile*).
-- [ ] 1.2 Regenerate the lockfile with `uv lock` (no `--upgrade`). Verify:
+- [x] 1.2 Regenerate the lockfile with `uv lock` (no `--upgrade`). Verify:
   - `uv lock --check` passes;
   - every package in `uv.lock` is a final release;
   - the packages that changed are the five pins, the RobotCode sub-packages and `grpcio`/`grpcio-tools`, as design.md lists. Explain any other change in the PR description.
-- [ ] 1.3 Install the way participants do: `uv sync --locked`, then `uv run --no-sync rfbrowser install chromium`. Verify:
+- [x] 1.3 Install the way participants do: `uv sync --locked`, then `uv run --no-sync rfbrowser install chromium`. Verify:
   - `uv run --no-sync python setup-check/check.py` passes;
   - `uv run robocop --version` prints the version that `uv.lock` records;
   - `uv run robotcode --help` lists `discover`, `libdoc`, `robot-debug`, `repl`, `results` and `analyze`.
+  - Applied 2026-11-02: every dependency check passed. Three checks failed on the applying machine for reasons outside this change: Docker runs only inside WSL there (*Container runtime*, *Shop image*), and the global OpenSpec was 1.14.1, not the pinned 1.13.1.
 
 ## 2. Suite and documentation
 
-- [ ] 2.1 Start the local shop and run the suite as CI does: `uv run robotcode robot --exclude broken`. Verify: every test passes, as it does on `main` with the old pins. If a failure comes from Browser 21, pin both Browser packages back to 20.5.0, re-lock, and say so in the PR description (design.md, Migration Plan).
-- [ ] 2.2 Update `docs/robotcode.md` to the new versions, and re-run each of its examples with the shop in `clean`. Verify:
+- [x] 2.1 Start the local shop and run the suite as CI does: `uv run robotcode robot --exclude broken`. Verify: every test passes, as it does on `main` with the old pins. If a failure comes from Browser 21, pin both Browser packages back to 20.5.0, re-lock, and say so in the PR description (design.md, Migration Plan).
+- [x] 2.2 Update `docs/robotcode.md` to the new versions, and re-run each of its examples with the shop in `clean`. Verify:
   - the header names RobotCode 2.8.0, Robot Framework 7.5 and Browser 21.0.0;
   - `uv run robotcode libdoc Browser version` prints `21.0.0`, as the document shows;
   - every other example's shortened output still matches what the command prints now;
