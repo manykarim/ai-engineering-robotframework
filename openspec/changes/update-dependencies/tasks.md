@@ -23,11 +23,12 @@
   - `uv run robotcode libdoc Browser version` prints `21.0.0`, as the document shows;
   - every other example's shortened output still matches what the command prints now;
   - no other file under `docs/`, `labs/` or `README.md` names a superseded version.
-- [ ] 2.3 Add a paragraph to `README.md`, between the introduction and *Quickstart*. It links `https://manykarim.github.io/ai-engineering-robotframework/` and says the labs, the setup guide, the glossary and the guides are published there, worded so it also reads correctly on the site's home page (design.md, D7). Verify:
+- [x] 2.3 Add a paragraph to `README.md`, between the introduction and *Quickstart*. It links `https://manykarim.github.io/ai-engineering-robotframework/` and says the labs, the setup guide, the glossary and the guides are published there, worded so it also reads correctly on the site's home page (design.md, D7). Verify:
   - the address answers with HTTP 200, and matches `url` plus `baseUrl` in `website/docusaurus.config.js`;
   - on GitHub, the rendered README shows the link before the Quickstart (`workshop/docs-site`, *Found from the repository*);
   - the site builds locally (`npm ci` and `npm run build` in `website/`) without a broken link, and its home page shows the paragraph;
   - the existing transcripts and solutions links are unchanged.
+  - Applied 2026-11-02: the local build passed once `docs/facilitator/suite-outcomes.*` from `solutions` was left out. With those files it fails on its link to `suite-outcomes.toml`, on unchanged `main` as well. The site build on the pull request in CI is the check for that page.
 
 ## 3. Main
 
