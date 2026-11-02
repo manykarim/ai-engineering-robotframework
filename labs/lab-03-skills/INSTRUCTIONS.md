@@ -21,7 +21,7 @@ task* becomes a skill.
 
    | Claude Code | Codex | GitHub Copilot |
    |---|---|---|
-   | `uvx rf-agentskills@0.6.0 install --agent claude-code --scope project --project . --what skills` | same, with `--agent codex` | same, with `--agent copilot` |
+   | `uvx rf-agentskills@0.7.0 install --agent claude-code --scope project --project . --what skills` | same, with `--agent codex` | same, with `--agent copilot` |
    | lands in `.claude/skills/` | lands in `.agents/skills/` | lands in `.claude/skills/`, which Copilot also reads |
 
 2. **See what you got.** Start a new agent session and ask:
