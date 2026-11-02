@@ -2,7 +2,7 @@
 
 ## 1. Main
 
-- [ ] 1.1 On a branch `apply-update-agentskills` from `main`, change `rf-agentskills@0.6.0` to `rf-agentskills@0.7.0` in `labs/lab-03-skills/INSTRUCTIONS.md` (step 1). In `SETUP.md`'s *Agent plugins and skills* table, change the version column to content `2.0.0`, installer `rf-agentskills` 0.7.0, and the command to `@0.7.0` (design.md, D1). Verify:
+- [x] 1.1 On a branch `apply-update-agentskills` from `main`, change `rf-agentskills@0.6.0` to `rf-agentskills@0.7.0` in `labs/lab-03-skills/INSTRUCTIONS.md` (step 1). In `SETUP.md`'s *Agent plugins and skills* table, change the version column to content `2.0.0`, installer `rf-agentskills` 0.7.0, and the command to `@0.7.0` (design.md, D1). Verify:
   - PyPI still lists 0.7.0 as the latest stable `rf-agentskills`. If a newer final release has appeared, stop and ask;
   - `git grep -n "rf-agentskills@0\.6\|rf-agentskills\` 0\.6"` on the branch finds nothing outside `openspec/changes/archive/`;
   - `uvx rf-agentskills@0.7.0 install --agent <agent> --scope project --project . --what skills --dry-run --no-input` succeeds for `claude-code`, `codex` and `copilot`, and writes to the folders Lab 3's table names.
