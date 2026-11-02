@@ -6,27 +6,29 @@
   - PyPI still lists 0.7.0 as the latest stable `rf-agentskills`. If a newer final release has appeared, stop and ask;
   - `git grep -n "rf-agentskills@0\.6\|rf-agentskills\` 0\.6"` on the branch finds nothing outside `openspec/changes/archive/`;
   - `uvx rf-agentskills@0.7.0 install --agent <agent> --scope project --project . --what skills --dry-run --no-input` succeeds for `claude-code`, `codex` and `copilot`, and writes to the folders Lab 3's table names.
-- [ ] 1.2 Open a pull request to `main` that names the content break (skills renamed `rf-*`, generator skills retired) for anyone who installed 0.6.0. Verify: "Run tests" and "Build the site" pass. Then merge it, and verify `git show origin/main:SETUP.md` names 0.7.0.
+- [x] 1.2 Open a pull request to `main` that names the content break (skills renamed `rf-*`, generator skills retired) for anyone who installed 0.6.0. Verify: "Run tests" and "Build the site" pass. Then merge it, and verify `git show origin/main:SETUP.md` names 0.7.0.
 
 ## 2. Lab 3's result on solutions
 
-- [ ] 2.1 Note the tip of `origin/solutions` for the lease. Rebase `solutions` onto the new `origin/main`, with a sequence editor that marks the commits `lab-03-skills: ...` and `reference: one page per lab ...` as `edit` (design.md, D2 and D4). Verify: the rebase stops at `lab-03-skills` with no conflict.
-- [ ] 2.2 At that stop, in WSL, clone the repository below `/tmp`, check out the same commit, and run Lab 3's command with 0.7.0 there: `uvx rf-agentskills@0.7.0 install --agent claude-code --scope project --project . --what skills --no-input` (design.md, D3). Copy the resulting `.claude/` and `.rf-agentskills/` back over the stop's working tree. Remove any 0.6.0 skill folder or support file that is left, then `git add -A .claude .rf-agentskills`, `git commit --amend --no-edit`, and `git rebase --continue`. Verify:
+- [x] 2.1 Note the tip of `origin/solutions` for the lease. Rebase `solutions` onto the new `origin/main`, with a sequence editor that marks the commits `lab-03-skills: ...` and `reference: one page per lab ...` as `edit` (design.md, D2 and D4). Verify: the rebase stops at `lab-03-skills` with no conflict.
+- [x] 2.2 At that stop, in WSL, clone the repository below `/tmp`, check out the same commit, and run Lab 3's command with 0.7.0 there: `uvx rf-agentskills@0.7.0 install --agent claude-code --scope project --project . --what skills --no-input` (design.md, D3). Copy the resulting `.claude/` and `.rf-agentskills/` back over the stop's working tree. Remove any 0.6.0 skill folder or support file that is left, then `git add -A .claude .rf-agentskills`, `git commit --amend --no-edit`, and `git rebase --continue`. Verify:
   - `.claude/skills/` holds exactly the 12 `rf-*` skills and `locators-in-resources`;
   - `locators-in-resources` is byte-identical to the old commit's;
   - `.rf-agentskills/installed.json` records `bundle_version` 0.7.0, and every path in it exists;
   - no installed file contains a Windows path, and `grep -r "libdoc-search\|keyword-builder\|rf-tools" .claude` finds nothing;
   - the commit's message and position are unchanged.
-- [ ] 2.3 At the stop at the reference commit, update `solutions/lab-03-skills.md` (design.md, D4): replace the 0.6.0 skill list with the 12 `rf-*` names, give Codex's folder as `.agents/skills/` and Copilot's as `.claude/skills/`, and add one sentence saying the transcript was recorded with 0.6.0, whose skills had other names. Amend and continue the rebase. Verify:
+  - Applied 2026-11-02: `.claude/skills/` also holds the `openspec-*` skills, which come from `main`, not from the installer. The installer pruned 67 files 0.7.0 no longer ships and left none behind. The WSL result and the amended commit have the same tree hash. The only embedded root is `/tmp/rf-workshop/repo`.
+- [x] 2.3 At the stop at the reference commit, update `solutions/lab-03-skills.md` (design.md, D4): replace the 0.6.0 skill list with the 12 `rf-*` names, give Codex's folder as `.agents/skills/` and Copilot's as `.claude/skills/`, and add one sentence saying the transcript was recorded with 0.6.0, whose skills had other names. Amend and continue the rebase. Verify:
   - the rebase finishes, and `git log --oneline origin/main..solutions` shows the same commit subjects in the same order as before;
   - `git range-diff` shows changes only in those two commits;
   - `transcripts/` is unchanged.
 
 ## 3. Check and publish solutions
 
-- [ ] 3.1 On the rebased `solutions`, run both of the reference page's debrief prompts in fresh, headless Claude Code sessions (`claude -p ... --output-format stream-json --verbose`). Verify: the review prompt loads `locators-in-resources` and the `reset` prompt does not. Also note which `rf-*` skills load. If the participant's skill no longer loads, stop and decide with the user (design.md, Risks).
-- [ ] 3.2 Install with `uv sync --locked`, reset the shop, and run the whole suite with `uv run robotcode robot`. Verify: every test passes, including the two that `main` ships broken.
-- [ ] 3.3 Push with `git push --force-with-lease=solutions:<tip from 2.1> origin solutions`. Verify: `origin/solutions` is the rebased tip, `origin/main` is its ancestor, and the site's deployment after the push succeeds and shows the new skill list on the Lab 3 reference page.
+- [x] 3.1 On the rebased `solutions`, run both of the reference page's debrief prompts in fresh, headless Claude Code sessions (`claude -p ... --output-format stream-json --verbose`). Verify: the review prompt loads `locators-in-resources` and the `reset` prompt does not. Also note which `rf-*` skills load. If the participant's skill no longer loads, stop and decide with the user (design.md, Risks).
+  - Applied 2026-11-02: the review prompt loaded `locators-in-resources` and no other skill, and the `reset` prompt loaded none. No `rf-*` skill loaded in either session.
+- [x] 3.2 Install with `uv sync --locked`, reset the shop, and run the whole suite with `uv run robotcode robot`. Verify: every test passes, including the two that `main` ships broken.
+- [x] 3.3 Push with `git push --force-with-lease=solutions:<tip from 2.1> origin solutions`. Verify: `origin/solutions` is the rebased tip, `origin/main` is its ancestor, and the site's deployment after the push succeeds and shows the new skill list on the Lab 3 reference page.
 
 ## Workflow follow-up
 
