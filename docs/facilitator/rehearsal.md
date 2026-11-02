@@ -160,6 +160,26 @@ Found and changed:
   a real issue there was not wanted. The draft in `results/issue.md` was complete. **Open: file one issue from a
   test fork before the workshop.**
 
+## Lab 7 again with Claude Code (2026-11-02)
+
+After `lab-07-hooks-intro`, Lab 7 has ten steps: the hooks page first, four hooks, and a hook of your own. Rehearsed
+with Claude Code 2.1.296 headless on Windows 11, in a fresh clone of `solutions` at Lab 6 (`C:\workspace\r7`), one
+session per prompt, the lab's own prompts. The own hook was "No shortcut to green".
+
+| Lab | Result | Agent time | Tokens (in / out) |
+|---|---|---|---|
+| 7 | checklist holds except the filing, as in September: in step 3 the locator edit was refused, `Place Ordr` came back from the static check and the affected tests, the smoke edit with one failure, and the commit was blocked; the agent wrote `hooks/no_shortcut_to_green.py`, tested it both ways, and in a new session it refused tagging a test `broken`; the inline locator moved into `Reset Filters`; `buggy` failed exactly the 3 defect tests; an issue drafted for one of them; after the reset 30 of 30 passed and commits were allowed | 6 min | 2.4 M / 24 k |
+
+Found and changed:
+- **Claude Code committed through `PowerShell`** in step 3. The commit hook matched only `Bash` until the cross-agent
+  check above; now it matches both, and it blocked the commit.
+- **Claude Code asks before it writes into `.claude/`,** as in Bonus 3. The agent wrote the script and proposed the
+  wiring; the rehearsal added that entry unchanged, and the transcript says so. The reference page debriefs it.
+- **The agent named its hook's false positive itself:** an argument whose value is exactly `Skip` or
+  `Pass Execution` is refused too. The reference page uses it for the debrief.
+- **Transcripts from Windows.** `tools/transcript.py` rewrote the checkout's path only as `C:\...`. It now also
+  rewrites `C:/...`, `/c/...`, the JSON-escaped form, and Claude Code's project folder with backslashes.
+
 ## Lab 9 on GitHub Actions (2026-09-26)
 
 Rehearsed in the workshop's own repository, with pull request #15 from the branch `lab-09-break`, following the

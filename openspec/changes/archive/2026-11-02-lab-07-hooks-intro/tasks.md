@@ -97,19 +97,19 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
 - [x] 4.3a Remove `MultiEdit`, which the latest Claude Code no longer has (D8): from the Claude Code matcher, from
   `hooks/hookio.py` and from `tools/transcript.py`. Verify: `git grep MultiEdit` finds it only in this change's
   artifacts, and the hooks behave unchanged on recorded `Write` and `Edit` payloads.
-- [ ] 4.4 Open a pull request to `main` with groups 1 to 4. Verify: "Run tests" and "Build the site" pass. Merge it
+- [x] 4.4 Open a pull request to `main` with groups 1 to 4. Verify: "Run tests" and "Build the site" pass. Merge it
   after the user agrees.
 
 ## 5. Solutions
 
-- [ ] 5.1 Note the tip of `origin/solutions`. Rebase `solutions` onto the new `main`, with a sequence editor that
+- [x] 5.1 Note the tip of `origin/solutions`. Rebase `solutions` onto the new `main`, with a sequence editor that
   marks as `edit`:
   - `lab-07-hooks-toolbelt`;
   - `reference: one page per lab`;
   - `reference: the transcripts and the facilitators' answer sheet`.
 
   Verify: the rebase stops at `lab-07-hooks-toolbelt` without a conflict.
-- [ ] 5.2 Rehearse the new Lab 7 with Claude Code (D9) in a WSL clone of the commit before the stop:
+- [x] 5.2 Rehearse the new Lab 7 with Claude Code (D9) in a WSL clone of the commit before the stop:
   - record steps, prompts and commands as `workshop.*` lines with the `claude -p --output-format stream-json
     --verbose` events;
   - for the own hook, choose "No shortcut to green";
@@ -124,7 +124,7 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   - the checklist holds, except the filing;
   - the own hook refused an edit that adds the `broken` tag;
   - the commit contains no path from the machine.
-- [ ] 5.3 At the reference stops:
+- [x] 5.3 At the reference stops:
   - update `solutions/lab-07-hooks-toolbelt.md`: the wiring with four hooks plus the own hook, and why the own hook
     is a good one;
   - write `transcripts/lab-07-hooks-toolbelt.md` with `tools/transcript.py` from the recording (`--secrets .env`).
@@ -134,7 +134,7 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   - the transcript holds no local path;
   - the rebase finishes with the same commit subjects in the same order, apart from the Lab 7 subject;
   - `git range-diff` shows changes only in the three stopped commits.
-- [ ] 5.4 On the rebased `solutions`, run `uv sync --locked`, reset the shop and run the whole suite. Verify: every
+- [x] 5.4 On the rebased `solutions`, run `uv sync --locked`, reset the shop and run the whole suite. Verify: every
   test passes. Then `git push --force-with-lease=solutions:<tip from 5.1> origin solutions`, after the user agrees.
   Verify:
   - `origin/main` is an ancestor of `origin/solutions`;
