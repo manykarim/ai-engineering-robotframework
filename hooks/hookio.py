@@ -2,7 +2,7 @@
 
 Claude Code, Codex and GitHub Copilot each pass a JSON object on stdin, in their own shape:
 
-    Claude Code  {"tool_name": "Write"|"Edit"|"Bash", "tool_input": {...}}
+    Claude Code  {"tool_name": "Write"|"Edit"|"Bash"|"PowerShell", "tool_input": {...}}
     Codex        {"tool_name": "apply_patch"|"Bash", "tool_input": {"command": <patch or shell>}}
     Copilot      {"toolName": "create"|"edit"|"apply_patch"|"bash", "toolArgs": {...} or <patch>}
 
@@ -113,7 +113,7 @@ def parse(payload: dict) -> Call:
     if tool == "Edit":
         change = (args.get("old_string", ""), args.get("new_string", ""), bool(args.get("replace_all")))
         return Call(agent, "edit", [_replaced(path, [change])])
-    if tool in ("Bash", "shell"):
+    if tool in ("Bash", "PowerShell", "shell"):
         return Call(agent, "shell", command=args.get("command", ""))
     return Call(agent, "other")
 
@@ -138,8 +138,13 @@ def read_call() -> Call | None:
 
 def deny(call: Call, reason: str) -> None:
     """Refuse the action about to happen, and tell the agent why."""
-    if call.agent == "copilot":
+    if call.agent == "codex":  # in code mode, Codex 0.165 ignores exit 2 on a tool called from a script; JSON works
+        print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+                                                 "permissionDecisionReason": reason}}))
+        sys.exit(0)
+    if call.agent == "copilot":  # an exit 2 also refuses, but the agent then sees "hook errored", not the reason
         print(json.dumps({"permissionDecision": "deny", "permissionDecisionReason": reason}))
+        sys.exit(0)
     print(reason, file=sys.stderr)
     sys.exit(2)
 
@@ -154,6 +159,9 @@ def report(call: Call, message: str, problem: bool) -> None:
     """After an action: give the agent a result it must take into account."""
     if call.agent == "copilot":
         print(json.dumps({"additionalContext": message}))
+        sys.exit(0)
+    if problem and call.agent == "codex":  # replaces the tool's result with the message; exit 2 is lost in code mode
+        print(json.dumps({"decision": "block", "reason": message}))
         sys.exit(0)
     if problem:
         print(message, file=sys.stderr)

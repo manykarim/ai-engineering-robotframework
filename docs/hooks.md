@@ -53,14 +53,23 @@ The agent starts the hook's command and passes a JSON object on its standard inp
 arguments, the working directory. The hook answers with its exit code and its output:
 
 - **Let the action through:** exit 0 and print nothing. This is the answer to almost every call.
-- **Refuse it** (before a tool): exit 2, with the reason on standard error. Copilot also expects
-  `{"permissionDecision": "deny", "permissionDecisionReason": "..."}` on standard output. The agent sees the reason
-  and tries something else, so write it for the agent: what is wrong, and what to do instead.
-- **Report a result** (after a tool): exit 2, with the result on standard error, for Claude Code and Codex. Copilot
-  expects `{"additionalContext": "..."}` on standard output. Plain output with exit 0 after a tool does not reach the
-  model in every agent.
+- **Refuse it** (before a tool). The agent sees the reason and tries something else, so write it for the agent: what
+  is wrong, and what to do instead.
+  - Claude Code: exit 2, with the reason on standard error.
+  - Codex: exit 0, with `{"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+    "permissionDecisionReason": "..."}}` on standard output.
+  - Copilot: exit 0, with `{"permissionDecision": "deny", "permissionDecisionReason": "..."}` on standard output.
+- **Report a result** (after a tool):
+  - Claude Code: exit 2, with the result on standard error.
+  - Codex: `{"decision": "block", "reason": "..."}`. It replaces the tool's result with the reason; the edit stays.
+  - Copilot: `{"additionalContext": "..."}`.
+
+  Plain output with exit 0 after a tool does not reach the model in every agent.
 - **Add context** (at the start of a session): print the text and exit 0. Copilot expects
   `{"additionalContext": "..."}` instead.
+
+Codex and Copilot accept exit 2 as well, but the reason gets lost. Copilot shows the agent only "hook errored", and
+Codex 0.165 ignores the exit 2 when the model calls a tool from a script, as it does by default ("code mode").
 
 Every agent sends a different JSON object, so `hooks/hookio.py` does the translating:
 - `read_call()` reads the input of any of the three agents into one `Call`: an edit with the files it changes, a shell
@@ -260,7 +269,8 @@ What makes a good hook:
 - **Quiet.** Nothing when all is well; when not, only what the agent needs to act.
 - **One job.** Two small hooks are easier to trust than one clever one.
 - **A reason the agent can act on.** "Refused" teaches nothing; "use `uv run robotcode robot` instead" does.
-- **Open when broken.** If it cannot read its input, it lets the action through, as `hookio` does.
+- **Open when broken.** If it cannot read its input, it lets the action through, as `hookio` does. Copilot refuses
+  the action when a hook before a tool fails, so run a new hook as a command before you wire it.
 
 To switch a hook off, remove its entry from your agent's file, and start a new session. Claude Code lists the active
 hooks with `/hooks`, and Codex shows them with `/hooks`, where it also asks you to trust new or changed ones.
@@ -273,4 +283,7 @@ Every agent runs a repository's hooks only once you trust them:
 - **GitHub Copilot** asks whether you trust the folder. In prompt mode, `copilot -p`, nobody is asked, so hooks run
   only in a folder you trusted before.
 
-Each agent reads only its own wiring file. `hooks/README.md` says where each of the provided files goes.
+**Wire only your own agent.** GitHub Copilot also runs the hooks in `.claude/settings.json`. With both files wired,
+every hook runs twice in Copilot. On Windows it is worse: Copilot runs Claude Code's commands in PowerShell, where
+`$CLAUDE_PROJECT_DIR` does not work, the hooks fail, and Copilot refuses every action. Claude Code and Codex read
+only their own file. `hooks/README.md` says where each of the provided files goes.

@@ -24,8 +24,10 @@ Copy the file for your agent into place. If the target file already exists, merg
 | Codex | `hooks/codex.hooks.json` | `.codex/hooks.json` |
 | GitHub Copilot | `hooks/copilot.hooks.json` | `.github/hooks/workshop.json` |
 
-Then start your agent in the repository root. Each agent reads only its own wiring, and runs a repository's hooks
-only once you trust them:
+Wire only your own agent. GitHub Copilot also runs the hooks in `.claude/settings.json`: with both files, every hook
+runs twice, and on Windows Claude Code's commands fail in Copilot, which then refuses every action.
+
+Then start your agent in the repository root. It runs a repository's hooks only once you trust them:
 
 - **Claude Code** runs them once you have trusted the folder, which it asks about on first start. `/hooks` lists
   what is active.

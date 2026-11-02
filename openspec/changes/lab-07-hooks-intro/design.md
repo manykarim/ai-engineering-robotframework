@@ -218,6 +218,13 @@ your agent's file", and "it refused or answered one action".
     users with both files get every hook twice. The wiring scenario in `workshop/lab-assets` then holds only with
     that advice.
   - If it does not, the rehearsal note stands.
+  - **Result:** Copilot 1.0.105 runs them, and on Windows they fail in PowerShell, so Copilot refuses every action.
+    The advice to wire only your own agent is now in the page, `hooks/README.md` and Lab 7's step 2.
+- **How a hook answers, as rehearsed:** Codex 0.165 lost exit 2 in code mode, and Copilot showed only "hook errored"
+  for it. `hookio` answers both in JSON: Codex with `permissionDecision: "deny"` and `decision: "block"`, Copilot's
+  refusals with exit 0. Claude Code keeps exit 2.
+- **Claude Code's `PowerShell` tool:** on Windows, Claude Code may commit through `PowerShell`, so the commit hook
+  matches `Bash|PowerShell`.
 - **`MultiEdit`:** removed. The workshop targets the latest Claude Code only, so the matcher is `Write|Edit`, and
   `hooks/hookio.py` and `tools/transcript.py` drop their `MultiEdit` branches.
 

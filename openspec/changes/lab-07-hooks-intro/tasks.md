@@ -80,7 +80,7 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
 
 ## 4. Check in every agent
 
-- [ ] 4.1 In a fresh clone at a short path (`C:\workspace\h7` on Windows; WSL's agents are too old), with the shop
+- [x] 4.1 In a fresh clone at a short path (`C:\workspace\h7` on Windows; WSL's agents are too old), with the shop
   clean, wire the four hooks for each agent in turn and run Lab 7's step 3 prompt (D8):
   - Claude Code 2.1.296;
   - Codex 0.165.0, hooks trusted;
@@ -88,9 +88,9 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
 
   Verify in each: the locator edit is refused; the misspelled keyword comes back from the static check within
   seconds; the smoke edit comes back with one failed test; the commit is blocked.
-- [ ] 4.2 Run the page's session-start example in each agent, and ask the new session which presets hold. Verify:
+- [x] 4.2 Run the page's session-start example in each agent, and ask the new session which presets hold. Verify:
   each answers from the added context without running a command.
-- [ ] 4.3 Start Copilot in a clone where only `.claude/settings.json` carries the hooks, and make an edit that a
+- [x] 4.3 Start Copilot in a clone where only `.claude/settings.json` carries the hooks, and make an edit that a
   hook refuses (D8). Record whether Copilot runs them. If it does, add the "wire only your agent's file" advice to
   `docs/hooks.md` and `hooks/README.md`. Record the result, and the agent versions, in
   `docs/facilitator/rehearsal.md` under *Hooks*.

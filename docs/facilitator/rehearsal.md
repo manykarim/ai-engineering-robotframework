@@ -30,7 +30,40 @@ Observed along the way, and now covered by the wiring or `hooks/README.md`:
 - Copilot runs repository hooks only in a folder the user trusts. In prompt mode (`copilot -p`) nobody is asked, so
   hooks stay off unless the folder was trusted interactively before.
 - Codex runs project hooks only once they are trusted.
-- Each agent ignores the others' wiring. Copilot reads `.claude/settings.json` but runs none of its hooks.
+- Each agent ignores the others' wiring. Copilot reads `.claude/settings.json` but runs none of its hooks. *No longer
+  true; see below.*
+
+### Hooks again, four hooks and session start (2026-11-02)
+
+Claude Code 2.1.296, Codex 0.165.0 and GitHub Copilot CLI 1.0.105 on Windows 11, headless (`claude -p`, `codex exec`
+with the workspace-write sandbox, `copilot -p` with only file writes and `git commit` allowed), in a fresh clone at a
+short path with the local shop `clean`. The four hooks of `hooks/README.md` plus the session-start example of
+`docs/hooks.md`, the prompt of Lab 7's step 3.
+
+| Agent | Inline locator | `Place Ordr` | Smoke test edited | `git commit` after a red run | Session start |
+|---|---|---|---|---|---|
+| Claude Code | rejected, reason shown | static check: `KeywordNotFound` at line 30; affected tests 3 passed, 1 failed | 1 passed, 1 failed | blocked, failing test named | answered space and presets without a tool |
+| Codex | rejected, reason shown | the same | the same | blocked, reason shown | the same |
+| GitHub Copilot | rejected, reason shown | the same | the same | blocked, failing test named | the same |
+
+Found and changed:
+- **Codex lost every exit 2.** Codex 0.165 calls its tools from a JavaScript cell by default ("code mode"). There,
+  a hook's exit 2 neither refused the edit nor reached the model, although Codex's documentation says it should.
+  `hookio` now answers Codex in JSON: `permissionDecision: "deny"` before a tool, `decision: "block"` after it.
+- **Copilot hid the reason.** An exit 2 refuses in Copilot, but the agent sees only "hook errored". `hookio` now
+  answers Copilot's refusals with the JSON alone and exit 0.
+- **Copilot runs the hooks in `.claude/settings.json`.** Its documentation now says so. On Windows it runs them in
+  PowerShell, where `"$CLAUDE_PROJECT_DIR"` is empty, so they fail, and Copilot refuses every action, `git status`
+  included. `docs/hooks.md`, `hooks/README.md` and Lab 7's step 2 now say to wire only your own agent. The table above
+  was run with only `.github/hooks/` wired for Copilot.
+- **Claude Code on Windows has a `PowerShell` tool.** The commit hook matched only `Bash`; it now matches
+  `Bash|PowerShell`, and `hookio` reads both.
+- **`MultiEdit` is gone** from Claude Code's tools. The wiring matches `Write|Edit`.
+- **Codex's Windows sandbox could not start PowerShell** on the rehearsal machine (`CreateProcessAsUserW failed: 5`,
+  with `sandbox = "unelevated"`), so the model could not read files through the shell. The hooks are not affected;
+  the table's Codex row was completed with prompts that need no shell. Open below.
+- **Long paths.** In a clone under a deep temporary folder, Chromium did not start (Windows' 260-character limit).
+  The rehearsal used `C:\workspace\h7`.
 
 ### Subagents (2026-09-24)
 
@@ -245,3 +278,4 @@ Found and changed:
 | Lab 9's Claude tier, with a Claude credential set on the repository | a maintainer | open |
 | Bonus 2's stretch goal: the listener live against a test fork, then the issues closed. Not needed for the tag | a maintainer | open |
 | Bonus 3 with Codex or GitHub Copilot: their subagents carry the rehearsed instructions, unrehearsed. Not needed for the tag | a maintainer | open |
+| Codex on Windows: its workspace-write sandbox could not start PowerShell from the Microsoft Store (`CreateProcessAsUserW failed: 5`). Find the setting or install that works, and name it in `docs/environments.md` | a maintainer | open |
