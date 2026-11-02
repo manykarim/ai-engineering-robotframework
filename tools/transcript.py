@@ -174,6 +174,15 @@ def secret_values(files: list[Path]) -> list[str]:
     return values
 
 
+def spellings(repo: Path) -> list[str]:
+    """The ways a session writes a checkout's path, longest first: on Windows also C:/..., /c/... and JSON's C:\\\\..."""
+    path = repo.resolve()
+    forms = [str(path), str(repo), path.as_posix(), str(path).replace("\\", "\\\\")]
+    if path.drive:
+        forms.append("/" + path.drive[0].lower() + path.as_posix()[len(path.drive):])
+    return sorted(dict.fromkeys(forms), key=len, reverse=True)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="transcript", description=__doc__.split("\n\n")[0])
     parser.add_argument("events", nargs="+", type=Path)
@@ -187,7 +196,7 @@ def main(argv: list[str] | None = None) -> int:
 
     text, totals = render(args.events, args.title, args.agent)
     for repo in args.repo:
-        for path in dict.fromkeys([str(repo.resolve()), str(repo)]):
+        for path in spellings(repo):
             text = text.replace(path, "<repo>")
     text = text.replace(str(Path.home()), "~")
     for name, placeholder in ((getpass.getuser(), "user"), (socket.gethostname(), "host")):
@@ -195,7 +204,8 @@ def main(argv: list[str] | None = None) -> int:
             text = re.sub(rf"\b{re.escape(name)}\b", placeholder, text)
     text = re.sub(r"/tmp/claude-\d+(?:/[^\s`'\")]*)?", "<scratch>", text)
     # Claude Code names a project's folder after its path, with dashes: ~/.claude/projects/-tmp-claude-1000--mnt-c-...
-    text = re.sub(r"(\.claude/projects/)-[A-Za-z0-9._-]+", r"\1<project>", text)
+    # On Windows the separators are backslashes and the name has no leading dash: C--workspace-...
+    text = re.sub(r"(\.claude[/\\]projects[/\\])-?[A-Za-z0-9._-]+", r"\1<project>", text)
 
     found = [f"a value from {', '.join(map(str, args.secrets))}" for value in secret_values(args.secrets) if value in text]
     found += [f"something shaped like a secret ({pattern.pattern[:30]}...)" for pattern in SECRET_SHAPES if pattern.search(text)]
