@@ -4,12 +4,12 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
 
 ## 1. Hooks
 
-- [ ] 1.1 Add `# robotcode: ignore[variable-not-found]` to the `${HEADLESS}` line of `resources/shop.resource`
+- [x] 1.1 Add `# robotcode: ignore[variable-not-found]` to the `${HEADLESS}` line of `resources/shop.resource`
   (design.md, D3). Update `docs/robotcode.md`: the *Analyze* example output, and the trap row, which now says the
   line is already marked. Verify:
   - `uv run --no-sync robotcode analyze code tests resources` reports `Errors: 0` and exits 0;
   - `uv run robotcode robot --exclude broken` against a clean shop passes as before.
-- [ ] 1.2 Write `hooks/static_check.py` (D2), in the style of the other hooks, with a module docstring that says
+- [x] 1.2 Write `hooks/static_check.py` (D2), in the style of the other hooks, with a module docstring that says
   how to use it as a hook and as a command. Verify:
   - as a command over `tests resources`, it prints nothing and exits 0;
   - on a scratch copy of a test file with a misspelled keyword, it prints only that file's `[ERROR]` line(s) and
@@ -17,18 +17,18 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   - fed a recorded hook payload for each agent (Claude Code `Edit`, Codex `apply_patch`, Copilot `edit`), it answers
     in that agent's form;
   - a non-Robot file, or a file outside `tests/` and `resources/`, gives no output.
-- [ ] 1.3 Teach `hooks/hookio.py` session start and `context()` (D4), and update its docstring table. Verify: a
+- [x] 1.3 Teach `hooks/hookio.py` session start and `context()` (D4), and update its docstring table. Verify: a
   session-start payload from each of the three agents parses to `kind == "session"`. `context()` prints plain text
   for Claude Code and Codex, and `{"additionalContext": ...}` for Copilot. The existing three hooks behave
   unchanged on their recorded payloads.
-- [ ] 1.4 Wire the static check in `hooks/claude-code.settings.json`, `hooks/codex.hooks.json` and
+- [x] 1.4 Wire the static check in `hooks/claude-code.settings.json`, `hooks/codex.hooks.json` and
   `hooks/copilot.hooks.json`, after an edit and before `run_affected_tests.py`, with a 60 s timeout (`timeoutSec`
   for Copilot). Update `hooks/README.md`: the table of four scripts, and `static_check.py` under *Without an agent*.
   Verify: every wiring file parses as JSON, and `hooks/README.md` names all four scripts.
 
 ## 2. The page and the site
 
-- [ ] 2.1 Add Mermaid to the site (D7): `@docusaurus/theme-mermaid` at the core's exact version in
+- [x] 2.1 Add Mermaid to the site (D7): `@docusaurus/theme-mermaid` at the core's exact version in
   `website/package.json` and the lockfile, plus `markdown.mermaid`, `themes` and `themeConfig.mermaid` in
   `website/docusaurus.config.js`. Verify:
   - `npm ci && npm run build` in `website/` succeeds;
@@ -37,7 +37,7 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   - `${SHOP_URL}` in prose still renders literally.
   - If Mermaid does not render in `.md`, stop: use the ASCII fallback, and drop the docs-site delta after asking
     the user.
-- [ ] 2.2 Write `docs/hooks.md` (D1, D2, D4, D5) and add it to *Guides* in `website/sidebars.js`. It contains:
+- [x] 2.2 Write `docs/hooks.md` (D1, D2, D4, D5) and add it to *Guides* in `website/sidebars.js`. It contains:
   - the loop as one Mermaid diagram;
   - the shared events table with links to each agent's documentation;
   - how a hook answers;
@@ -51,13 +51,13 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   - the site builds with no broken link or anchor;
   - `uv run --no-sync python tools/check_labs.py` passes, including its no-answers scan;
   - every command on the page runs as shown.
-- [ ] 2.3 In `GLOSSARY.md`, link `docs/hooks.md` from the *Hook* entry, next to the existing Claude Code link. Name
+- [x] 2.3 In `GLOSSARY.md`, link `docs/hooks.md` from the *Hook* entry, next to the existing Claude Code link. Name
   Codex's and Copilot's hook documentation too, labelled with whose they are. Verify: the site builds, and the
   facilitation scenario "Reading on after the day" holds for hooks in all three agents.
 
 ## 3. Lab 7 and the timetable
 
-- [ ] 3.1 Rewrite `labs/lab-07-hooks-toolbelt/INSTRUCTIONS.md` with the ten steps of D6:
+- [x] 3.1 Rewrite `labs/lab-07-hooks-toolbelt/INSTRUCTIONS.md` with the ten steps of D6:
   - step 1 sends the participant to `docs/hooks.md`;
   - step 3's prompt gains a misspelled keyword for the static check;
   - step 4 gives the prompt for the agent to write and wire a hook from the menu, and a prompt to trigger it.
@@ -65,7 +65,7 @@ All work on `main` happens on a branch `apply-lab-07-hooks-intro` from `main`.
   Update the header's time to 30 minutes and the fallback line's step numbers. Add the two own-hook items to
   `checklist.md` (D6). Verify: `uv run --no-sync python tools/check_labs.py` passes with Lab 7 at 30 minutes, and
   the site builds.
-- [ ] 3.2 Update the timetable (D6):
+- [x] 3.2 Update the timetable (D6):
   - the table and the Module 7, 8 and 9 headings in `docs/WWWW_Workshop_Master_Preparation.md`, and its line
     "Self-healing at 15:45";
   - the rows of Modules 7, 8 and 9 in `docs/facilitator/run-sheet.md`, including Module 7's demo cell (the static

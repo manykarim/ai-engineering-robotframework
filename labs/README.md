@@ -12,7 +12,7 @@ before. Missed a lab? Each lab says how to catch up, so you can always join the 
 | [Lab 4 - RobotCode](lab-04-robotcode/INSTRUCTIONS.md) | 4 - RobotCode for Agents | 25 min | `clean` |
 | [Lab 5 - Prompt to green](lab-05-prompt-to-green/INSTRUCTIONS.md) | 5 - Natural Prompt Automation & Debugging | 30 min | `clean` |
 | [Lab 6 - MCP](lab-06-mcp/INSTRUCTIONS.md) | 6 - Robot Framework MCP | 25 min | `clean` |
-| [Lab 7 - Hooks and toolbelt](lab-07-hooks-toolbelt/INSTRUCTIONS.md) | 7 - Hooks, Subagents & the CLI Toolbelt | 20 min | `buggy` |
+| [Lab 7 - Hooks and toolbelt](lab-07-hooks-toolbelt/INSTRUCTIONS.md) | 7 - Hooks, Subagents & the CLI Toolbelt | 30 min | `buggy` |
 | [Lab 8 - Healing](lab-08-healing/INSTRUCTIONS.md) | 8 - Self-Healing Tests | 12 min | `drift_and_bug` |
 | [Lab 9 - CI](lab-09-ci/INSTRUCTIONS.md) | 9 - CI & Toolchain Integration | 15 min | `clean` |
 

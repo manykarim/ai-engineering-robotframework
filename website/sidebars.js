@@ -50,7 +50,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Guides',
-      items: ['docs/environments', 'docs/conventions', 'docs/robotcode', 'docs/building-with-agents'],
+      items: ['docs/environments', 'docs/conventions', 'docs/robotcode', 'docs/hooks', 'docs/building-with-agents'],
     },
     {
       type: 'category',

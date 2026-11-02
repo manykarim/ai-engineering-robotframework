@@ -18,11 +18,23 @@ module.exports = {
   markdown: {
     // .md is CommonMark: ${VARIABLE} and HTML comments in prose stay as written.
     format: 'detect',
+    // A ```mermaid block renders as a diagram, as it does on GitHub (spec: workshop/docs-site).
+    mermaid: true,
     hooks: {
       onBrokenMarkdownLinks: 'throw',
       onBrokenMarkdownImages: 'throw',
     },
   },
+
+  themes: ['@docusaurus/theme-mermaid'],
+  plugins: [
+    // The theme imports Mermaid's optional ELK layouts behind a flag that is off here, yet webpack still resolves the
+    // import. No page uses ELK, so it resolves to an empty module instead of a heavy package.
+    () => ({
+      name: 'mermaid-without-elk',
+      configureWebpack: () => ({resolve: {alias: {'@mermaid-js/layout-elk': false}}}),
+    }),
+  ],
 
   presets: [
     [
@@ -63,6 +75,9 @@ module.exports = {
     footer: {
       style: 'dark',
       copyright: 'Built by the community, for the community. Fork it, break it, heal it.',
+    },
+    mermaid: {
+      theme: {light: 'neutral', dark: 'dark'},
     },
     prism: {
       theme: themes.github,

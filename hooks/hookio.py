@@ -6,8 +6,13 @@ Claude Code, Codex and GitHub Copilot each pass a JSON object on stdin, in their
     Codex        {"tool_name": "apply_patch"|"Bash", "tool_input": {"command": <patch or shell>}}
     Copilot      {"toolName": "create"|"edit"|"apply_patch"|"bash", "toolArgs": {...} or <patch>}
 
-read_call() turns any of them into a Call; deny() and report() answer in the way the sending
-agent understands. Input that cannot be read lets the action through, with a warning: a
+At the start of a session there is no tool:
+
+    Claude Code, Codex  {"hook_event_name": "SessionStart", "source": "startup", ...}
+    Copilot             {"source": "new", "initialPrompt": ..., ...}
+
+read_call() turns any of them into a Call; deny(), report() and context() answer in the way the
+sending agent understands. Input that cannot be read lets the action through, with a warning: a
 guardrail that breaks must not stop the agent.
 """
 from __future__ import annotations
@@ -31,7 +36,7 @@ class Edit:
 @dataclass
 class Call:
     agent: str  # "claude-code", "codex" or "copilot"
-    kind: str  # "edit", "shell" or "other"
+    kind: str  # "edit", "shell", "session" (a session starts) or "other"
     edits: list[Edit] = field(default_factory=list)
     command: str = ""
 
@@ -79,6 +84,10 @@ def _patch_edits(patch: str, cwd: str) -> list[Edit]:
 
 def parse(payload: dict) -> Call:
     cwd = payload.get("cwd") or os.getcwd()
+    if payload.get("hook_event_name") == "SessionStart":  # Claude Code or Codex: both answer the same way
+        return Call("codex" if "model" in payload else "claude-code", "session")
+    if "source" in payload and not ({"toolName", "tool_name", "hook_event_name"} & payload.keys()):
+        return Call("copilot", "session")  # Copilot's sessionStart
     if "toolName" in payload:  # GitHub Copilot
         tool, args = payload["toolName"], payload.get("toolArgs") or {}
         if tool == "apply_patch":  # GPT models edit through patches; the arguments are the patch itself
@@ -137,6 +146,12 @@ def deny(call: Call, reason: str) -> None:
         print(json.dumps({"permissionDecision": "deny", "permissionDecisionReason": reason}))
     print(reason, file=sys.stderr)
     sys.exit(2)
+
+
+def context(call: Call, text: str) -> None:
+    """Add text to the agent's context, for example at the start of a session."""
+    print(json.dumps({"additionalContext": text}) if call.agent == "copilot" else text)
+    sys.exit(0)
 
 
 def report(call: Call, message: str, problem: bool) -> None:

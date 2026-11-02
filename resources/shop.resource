@@ -14,7 +14,7 @@ Open Shop Browser
     [Documentation]    Starts the browser once for the suite: headless, unless ``HEADLESS`` is
     ...    false, for example with ``-v HEADLESS:False``.
     # Not a variable table: importing this file at run time, as the REPL does, would reset -v.
-    ${headless}=    Get Variable Value    ${HEADLESS}    ${True}
+    ${headless}=    Get Variable Value    ${HEADLESS}    ${True}    # robotcode: ignore[variable-not-found]
     New Browser    chromium    headless=${headless}
 
 Start Shop Test

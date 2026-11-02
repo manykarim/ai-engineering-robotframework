@@ -37,9 +37,9 @@ This is the single source of truth for preparing and running the workshop: final
 | 13:20 – 14:05 | 5 — Natural Prompt Automation & Debugging | Tiers 1–3 | 45 min |
 | 14:05 – 14:50 | 6 — Robot Framework MCP: The Live-Access Upgrade | Live access | 45 min |
 | 14:50 – 15:05 | ☕ Break | | 15 min |
-| 15:05 – 15:45 | 7 — Hooks, Subagents & the CLI Toolbelt (gh, az, Jira skill) | Orchestration | 40 min |
-| 15:45 – 16:15 | 8 — Self-Healing Tests | Orchestration | 30 min |
-| 16:15 – 16:50 | 9 — CI & Toolchain Integration | Scale | 35 min |
+| 15:05 – 15:55 | 7 — Hooks, Subagents & the CLI Toolbelt (gh, az, Jira skill) | Orchestration | 50 min |
+| 15:55 – 16:20 | 8 — Self-Healing Tests | Orchestration | 25 min |
+| 16:20 – 16:50 | 9 — CI & Toolchain Integration | Scale | 30 min |
 | 16:50 – 17:00 | 10 — Wrap-Up, Roadmap & Q&A | — | 10 min |
 
 **Engagement design baked into the order:**
@@ -48,7 +48,7 @@ This is the single source of truth for preparing and running the workshop: final
 - **First win before 10:30:** the `AGENTS.md` lab needs nothing but a text editor — everyone succeeds early.
 - **Payoff lab in the post-lunch dip (13:20):** active typing plus a pair-review breakout beats introducing a new protocol at the day's lowest-energy hour.
 - **MCP as a felt upgrade (14:05):** participants hit the ceiling of Tiers 1–3 in their own lab first, then get the tool that removes it.
-- **Self-healing at 15:45:** the one demo that survives the late-afternoon slump.
+- **Self-healing at 15:55:** the one demo that survives the late-afternoon slump.
 - Buffer lives in debriefs and stretch goals — never in lab time.
 
 ---
@@ -96,19 +96,19 @@ The before/after on Module 5's own task: stepwise execution — run a step, insp
 **Lab:** connect the RF MCP server; rebuild the Module 5 test stepwise; compare both versions — where did live access change the result? Stretch: change the page in the browser mid-session and ask the agent again.
 **Outcome:** grounded live development and the judgement of when MCP is worth the setup.
 
-## Module 7 — Hooks, Subagents & the CLI Toolbelt (40 min · 15/20/5)
+## Module 7 — Hooks, Subagents & the CLI Toolbelt (50 min · 15/30/5)
 
-Hooks as always-on guardrails (auto-run affected suite, reject inline locators — the Module 3 skill with teeth, block commits on red). Subagents: writer/reviewer/runner. The toolbelt pattern: check for a CLI before building an integration — `gh` for issues/PRs/checks, `az boards`/`az repos` for the enterprise crowd. Custom outward-facing skills: the Jira skill as worked example. Plus 10 minutes on prompt injection and constrained tool access — the security mindset in one segment.
-**Lab:** two hooks; file a demo-project bug via `gh` with reproduction steps from a real run. Stretch A: writer → reviewer flow on a Module 5 task. Stretch B: the Jira skill against a free Jira Cloud instance.
+Hooks as always-on guardrails (auto-run affected suite, a static check after every edit with `robotcode analyze`, reject inline locators — the Module 3 skill with teeth, block commits on red), and how one hook works in every agent. Subagents: writer/reviewer/runner. The toolbelt pattern: check for a CLI before building an integration — `gh` for issues/PRs/checks, `az boards`/`az repos` for the enterprise crowd. Custom outward-facing skills: the Jira skill as worked example. Plus 10 minutes on prompt injection and constrained tool access — the security mindset in one segment.
+**Lab:** read the hooks page, wire the four hooks, have your agent write and wire one of your own; file a demo-project bug via `gh` with reproduction steps from a real run. Stretch A: writer → reviewer flow on a Module 5 task. Stretch B: the Jira skill against a free Jira Cloud instance.
 **Outcome:** boundaries, divided responsibilities, hands on the real toolchain.
 
-## Module 8 — Self-Healing Tests (30 min, demo-led · 15/12/3)
+## Module 8 — Self-Healing Tests (25 min, demo-led · 10/12/3)
 
 Listener-based healing: intercept the failure, inspect the live page, recover, keep running. Healing vs. hiding — assertions keep it honest. Every heal logged and reviewable; heals are *proposals*, never silent mutations. Live: UI-drift script mid-suite, then the healing report reviewed like adults.
 **Lab (compact):** enable listener, run drift script, run suite, triage the report per heal: accept / reject / investigate.
 **Outcome:** a working setup and the governance instinct to go with it.
 
-## Module 9 — CI & Toolchain Integration (35 min · 15/15/5)
+## Module 9 — CI & Toolchain Integration (30 min · 10/15/5)
 
 What belongs in CI (triage, healing suggestions, summaries) and what doesn't (unreviewed generation to main). Determinism and trust: pinned models, constrained tools, budgets, timeouts, every agent action a reviewable artifact. GitHub Actions hands-on: failure → agent analyses via `robotcode results` → root-cause PR comment; heals become suggestion PRs. Azure DevOps and Jira shown as the same pattern.
 **Lab:** enable the provided workflow on your fork; push a breaking change; open a PR; watch the agent explain your mistake in public. Character-building. Stretch: heal-suggestion PR step.

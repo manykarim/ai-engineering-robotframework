@@ -32,7 +32,7 @@ LABS = {
     "lab-04-robotcode": ("4", 25, "clean"),
     "lab-05-prompt-to-green": ("5", 30, "clean"),
     "lab-06-mcp": ("6", 25, "clean"),
-    "lab-07-hooks-toolbelt": ("7", 20, "buggy"),
+    "lab-07-hooks-toolbelt": ("7", 30, "buggy"),
     "lab-08-healing": ("8", 12, "drift_and_bug"),
     "lab-09-ci": ("9", 15, "clean"),
 }
@@ -159,7 +159,7 @@ def check_site_link(root: Path, rel: str, target: str, ref: str, pending: bool) 
     """A link to a page of the site: the Markdown file it renders must exist where the build takes it from."""
     page, _, anchor = target[len(SITE) + 1:].partition("#")
     page = page.rstrip("/")
-    candidates = [f"{page}.md", f"{page}/README.md"]
+    candidates = [f"{page}.md", f"{page}/README.md"] if page else ["README.md"]  # the site's root is the README
     if page.startswith(FROM_SOLUTIONS):
         if not has_ref(root, ref):
             return [f"{rel}: cannot check '{target}': {ref} is missing (git fetch origin solutions)"]
