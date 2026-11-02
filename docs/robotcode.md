@@ -75,8 +75,15 @@ variables that do not exist, wrong arguments, imports that fail.
 
 ```text
 $ uv run robotcode analyze code tests resources
-resources/shop.resource:17:45: [ERROR] VariableNotFound: Variable '${HEADLESS}' not found.
-Files: 8, Errors: 1, Warnings: 0, Infos: 0, Hints: 0 (in 2.44s)
+Files: 8, Errors: 0, Warnings: 0, Infos: 0, Hints: 0 (in 0.20s)
+```
+
+The suite as shipped has no finding. With `Place Order` misspelled as `Place Ordr` in `tests/ui/checkout.robot`:
+
+```text
+$ uv run robotcode analyze code tests/ui/checkout.robot
+tests/ui/checkout.robot:30:5: [ERROR] KeywordNotFound: No keyword with name 'Place Ordr' found.
+Files: 1, Errors: 1, Warnings: 0, Infos: 0, Hints: 0 (in 0.18s)
 ```
 
 - Name the folders to check. Without them, it checks everything below the current directory.
@@ -84,7 +91,8 @@ Files: 8, Errors: 1, Warnings: 0, Infos: 0, Hints: 0 (in 2.44s)
 - The exit code adds up what it found: 1 for errors, 2 for warnings, 4 for information, 8 for hints. 0 means
   nothing.
 - `--format json`, before the command, gives the findings as JSON: `uv run robotcode --format json analyze code tests`.
-- The one error here is a false positive: see [Traps](#traps). A finding is a question, not a verdict.
+- A finding is a question, not a verdict: `analyze` can be wrong, see [Traps](#traps).
+- Lab 7's static-check hook runs it on every file your agent edits: [Hooks](hooks.md).
 
 ## The debugger
 
@@ -184,7 +192,7 @@ What to know about the piped form:
 | `.break "<keyword>"` with quotes at the `(rdb)` prompt | the breakpoint never stops | leave out the quotes there: `.break Go To Catalogue`. On the command line, `--break "<keyword>"` is right |
 | The REPL's exit code | always 0, and its `output.xml` says PASS, whatever failed | read the output, or run a test for a verdict |
 | `.save` | lines that failed are saved too | save a clean session, or delete those lines afterwards |
-| `analyze code` and a variable read with `Get Variable Value` and a default | `VariableNotFound` for `${HEADLESS}` in `resources/shop.resource`, and exit code 1 | nothing: the default makes the line safe. To silence it, put `# robotcode: ignore[variable-not-found]` at the end of that line. A variable table instead would bring back the trap with `-v` above |
+| `analyze code` and a variable read with `Get Variable Value` and a default | `VariableNotFound` for that variable, and exit code 1 | nothing: the default makes the line safe. To silence it, end the line with `# robotcode: ignore[variable-not-found]`, as `resources/shop.resource` does for `${HEADLESS}`. A variable table instead would bring back the trap with `-v` above |
 | `results diff` | exits 0 even with new failures | to fail a script on new failures, count `newFailures` in `--format json` |
 | RequestsLibrary's log | every request and response, with headers and body, in `output.xml` and `log.html` | never send a real credential from a test; results uploaded from a public fork are public |
 

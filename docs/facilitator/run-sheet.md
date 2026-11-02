@@ -17,9 +17,9 @@ and what to do when it goes wrong or runs late. Print it. Times are CET, as in t
 | 13:20-14:05 | 5 - Natural Prompt Automation & Debugging (45 min: 10 / 30 / 5) | `clean` | `/opsx:propose` on a slice outside the lab (WEB-002_AC-8, the price range) | [Lab 5](../../labs/lab-05-prompt-to-green/INSTRUCTIONS.md), pair review in breakouts | Transcript; the pair review works on its proposal | Announce the two-criteria slice; skip the archive step (7). The rehearsal's agent needed 14 minutes to propose and 7 to apply four criteria |
 | 14:05-14:50 | 6 - Robot Framework MCP (45 min: 15 / 25 / 5) | `clean` | Your Module 5 demo test rebuilt stepwise | [Lab 6](../../labs/lab-06-mcp/INSTRUCTIONS.md) | Transcript | Skip the cost step (6) |
 | 14:50-15:05 | Break | | | | | |
-| 15:05-15:45 | 7 - Hooks, Subagents & the CLI Toolbelt (40 min: 15 / 20 / 5) | `buggy`, applied by each participant in step 4 | Hooks firing; `gh issue create` from a real run; 10 minutes on prompt injection | [Lab 7](../../labs/lab-07-hooks-toolbelt/INSTRUCTIONS.md) | Steps 3-5, 7-8 need no agent; transcript | Cut stretch B (Jira) |
-| 15:45-16:15 | 8 - Self-Healing Tests (30 min: 15 / 12 / 3) | `drift_and_bug`, applied by each participant in step 1 | A live healing run, and its report triaged ([answers](https://manykarim.github.io/ai-engineering-robotframework/docs/facilitator/suite-outcomes#module-8-the-triage-answers)) | [Lab 8](../../labs/lab-08-healing/INSTRUCTIONS.md) | The [recorded report](https://manykarim.github.io/ai-engineering-robotframework/transcripts/lab-08-healing-report) | **First cut:** demo only, skip the lab |
-| 16:15-16:50 | 9 - CI & Toolchain Integration (35 min: 15 / 15 / 5) | `clean` (CI starts its own shop) | A pushed break explained in a pull request on your fork | [Lab 9](../../labs/lab-09-ci/INSTRUCTIONS.md) | Transcript | Cut the stretch (heal suggestions) |
+| 15:05-15:55 | 7 - Hooks, Subagents & the CLI Toolbelt (50 min: 15 / 30 / 5) | `buggy`, applied by each participant in step 6 | Hooks firing, the static check on a misspelled keyword ([Hooks](../hooks.md#worked-example-the-static-check)); `gh issue create` from a real run; 10 minutes on prompt injection | [Lab 7](../../labs/lab-07-hooks-toolbelt/INSTRUCTIONS.md) | Steps 1, 5-7, 9-10 need no agent; transcript | Cut stretch B (Jira) |
+| 15:55-16:20 | 8 - Self-Healing Tests (25 min: 10 / 12 / 3) | `drift_and_bug`, applied by each participant in step 1 | A live healing run, and its report triaged ([answers](https://manykarim.github.io/ai-engineering-robotframework/docs/facilitator/suite-outcomes#module-8-the-triage-answers)) | [Lab 8](../../labs/lab-08-healing/INSTRUCTIONS.md) | The [recorded report](https://manykarim.github.io/ai-engineering-robotframework/transcripts/lab-08-healing-report) | **First cut:** demo only, skip the lab |
+| 16:20-16:50 | 9 - CI & Toolchain Integration (30 min: 10 / 15 / 5) | `clean` (CI starts its own shop) | A pushed break explained in a pull request on your fork | [Lab 9](../../labs/lab-09-ci/INSTRUCTIONS.md) | Transcript | Cut the stretch (heal suggestions) |
 | 16:50-17:00 | 10 - Wrap-Up, Roadmap & Q&A (10 min) | - | The ladder once more; the Monday plan: `AGENTS.md`, then the RobotCode plugin and RF Agent Skills, then one CI triage step, then the bonus chapters for building your own library or tool | Questions | - | - |
 
 Buffer lives in debriefs and stretch goals, never in lab time.
@@ -40,7 +40,7 @@ Every participant switches their own shop, local or in their own space, with the
 loud and put it in the chat at the start of Modules 7 and 8, and the reset at their end:
 
 ```bash
-uv run --no-sync python -m shop preset buggy          # Module 7, step 4
+uv run --no-sync python -m shop preset buggy          # Module 7, step 6
 uv run --no-sync python -m shop preset drift_and_bug  # Module 8, step 1
 uv run --no-sync python -m shop reset                 # the end of Modules 7 and 8
 uv run --no-sync python -m shop status                # what holds right now

@@ -140,8 +140,10 @@ Building a test one step at a time against the live system: run a step, look at 
 ### Hook
 
 A command the agent runs automatically, before or after it uses a tool, and cannot skip. It can reject the action or
-report back. Hooks turn conventions into guardrails.
-Read more: Claude Code's [hooks guide](https://code.claude.com/docs/en/hooks-guide).
+report back. Hooks turn conventions into guardrails. [Hooks](docs/hooks.md) shows how they work in each agent, and
+how to write one.
+Read more: Claude Code's [hooks guide](https://code.claude.com/docs/en/hooks-guide); Codex's
+[hooks](https://learn.chatgpt.com/docs/hooks); GitHub Copilot's [hooks reference](https://docs.github.com/en/copilot/reference/hooks-reference).
 
 ### Subagent
 

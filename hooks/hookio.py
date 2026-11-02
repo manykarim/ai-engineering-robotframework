@@ -2,12 +2,17 @@
 
 Claude Code, Codex and GitHub Copilot each pass a JSON object on stdin, in their own shape:
 
-    Claude Code  {"tool_name": "Write"|"Edit"|"MultiEdit"|"Bash", "tool_input": {...}}
+    Claude Code  {"tool_name": "Write"|"Edit"|"Bash"|"PowerShell", "tool_input": {...}}
     Codex        {"tool_name": "apply_patch"|"Bash", "tool_input": {"command": <patch or shell>}}
     Copilot      {"toolName": "create"|"edit"|"apply_patch"|"bash", "toolArgs": {...} or <patch>}
 
-read_call() turns any of them into a Call; deny() and report() answer in the way the sending
-agent understands. Input that cannot be read lets the action through, with a warning: a
+At the start of a session there is no tool:
+
+    Claude Code, Codex  {"hook_event_name": "SessionStart", "source": "startup", ...}
+    Copilot             {"source": "new", "initialPrompt": ..., ...}
+
+read_call() turns any of them into a Call; deny(), report() and context() answer in the way the
+sending agent understands. Input that cannot be read lets the action through, with a warning: a
 guardrail that breaks must not stop the agent.
 """
 from __future__ import annotations
@@ -31,7 +36,7 @@ class Edit:
 @dataclass
 class Call:
     agent: str  # "claude-code", "codex" or "copilot"
-    kind: str  # "edit", "shell" or "other"
+    kind: str  # "edit", "shell", "session" (a session starts) or "other"
     edits: list[Edit] = field(default_factory=list)
     command: str = ""
 
@@ -79,6 +84,10 @@ def _patch_edits(patch: str, cwd: str) -> list[Edit]:
 
 def parse(payload: dict) -> Call:
     cwd = payload.get("cwd") or os.getcwd()
+    if payload.get("hook_event_name") == "SessionStart":  # Claude Code or Codex: both answer the same way
+        return Call("codex" if "model" in payload else "claude-code", "session")
+    if "source" in payload and not ({"toolName", "tool_name", "hook_event_name"} & payload.keys()):
+        return Call("copilot", "session")  # Copilot's sessionStart
     if "toolName" in payload:  # GitHub Copilot
         tool, args = payload["toolName"], payload.get("toolArgs") or {}
         if tool == "apply_patch":  # GPT models edit through patches; the arguments are the patch itself
@@ -104,11 +113,7 @@ def parse(payload: dict) -> Call:
     if tool == "Edit":
         change = (args.get("old_string", ""), args.get("new_string", ""), bool(args.get("replace_all")))
         return Call(agent, "edit", [_replaced(path, [change])])
-    if tool == "MultiEdit":
-        changes = [(e.get("old_string", ""), e.get("new_string", ""), bool(e.get("replace_all")))
-                   for e in args.get("edits", [])]
-        return Call(agent, "edit", [_replaced(path, changes)])
-    if tool in ("Bash", "shell"):
+    if tool in ("Bash", "PowerShell", "shell"):
         return Call(agent, "shell", command=args.get("command", ""))
     return Call(agent, "other")
 
@@ -133,16 +138,30 @@ def read_call() -> Call | None:
 
 def deny(call: Call, reason: str) -> None:
     """Refuse the action about to happen, and tell the agent why."""
-    if call.agent == "copilot":
+    if call.agent == "codex":  # in code mode, Codex 0.165 ignores exit 2 on a tool called from a script; JSON works
+        print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "deny",
+                                                 "permissionDecisionReason": reason}}))
+        sys.exit(0)
+    if call.agent == "copilot":  # an exit 2 also refuses, but the agent then sees "hook errored", not the reason
         print(json.dumps({"permissionDecision": "deny", "permissionDecisionReason": reason}))
+        sys.exit(0)
     print(reason, file=sys.stderr)
     sys.exit(2)
+
+
+def context(call: Call, text: str) -> None:
+    """Add text to the agent's context, for example at the start of a session."""
+    print(json.dumps({"additionalContext": text}) if call.agent == "copilot" else text)
+    sys.exit(0)
 
 
 def report(call: Call, message: str, problem: bool) -> None:
     """After an action: give the agent a result it must take into account."""
     if call.agent == "copilot":
         print(json.dumps({"additionalContext": message}))
+        sys.exit(0)
+    if problem and call.agent == "codex":  # replaces the tool's result with the message; exit 2 is lost in code mode
+        print(json.dumps({"decision": "block", "reason": message}))
         sys.exit(0)
     if problem:
         print(message, file=sys.stderr)

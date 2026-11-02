@@ -13,6 +13,10 @@
     "PostToolUse": [
       {
         "matcher": "^apply_patch$",
+        "hooks": [{"type": "command", "command": "uv run --no-sync python hooks/static_check.py", "timeout": 60, "statusMessage": "Checking the edited files statically"}]
+      },
+      {
+        "matcher": "^apply_patch$",
         "hooks": [{"type": "command", "command": "uv run --no-sync python hooks/run_affected_tests.py", "timeout": 300, "statusMessage": "Running the affected tests"}]
       }
     ]

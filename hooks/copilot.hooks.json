@@ -19,6 +19,13 @@
       {
         "type": "command",
         "matcher": "^(create|edit|apply_patch)$",
+        "bash": "uv run --no-sync python hooks/static_check.py",
+        "powershell": "uv run --no-sync python hooks/static_check.py",
+        "timeoutSec": 60
+      },
+      {
+        "type": "command",
+        "matcher": "^(create|edit|apply_patch)$",
         "bash": "uv run --no-sync python hooks/run_affected_tests.py",
         "powershell": "uv run --no-sync python hooks/run_affected_tests.py",
         "timeoutSec": 300
