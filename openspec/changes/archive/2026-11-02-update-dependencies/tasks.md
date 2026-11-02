@@ -32,21 +32,22 @@
 
 ## 3. Main
 
-- [ ] 3.1 Run the checks and open a pull request to `main`. In its description, tell participants to run `uv sync --locked` and `uv run --no-sync rfbrowser install chromium` again, and say that `solutions` will be rebased from its tip `df84f6d`. Verify:
+- [x] 3.1 Run the checks and open a pull request to `main`. In its description, tell participants to run `uv sync --locked` and `uv run --no-sync rfbrowser install chromium` again, and say that `solutions` will be rebased from its tip `df84f6d`. Verify:
   - `openspec validate update-dependencies --strict` passes;
   - "Run tests" passes on the pull request.
-- [ ] 3.2 Merge the pull request into `main`. Verify: `git show origin/main:pyproject.toml` has the new pins.
+- [x] 3.2 Merge the pull request into `main`. Verify: `git show origin/main:pyproject.toml` has the new pins.
 
 ## 4. Solutions branch
 
-- [ ] 4.1 Rebase `solutions` onto the new `origin/main`, without changing its commits. Verify:
+- [x] 4.1 Rebase `solutions` onto the new `origin/main`, without changing its commits. Verify:
   - the rebase finishes without conflicts, and `git log --oneline origin/main..solutions` shows the same 16 commit subjects in the same order;
   - `git range-diff origin/solutions...solutions` shows no change inside any lab or reference commit;
   - `git diff origin/main solutions -- pyproject.toml uv.lock docs/robotcode.md` is empty.
-- [ ] 4.2 On the rebased `solutions`, install with `uv sync --locked` and `uv run --no-sync rfbrowser install chromium`, reset the shop with `uv run --no-sync python -m shop reset`, and run the whole suite with `uv run robotcode robot`, without `--exclude broken` (`workshop/solutions`, *Solutions pass*). Verify:
+- [x] 4.2 On the rebased `solutions`, install with `uv sync --locked` and `uv run --no-sync rfbrowser install chromium`, reset the shop with `uv run --no-sync python -m shop reset`, and run the whole suite with `uv run robotcode robot`, without `--exclude broken` (`workshop/solutions`, *Solutions pass*). Verify:
   - every test passes, including the two that `main` ships broken;
   - `uv lock --check` passes in `bonus/bonus-1-library` and `bonus/bonus-2-tool`.
-- [ ] 4.3 Push with `git push --force-with-lease=solutions:df84f6d origin solutions`. Verify: `origin/solutions` is the rebased tip, and `git merge-base --is-ancestor origin/main origin/solutions` succeeds.
+  - Applied 2026-11-02: 30 of 30 tests passed, including `WEB-002_AC-4 Rating Filter` and `WEB-002_AC-12 Handpicked Highlights`, which `main` tags `broken`. `uv lock --check` failed in both Bonus projects, already at the old tip `df84f6d`: inside the repository uv applies the root's `prerelease = "disallow"`, while those lockfiles were written in the default mode. Outside the repository they re-lock unchanged. Accepted as an existing finding for a separate follow-up; the lab commits stay unchanged.
+- [x] 4.3 Push with `git push --force-with-lease=solutions:df84f6d origin solutions`. Verify: `origin/solutions` is the rebased tip, and `git merge-base --is-ancestor origin/main origin/solutions` succeeds.
 
 ## Workflow follow-up
 
