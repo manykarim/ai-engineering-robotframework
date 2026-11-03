@@ -70,7 +70,7 @@ _ENCODED = [
 ]
 GIVEAWAYS = [(re.compile(base64.b64decode(b).decode(), f), what, scope) for b, f, what, scope in _ENCODED]
 PARTICIPANT_FILES = ("labs/**/*.md", "GLOSSARY.md", "docs/environments.md", "docs/robotcode.md",
-                     "docs/building-with-agents.md")
+                     "docs/building-with-agents.md", "docs/skills.md")
 STORY_DIR = "labs/lab-05-prompt-to-green/stories/"  # copied verbatim; not ours to police
 # What the scan of main leaves out: the suite the labs work on, the shop's specifications (correct behaviour,
 # also as archived deltas), the stories copied from the shop's repository, and lock files full of version numbers.

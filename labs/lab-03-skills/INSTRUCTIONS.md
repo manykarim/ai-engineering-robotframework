@@ -15,6 +15,9 @@ A skill is a folder with a `SKILL.md`. The agent reads only its `description` un
 loads the rest. Rule of thumb: what is *always* relevant goes into `AGENTS.md`; what is relevant for *one kind of
 task* becomes a skill.
 
+Read [Skills](../../docs/skills.md) before step 4: how an agent loads a skill, where yours goes, what makes one good,
+and how to check it.
+
 ## Steps
 
 1. **Install the Robot Framework Agent Skills** into this repository. The version is pinned in `SETUP.md`:
@@ -44,13 +47,14 @@ task* becomes a skill.
 
    | Claude Code | Codex | GitHub Copilot |
    |---|---|---|
-   | `cp -r skills/template .claude/skills/locators-in-resources` | `cp -r skills/template .agents/skills/locators-in-resources` | `cp -r skills/template .github/skills/locators-in-resources` |
+   | `cp -r skills/template .claude/skills/locators-in-resources` | `cp -r skills/template .agents/skills/locators-in-resources` | `cp -r skills/template .claude/skills/locators-in-resources` |
 
    The template is a working skill for convention 1. Read it once as it is.
 
 6. **Make it yours.** In the copied `SKILL.md`:
    - set `name` to the folder's name;
-   - rewrite `description`: what the skill checks, and *when* to use it, in the words a prompt would contain;
+   - rewrite `description`: what the skill checks, and *when* to use it, in the words a prompt would contain
+     ([Writing a good skill](../../docs/skills.md#writing-a-good-skill) has the rules);
    - replace the rule, the reason and the examples with your convention's;
    - delete the template's comment.
 

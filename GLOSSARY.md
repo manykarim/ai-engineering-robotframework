@@ -71,12 +71,14 @@ into it costs space and attention, which is why less, well-chosen context works 
 A folder with a `SKILL.md`: a name, a description, instructions, and optionally scripts and reference files. The
 agent reads only the description until a task matches it, then loads the rest. Always relevant: context file.
 Relevant for one kind of task: skill.
+[Skills](docs/skills.md) explains how they load and how to write a good one.
 Read more: Claude Code's [skills](https://code.claude.com/docs/en/skills); the [Agent Skills](https://agentskills.io/home) standard.
 
 ### Trigger
 
 The moment a skill's description matches the task and the agent loads it. A vague description triggers too often or
 never. Test both: a prompt that should load the skill, and one that should not.
+[Evaluate your skill](docs/skills.md#evaluate-your-skill) has the checks.
 
 ### Plugin
 
