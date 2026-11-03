@@ -8,8 +8,8 @@ description: Checks that Robot Framework test names in this repository start wit
 <!--
   This is the template for Lab 3. It is a complete, working skill for convention 1 of docs/conventions.md.
   To make your own skill:
-    1. Copy this folder into your agent's skill folder and rename it: .claude/skills/<name>/ (Claude Code),
-       .agents/skills/<name>/ (Codex) or .github/skills/<name>/ (GitHub Copilot).
+    1. Copy this folder into your agent's skill folder and rename it: .claude/skills/<name>/ (Claude Code and
+       GitHub Copilot) or .agents/skills/<name>/ (Codex).
     2. Change `name` above to the folder's name.
     3. Rewrite `description`. The agent decides from the description alone whether to load the skill, so say
        what the skill does AND when to use it, with the words a prompt would contain.
