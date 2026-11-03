@@ -45,7 +45,7 @@ All work on `main` happens on the branch `lab-03-skills-intro`.
 
 ## 4. Ship
 
-- [ ] 4.1 Commit, push the branch and open a PR. Verify that "Build the site" and both "Robot Framework suite" runs pass.
+- [x] 4.1 Commit, push the branch and open a PR. Verify that "Build the site" and both "Robot Framework suite" runs pass.
 
 ## Workflow follow-up
 
